@@ -83,4 +83,71 @@ class ArtisanAdminController extends Controller
         $artisan->update(['status' => $newStatus]);
         return back()->with('success', "Statut de {$artisan->first_name} mis à jour.");
     }
+
+    public function edit(Artisan $artisan)
+    {
+        $artisan->load('savoirFaires', 'user');
+        $categories  = Category::with('savoirFaires')->get();
+        $savoirFaires = SavoirFaire::with('category')->get();
+        return view('admin.artisans.edit', compact('artisan', 'categories', 'savoirFaires'));
+    }
+
+    public function update(Request $request, Artisan $artisan)
+    {
+        $validated = $request->validate([
+            'first_name'        => 'required|string|max:100',
+            'last_name'         => 'required|string|max:100',
+            'professional_name' => 'nullable|string|max:200',
+            'phone'             => 'required|string|max:30',
+            'whatsapp'          => 'nullable|string|max:30',
+            'description'       => 'nullable|string',
+            'history'           => 'nullable|string',
+            'experience_years'  => 'nullable|integer|min:0|max:100',
+            'address'           => 'nullable|string|max:255',
+            'latitude'          => 'nullable|numeric',
+            'longitude'         => 'nullable|numeric',
+            'status'            => 'required|in:draft,published,suspended',
+            'email'             => 'required|email|unique:users,email,' . $artisan->user_id,
+            'savoir_faires'     => 'nullable|array',
+        ]);
+
+        if ($artisan->user) {
+            $artisan->user->update([
+                'name'  => $validated['first_name'] . ' ' . $validated['last_name'],
+                'email' => $validated['email'],
+            ]);
+        }
+
+        $artisan->update([
+            'first_name'        => $validated['first_name'],
+            'last_name'         => $validated['last_name'],
+            'professional_name' => $validated['professional_name'],
+            'phone'             => $validated['phone'],
+            'whatsapp'          => $validated['whatsapp'] ?? $validated['phone'],
+            'description'       => $validated['description'],
+            'history'           => $validated['history'],
+            'experience_years'  => $validated['experience_years'] ?? 0,
+            'address'           => $validated['address'],
+            'latitude'          => $validated['latitude'],
+            'longitude'         => $validated['longitude'],
+            'status'            => $validated['status'],
+        ]);
+
+        $artisan->savoirFaires()->sync($validated['savoir_faires'] ?? []);
+
+        return redirect()->route('admin.artisans.index')
+            ->with('success', "✅ Profil de {$artisan->first_name} {$artisan->last_name} mis à jour avec succès !");
+    }
+
+    public function destroy(Artisan $artisan)
+    {
+        $name = "{$artisan->first_name} {$artisan->last_name}";
+        if ($artisan->user) {
+            $artisan->user->delete();
+        } else {
+            $artisan->delete();
+        }
+        return redirect()->route('admin.artisans.index')
+            ->with('success', "Artisan {$name} supprimé avec succès.");
+    }
 }
