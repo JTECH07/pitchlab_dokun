@@ -93,9 +93,10 @@
                 let name = artisan.professional_name || (artisan.first_name + ' ' + artisan.last_name);
                 let url = '/artisans/' + artisan.id;
                 
+                let imgSrc = artisan.image_url || '/images/hero/hero_dokun.png';
                 let popupContent = `
                     <div class="bg-white">
-                        <div class="h-24 bg-slate-200"><img src="https://images.unsplash.com/photo-1610756041697-7427282eb111?q=80&w=400&auto=format&fit=crop" class="w-full h-full object-cover"></div>
+                        <div class="h-28 bg-slate-200"><img src="${imgSrc}" class="w-full h-full object-cover"></div>
                         <div class="p-4">
                             <h4 class="font-bold text-slate-900 mb-1 text-lg">${name}</h4>
                             <p class="text-xs text-slate-500 mb-3 line-clamp-1">${artisan.address}</p>

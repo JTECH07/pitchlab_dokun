@@ -78,12 +78,12 @@
         <div class="mt-16 relative max-w-5xl mx-auto px-4 sm:px-6 animate-float">
             <div class="glass bg-white/5 rounded-2xl p-2 border border-white/10 shadow-2xl">
                 <div class="rounded-xl overflow-hidden bg-slate-800 aspect-video relative flex items-center justify-center">
-                    <img src="https://images.unsplash.com/photo-1606041011872-59659ceb7eb8?q=80&w=2069&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+                    <img src="{{ asset('images/hero/hero_dokun.png') }}" alt="Patrimoine Vivant Porto-Novo" class="absolute inset-0 w-full h-full object-cover opacity-90">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
                     <div class="relative z-10 text-center">
-                        <button class="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all group">
-                            <svg class="w-8 h-8 ml-1 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </button>
+                        <span class="px-4 py-2 bg-amber-500/90 text-white font-bold text-sm rounded-full backdrop-blur-sm border border-amber-400/50 shadow-xl">
+                            Porto-Novo, Bénin
+                        </span>
                     </div>
                 </div>
             </div>
@@ -106,7 +106,7 @@
                     </div>
                     <h3 class="text-2xl font-bold text-slate-900 mb-3">{{ $category->name }}</h3>
                     <p class="text-slate-600 mb-6">{{ $category->description }}</p>
-                    <a href="#" class="text-amber-500 font-semibold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                    <a href="{{ route('artisans.index') }}" class="text-amber-500 font-semibold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
                         Explorer <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
                 </div>
@@ -123,7 +123,7 @@
                     <h2 class="text-4xl font-black text-slate-900 tracking-tight">Artisans à la Une</h2>
                     <div class="h-1 w-20 bg-amber-500 mt-4 rounded-full"></div>
                 </div>
-                <a href="#" class="hidden md:inline-flex items-center gap-2 text-slate-600 font-semibold hover:text-amber-500 transition-colors">
+                <a href="{{ route('artisans.index') }}" class="hidden md:inline-flex items-center gap-2 text-slate-600 font-semibold hover:text-amber-500 transition-colors">
                     Voir tous les artisans <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                 </a>
             </div>
@@ -131,9 +131,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 @foreach($artisans as $artisan)
                 <div class="bg-white rounded-[2rem] overflow-hidden shadow-xl shadow-slate-200/50 border border-slate-100 group">
-                    <div class="h-48 bg-slate-200 relative overflow-hidden">
-                        <!-- Placeholder Image -->
-                        <img src="https://images.unsplash.com/photo-1610756041697-7427282eb111?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="h-56 bg-slate-200 relative overflow-hidden">
+                        <!-- Real Artisan Image -->
+                        <img src="{{ $artisan->image_url }}" alt="{{ $artisan->first_name }} {{ $artisan->last_name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                         <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-amber-600 shadow-sm">
                             ⭐ {{ $artisan->experience_years }} ans d'exp.
                         </div>

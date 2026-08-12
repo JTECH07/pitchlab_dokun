@@ -51,7 +51,7 @@
             <!-- Left Column -->
             <div class="lg:col-span-1 space-y-8">
                 <div class="rounded-[2.5rem] overflow-hidden bg-slate-200 aspect-[4/5] shadow-2xl shadow-slate-200 relative">
-                    <img src="https://images.unsplash.com/photo-1610756041697-7427282eb111?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover">
+                    <img src="{{ $artisan->image_url }}" alt="{{ $artisan->first_name }} {{ $artisan->last_name }}" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
                     <div class="absolute bottom-6 left-6 text-white">
                         <div class="px-3 py-1 bg-amber-500 text-white rounded-full text-xs font-bold inline-block mb-2">⭐ {{ $artisan->experience_years }} ans d'expérience</div>

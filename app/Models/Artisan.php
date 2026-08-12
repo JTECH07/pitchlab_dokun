@@ -12,4 +12,18 @@ class Artisan extends Model
     {
         return $this->belongsToMany(SavoirFaire::class, 'artisan_savoir_faire');
     }
+
+    public function media()
+    {
+        return $this->hasMany(Media::class);
+    }
+
+    public function getImageUrlAttribute()
+    {
+        $firstMedia = $this->media()->where('type', 'image')->first();
+        if ($firstMedia && $firstMedia->path) {
+            return asset($firstMedia->path);
+        }
+        return asset('images/hero/hero_dokun.png');
+    }
 }

@@ -98,8 +98,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($artisans as $artisan)
             <div class="bg-white rounded-[2rem] overflow-hidden shadow-xl shadow-slate-200/50 border border-slate-100 group flex flex-col h-full hover:-translate-y-1 transition-all duration-300">
-                <div class="h-48 bg-slate-200 relative overflow-hidden shrink-0">
-                    <img src="https://images.unsplash.com/photo-1610756041697-7427282eb111?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="h-56 bg-slate-200 relative overflow-hidden shrink-0">
+                    <img src="{{ $artisan->image_url }}" alt="{{ $artisan->first_name }} {{ $artisan->last_name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-amber-600 shadow-sm">
                         ⭐ {{ $artisan->experience_years }} ans d'exp.
                     </div>
