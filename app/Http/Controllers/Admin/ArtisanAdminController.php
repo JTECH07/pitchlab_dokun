@@ -39,7 +39,7 @@ class ArtisanAdminController extends Controller
             'address'           => 'nullable|string|max:255',
             'latitude'          => 'nullable|numeric',
             'longitude'         => 'nullable|numeric',
-            'status'            => 'required|in:draft,published,suspended',
+            'status'            => 'required|in:draft,pending,published',
             'email'             => 'required|email|unique:users,email',
             'savoir_faires'     => 'nullable|array',
         ]);
@@ -74,12 +74,12 @@ class ArtisanAdminController extends Controller
         }
 
         return redirect()->route('admin.artisans.index')
-            ->with('success', "✅ Artisan {$artisan->first_name} {$artisan->last_name} créé avec succès ! Mot de passe provisoire : dokun2026");
+            ->with('success', "Artisan {$artisan->first_name} {$artisan->last_name} créé avec succès. Mot de passe provisoire : dokun2026");
     }
 
     public function toggleStatus(Artisan $artisan)
     {
-        $newStatus = $artisan->status === 'published' ? 'suspended' : 'published';
+        $newStatus = $artisan->status === 'published' ? 'draft' : 'published';
         $artisan->update(['status' => $newStatus]);
         return back()->with('success', "Statut de {$artisan->first_name} mis à jour.");
     }
@@ -106,7 +106,7 @@ class ArtisanAdminController extends Controller
             'address'           => 'nullable|string|max:255',
             'latitude'          => 'nullable|numeric',
             'longitude'         => 'nullable|numeric',
-            'status'            => 'required|in:draft,published,suspended',
+            'status'            => 'required|in:draft,pending,published',
             'email'             => 'required|email|unique:users,email,' . $artisan->user_id,
             'savoir_faires'     => 'nullable|array',
         ]);
@@ -136,7 +136,7 @@ class ArtisanAdminController extends Controller
         $artisan->savoirFaires()->sync($validated['savoir_faires'] ?? []);
 
         return redirect()->route('admin.artisans.index')
-            ->with('success', "✅ Profil de {$artisan->first_name} {$artisan->last_name} mis à jour avec succès !");
+            ->with('success', "Profil de {$artisan->first_name} {$artisan->last_name} mis à jour avec succès.");
     }
 
     public function destroy(Artisan $artisan)
