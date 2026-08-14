@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Artisan extends Model
 {
+    use HasFactory;
     protected $guarded = [];
 
     public function savoirFaires()
@@ -13,9 +15,24 @@ class Artisan extends Model
         return $this->belongsToMany(SavoirFaire::class, 'artisan_savoir_faire');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function media()
     {
         return $this->hasMany(Media::class);
+    }
+
+    public function experiences()
+    {
+        return $this->hasMany(Experience::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(ReservationRequest::class);
     }
 
     public function getImageUrlAttribute()
