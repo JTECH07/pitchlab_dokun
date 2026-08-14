@@ -85,7 +85,7 @@
                     <select name="status" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none bg-slate-50">
                         <option value="draft" {{ old('status', $artisan->status) === 'draft' ? 'selected' : '' }}>Brouillon</option>
                         <option value="published" {{ old('status', $artisan->status) === 'published' ? 'selected' : '' }}>Publié</option>
-                        <option value="suspended" {{ old('status', $artisan->status) === 'suspended' ? 'selected' : '' }}>Suspendu</option>
+                        <option value="pending" {{ old('status', $artisan->status) === 'pending' ? 'selected' : '' }}>En attente de validation</option>
                     </select>
                 </div>
             </div>
