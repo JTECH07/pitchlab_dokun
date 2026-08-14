@@ -1,47 +1,45 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <x-auth-session-status class="mb-4" :status="session('status')"/>
 
-    <form method="POST" action="{{ route('login') }}">
+    <div class="text-center mb-8">
+        <h1 class="font-serif text-3xl text-[#064E3B] mb-2">Connexion</h1>
+        <p class="text-[#17201D]/60 text-sm">Accédez à votre espace artisan ou admin</p>
+    </div>
+
+    <form method="POST" action="{{ route('login') }}" class="space-y-5">
         @csrf
-
-        <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <label for="email" class="block text-sm font-bold text-[#17201D] mb-2">Adresse email</label>
+            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
+                class="w-full px-4 py-3.5 bg-[#F8F6F0] border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#064E3B] focus:border-transparent outline-none transition text-[#17201D] font-semibold placeholder:text-gray-400 placeholder:font-normal"
+                placeholder="vous@exemple.com">
+            <x-input-error :messages="$errors->get('email')" class="mt-2"/>
         </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div>
+            <label for="password" class="block text-sm font-bold text-[#17201D] mb-2">Mot de passe</label>
+            <input id="password" type="password" name="password" required
+                class="w-full px-4 py-3.5 bg-[#F8F6F0] border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#064E3B] focus:border-transparent outline-none transition text-[#17201D] font-semibold"
+                placeholder="••••••••">
+            <x-input-error :messages="$errors->get('password')" class="mt-2"/>
         </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+        <div class="flex items-center justify-between">
+            <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" name="remember" id="remember_me" class="w-4 h-4 rounded border-gray-300 text-[#064E3B] focus:ring-[#064E3B]">
+                <span class="text-sm text-[#17201D]/70">Se souvenir de moi</span>
             </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
+            @if(Route::has('password.request'))
+            <a href="{{ route('password.request') }}" class="text-sm text-[#064E3B] hover:text-[#C99424] font-semibold transition-colors">
+                Mot de passe oublié ?
+            </a>
             @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
         </div>
+        <button type="submit" class="w-full py-4 bg-[#064E3B] text-white font-bold rounded-xl hover:bg-[#064E3B]/90 transition-all shadow-lg shadow-[#064E3B]/20 text-base">
+            Se connecter
+        </button>
     </form>
+
+    <div class="mt-6 text-center text-sm text-[#17201D]/60">
+        Pas encore de compte ?
+        <a href="{{ route('register') }}" class="text-[#C99424] font-bold hover:underline ml-1">S'inscrire</a>
+    </div>
 </x-guest-layout>
