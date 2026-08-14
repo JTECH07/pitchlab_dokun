@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\ReservationAdminController;
 use App\Http\Controllers\Admin\SavoirFaireAdminController;
 use App\Http\Controllers\ArtisanPublicController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExperienceController;
+use App\Http\Controllers\ArtisanSpaceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\ProfileController;
@@ -25,6 +27,7 @@ Route::post('/artisans/{artisan_id}/reservations', [ReservationController::class
 
 Route::get('/savoir-faire', [SavoirFairePublicController::class, 'index'])->name('savoir-faire.index');
 Route::get('/savoir-faire/{slug}', [SavoirFairePublicController::class, 'show'])->name('savoir-faire.show');
+Route::get('/experiences', [ExperienceController::class, 'index'])->name('experiences.index');
 
 Route::get('/carte', [MapController::class, 'index'])->name('carte');
 
@@ -42,8 +45,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::middleware('role:artisan')->prefix('mon-atelier')->name('artisan-space.')->group(function () {
+        Route::get('/', [ArtisanSpaceController::class, 'index'])->name('index');
+        Route::patch('/reservations/{reservation}', [ArtisanSpaceController::class, 'updateReservation'])->name('reservations.update');
+    });
+
     // Admin Panel Routes
-    Route::prefix('admin')->name('admin.')->group(function () {
+    Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/reservations', [ReservationAdminController::class, 'index'])->name('reservations.index');
         Route::patch('/reservations/{reservation}/status', [ReservationAdminController::class, 'updateStatus'])->name('reservations.updateStatus');
 
