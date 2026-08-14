@@ -172,6 +172,18 @@ class DatabaseSeeder extends Seeder
                     'description' => $data['description'],
                 ]
             );
+
+            $experiences = [
+                'poterie-traditionnelle' => ['Initiation à la poterie traditionnelle', 'Façonnez un objet en argile aux côtés du maître artisan.', 120, 6, 12000, 'images/poterie_en_action.png'],
+                'vannerie-raffia' => ['Tresser les fibres de Porto-Novo', 'Apprenez les gestes essentiels du tressage de raphia.', 150, 8, 10000, 'images/artisans/yvette_gbaguidi.png'],
+                'sculpture-masques' => ['Découvrir la sculpture sur bois', 'Une visite commentée de l’atelier et de ses matières.', 90, 6, 8000, 'images/artisans/ayadji_houndagnon.png'],
+                'tissage-kanvo' => ['Tisser le Kanvo avec le maître', 'Découvrez le métier à tisser et créez votre première bande.', 120, 5, 15000, 'images/artisans/messan_akakpo.png'],
+            ];
+            $experience = $experiences[$data['savoir_faire']->slug] ?? ['Visite de l’atelier', 'Découvrez les gestes et l’histoire de ce savoir-faire avec l’artisan.', 90, 8, 8000, $data['image_path']];
+            \App\Models\Experience::firstOrCreate(
+                ['artisan_id' => $artisan->id, 'title' => $experience[0]],
+                ['summary' => $experience[1], 'duration_minutes' => $experience[2], 'capacity' => $experience[3], 'price' => $experience[4], 'image_path' => $experience[5]]
+            );
         }
     }
 }
