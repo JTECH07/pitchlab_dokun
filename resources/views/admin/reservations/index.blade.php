@@ -88,21 +88,21 @@
                         <form action="{{ route('admin.reservations.updateStatus', $res) }}" method="POST">
                             @csrf @method('PATCH')
                             <input type="hidden" name="status" value="accepted">
-                            <button class="px-3 py-1.5 bg-emerald-500 text-white text-xs font-bold rounded-lg hover:bg-emerald-600 transition-colors">✅ Accepter</button>
+                            <button class="px-3 py-1.5 bg-emerald-500 text-white text-xs font-bold rounded-lg hover:bg-emerald-600 transition-colors">Accepter</button>
                         </form>
                         @endif
                         @if($res->status !== 'rejected')
                         <form action="{{ route('admin.reservations.updateStatus', $res) }}" method="POST">
                             @csrf @method('PATCH')
                             <input type="hidden" name="status" value="rejected">
-                            <button class="px-3 py-1.5 bg-red-100 text-red-700 text-xs font-bold rounded-lg hover:bg-red-200 transition-colors">❌ Refuser</button>
+                            <button class="px-3 py-1.5 bg-red-100 text-red-700 text-xs font-bold rounded-lg hover:bg-red-200 transition-colors">Refuser</button>
                         </form>
                         @endif
                         @if($res->status === 'accepted')
                         <form action="{{ route('admin.reservations.updateStatus', $res) }}" method="POST">
                             @csrf @method('PATCH')
                             <input type="hidden" name="status" value="completed">
-                            <button class="px-3 py-1.5 bg-blue-100 text-blue-700 text-xs font-bold rounded-lg hover:bg-blue-200 transition-colors">🎉 Complétée</button>
+                            <button class="px-3 py-1.5 bg-blue-100 text-blue-700 text-xs font-bold rounded-lg hover:bg-blue-200 transition-colors">Complétée</button>
                         </form>
                         @endif
                     </div>
