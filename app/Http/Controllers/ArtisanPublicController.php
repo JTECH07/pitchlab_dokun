@@ -39,7 +39,7 @@ class ArtisanPublicController extends Controller
 
     public function show($id)
     {
-        $artisan = Artisan::with('savoirFaires')->findOrFail($id);
+        $artisan = Artisan::with(['savoirFaires', 'media', 'experiences' => fn ($query) => $query->where('is_published', true)])->findOrFail($id);
         return view('artisan', compact('artisan'));
     }
 }
