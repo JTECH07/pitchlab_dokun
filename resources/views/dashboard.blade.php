@@ -1,98 +1,15 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-bold text-xl text-slate-800 leading-tight">
-            {{ __('Tableau de Bord ƉƆKUN') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <!-- Welcome Banner -->
-            <div class="bg-gradient-to-r from-amber-500 to-orange-500 rounded-3xl p-8 text-white shadow-lg mb-8">
-                <h3 class="text-3xl font-black mb-2">Bonjour, {{ Auth::user()->name }} 👋</h3>
-                <p class="text-amber-100 font-medium">
-                    @if(Auth::user()->role === 'admin')
-                        Vous êtes sur l'interface d'administration de la plateforme ƉƆKUN.
-                    @else
-                        Bienvenue dans votre espace artisan. Gérez vos expériences et réservations ici.
-                    @endif
-                </p>
-            </div>
-
-            <!-- Stats Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex items-center gap-4">
-                    <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center text-blue-500">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-black text-slate-900">{{ $stats['artisans_count'] }}</div>
-                        <div class="text-sm font-bold text-slate-500">Artisans inscrits</div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex items-center gap-4">
-                    <div class="w-14 h-14 rounded-full bg-amber-50 flex items-center justify-center text-amber-500">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-black text-slate-900">{{ $stats['categories_count'] }}</div>
-                        <div class="text-sm font-bold text-slate-500">Catégories</div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex items-center gap-4">
-                    <div class="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-500">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-black text-slate-900">{{ $stats['reservations_count'] }}</div>
-                        <div class="text-sm font-bold text-slate-500">Réservations Totales</div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex items-center gap-4">
-                    <div class="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center text-red-500">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </div>
-                    <div>
-                        <div class="text-3xl font-black text-slate-900">{{ $stats['pending_reservations'] }}</div>
-                        <div class="text-sm font-bold text-slate-500">Demandes en attente</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Actions Pro -->
-            <div class="bg-white overflow-hidden shadow-sm rounded-2xl border border-slate-100">
-                <div class="p-8">
-                    <h4 class="text-xl font-bold text-slate-800 mb-6">Actions Rapides</h4>
-                    <div class="flex flex-wrap gap-4">
-                        @if(Auth::user()->role === 'admin')
-                            <a href="{{ route('admin.artisans.create') }}" class="px-6 py-3 bg-slate-900 text-white font-bold rounded-xl shadow-lg hover:bg-slate-800 transition-colors">
-                                + Ajouter un artisan
-                            </a>
-                            <a href="{{ route('admin.artisans.index') }}" class="px-6 py-3 bg-white text-slate-700 font-bold rounded-xl border border-slate-200 shadow-sm hover:bg-slate-50 transition-colors">
-                                Gérer les artisans
-                            </a>
-                            <a href="{{ route('admin.reservations.index') }}" class="px-6 py-3 bg-amber-500 text-white font-bold rounded-xl shadow-lg hover:bg-amber-600 transition-colors">
-                                Voir les réservations
-                                @if($stats['pending_reservations'] > 0)
-                                    <span class="ml-2 bg-white text-amber-600 text-xs font-black px-2 py-0.5 rounded-full">{{ $stats['pending_reservations'] }}</span>
-                                @endif
-                            </a>
-                        @else
-                            <button class="px-6 py-3 bg-amber-500 text-white font-bold rounded-xl shadow-lg hover:bg-amber-600 transition-colors">
-                                Mettre à jour mon profil
-                            </button>
-                            <button class="px-6 py-3 bg-white text-slate-700 font-bold rounded-xl border border-slate-200 shadow-sm hover:bg-slate-50 transition-colors">
-                                Gérer mes expériences
-                            </button>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
+    <x-slot name="header"><h1 class="font-serif text-3xl text-dokun-green">{{ $mode === 'admin' ? 'Pilotage ƉƆKUN' : 'Mon espace' }}</h1></x-slot>
+    @if($mode === 'visitor')
+    <div class="min-h-screen bg-dokun-ivory py-8"><div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section class="rounded-3xl bg-dokun-green text-white p-8 md:p-10"><p class="text-dokun-gold text-xs font-bold tracking-[.18em] uppercase">Votre carnet de voyage</p><h2 class="font-serif text-4xl mt-2">Bonjour, {{ Auth::user()->name }}</h2><p class="mt-3 text-white/75">Retrouvez vos réservations et continuez l’exploration de Porto-Novo.</p><a href="{{ route('experiences.index') }}" class="inline-block bg-dokun-gold rounded-xl px-5 py-3 mt-6 font-bold">Découvrir une expérience</a></section>
+        <section class="bg-white rounded-2xl border border-black/5 mt-8 overflow-hidden"><div class="p-6 border-b"><h2 class="font-serif text-2xl text-dokun-green">Mes réservations</h2></div><div class="divide-y">@forelse($reservations as $reservation)<article class="p-6 flex flex-wrap justify-between gap-4"><div><h3 class="font-bold">{{ $reservation->experience_type }}</h3><p class="text-sm text-dokun-charcoal/60 mt-1">{{ \Carbon\Carbon::parse($reservation->requested_date)->translatedFormat('l d F Y') }} · {{ $reservation->guests_count }} personne(s)</p><p class="text-xs mt-2 text-dokun-charcoal/50">Référence {{ $reservation->reference }}</p></div><span class="self-start rounded-full px-3 py-1 text-xs font-bold {{ $reservation->status === 'accepted' ? 'bg-emerald-100 text-emerald-800' : ($reservation->status === 'rejected' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-800') }}">{{ ['pending'=>'En attente','accepted'=>'Confirmée','rejected'=>'Refusée','completed'=>'Réalisée'][$reservation->status] }}</span></article>@empty<div class="p-12 text-center text-dokun-charcoal/60">Aucune réservation enregistrée. <a class="font-bold text-dokun-green underline" href="{{ route('experiences.index') }}">Explorer les expériences</a></div>@endforelse</div></section>
+    </div></div>
+    @else
+    <div class="min-h-screen bg-dokun-ivory py-8"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section class="rounded-3xl bg-dokun-green text-white p-8 md:p-10 relative overflow-hidden"><img src="{{ asset('images/hero/tourisme_porto_novo.png') }}" alt="" class="absolute inset-0 w-full h-full object-cover opacity-15"><div class="relative"><p class="text-dokun-gold text-xs font-bold tracking-[.18em] uppercase">Espace administration</p><h2 class="font-serif text-4xl mt-2">Bonjour, {{ Auth::user()->name }}</h2><p class="mt-3 text-white/75 max-w-2xl">Gardez une vue simple sur les savoir-faire, les détenteurs et les demandes de visite.</p></div></section>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 my-7">@foreach([['Artisans',$stats['artisans_count']],['Savoir-faire',$stats['categories_count']],['Réservations',$stats['reservations_count']],['À traiter',$stats['pending_reservations']]] as [$label,$value])<div class="bg-white rounded-2xl p-6 border border-black/5"><p class="text-sm font-semibold text-dokun-charcoal/55">{{ $label }}</p><p class="font-serif text-4xl text-dokun-green mt-2">{{ $value }}</p></div>@endforeach</div>
+        <section class="bg-white rounded-2xl p-7 border border-black/5"><h2 class="font-serif text-2xl text-dokun-green">Actions rapides</h2><div class="flex flex-wrap gap-3 mt-5"><a href="{{ route('admin.artisans.create') }}" class="bg-dokun-green text-white px-5 py-3 rounded-xl font-bold">Ajouter un artisan</a><a href="{{ route('admin.savoir-faires.index') }}" class="border border-dokun-green text-dokun-green px-5 py-3 rounded-xl font-bold">Gérer les contenus</a><a href="{{ route('admin.reservations.index') }}" class="bg-dokun-gold text-white px-5 py-3 rounded-xl font-bold">Voir les réservations</a></div></section>
+    </div></div>
+    @endif
 </x-app-layout>
