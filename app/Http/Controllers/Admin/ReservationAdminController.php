@@ -36,10 +36,10 @@ class ReservationAdminController extends Controller
         $reservation->update(['status' => $request->status]);
 
         $labels = [
-            'accepted'  => 'acceptée ✅',
-            'rejected'  => 'refusée ❌',
-            'completed' => 'complétée 🎉',
-            'pending'   => 'mise en attente 🕐',
+            'accepted'  => 'acceptée',
+            'rejected'  => 'refusée',
+            'completed' => 'complétée',
+            'pending'   => 'mise en attente',
         ];
 
         return back()->with('success', "Demande de {$reservation->visitor_name} " . ($labels[$request->status] ?? ''));
