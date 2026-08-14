@@ -4,78 +4,57 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Savoir-Faire Traditionnels — ƉƆKUN Porto-Novo</title>
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=outfit:300,400,600,700,900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=dm-serif-display:400|manrope:400,600,700,800&display=swap" rel="stylesheet"/>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { font-family: 'Outfit', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-    </style>
+    <script>tailwind.config={theme:{extend:{colors:{dokun:{green:'#064E3B',gold:'#C99424',ivory:'#F8F6F0',charcoal:'#17201D'}},fontFamily:{sans:['Manrope','sans-serif'],serif:['"DM Serif Display"','serif']}}}}</script>
+    <style>body{font-family:'Manrope',sans-serif;}h1,h2,h3,.serif{font-family:'DM Serif Display',serif;}</style>
 </head>
-<body class="antialiased bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+<body class="antialiased bg-[#F8F6F0] text-[#17201D] min-h-screen flex flex-col">
 
-    <!-- Navbar -->
-    <nav class="fixed w-full z-50 glass bg-white/80 border-b border-slate-200/50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <a href="{{ route('home') }}" class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-amber-500/30">Ɖ</div>
-                    <span class="font-black text-2xl tracking-tighter text-slate-900">ƆKUN</span>
-                </a>
-                <div class="hidden md:flex space-x-8 items-center font-semibold">
-                    <a href="{{ route('savoir-faire.index') }}" class="text-amber-600 font-bold border-b-2 border-amber-500 pb-1">Savoir-faire</a>
-                    <a href="{{ route('artisans.index') }}" class="text-slate-600 hover:text-amber-500 transition-colors">Artisans</a>
-                    <a href="{{ route('carte') }}" class="text-slate-600 hover:text-amber-500 transition-colors">Carte Interactive</a>
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="px-5 py-2.5 bg-slate-900 text-white rounded-full hover:bg-slate-800 transition shadow-lg shadow-slate-900/20">Mon Espace</a>
-                    @else
-                        <a href="{{ route('login') }}" class="px-5 py-2.5 bg-amber-500 text-white rounded-full hover:bg-amber-600 transition shadow-lg shadow-amber-500/30">Connexion Pro</a>
-                    @endauth
-                </div>
-            </div>
+    @include('partials.navbar', ['active' => 'savoir-faire'])
+
+    <!-- Hero -->
+    <section class="pt-36 pb-24 bg-[#17201D] text-white relative overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="{{ asset('images/reel_marche_arts.png') }}" class="w-full h-full object-cover opacity-30" alt="Arts béninois" onerror="">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#064E3B] via-[#17201D]/80 to-transparent"></div>
         </div>
-    </nav>
-
-    <!-- Header Banner -->
-    <section class="pt-32 pb-16 bg-slate-900 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span class="inline-block py-1 px-3.5 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xs uppercase tracking-wider mb-4 border border-amber-500/30">
-                Patrimoine Immmatériel
-            </span>
-            <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-4">
-                Les Savoir-Faire d'Exception de <span class="text-amber-400">Porto-Novo</span>
-            </h1>
-            <p class="text-slate-300 max-w-2xl mx-auto text-lg font-light">
-                Explorez la richesse des techniques artisanales transmises de génération en génération.
-            </p>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="inline-block py-1.5 px-4 rounded-full bg-[#C99424]/20 text-[#C99424] font-bold text-xs tracking-[0.2em] uppercase mb-5 border border-[#C99424]/30">Patrimoine Immatériel</span>
+            <h1 class="serif text-5xl md:text-6xl mb-5">Les Savoir-Faire de <span class="text-[#C99424]">Porto-Novo</span></h1>
+            <p class="text-white/70 max-w-2xl mx-auto text-lg font-light">Explorez la richesse des techniques artisanales transmises de génération en génération.</p>
         </div>
     </section>
 
-    <!-- Categories & Savoir-Faire Grid -->
-    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full space-y-16">
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full space-y-20">
         @foreach($categories as $cat)
-        <div class="space-y-6">
-            <div class="border-b border-slate-200 pb-4 flex items-end justify-between">
+        <div>
+            <div class="flex items-end justify-between mb-8 pb-5 border-b border-gray-200">
                 <div>
-                    <h2 class="text-3xl font-black text-slate-900">{{ $cat->name }}</h2>
-                    <p class="text-slate-500 text-sm mt-1">{{ $cat->description }}</p>
+                    <h2 class="serif text-3xl md:text-4xl text-[#064E3B]">{{ $cat->name }}</h2>
+                    <p class="text-[#17201D]/60 mt-2 text-sm">{{ $cat->description }}</p>
                 </div>
-                <span class="px-3 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full">
+                <span class="shrink-0 px-3 py-1.5 bg-[#064E3B]/10 text-[#064E3B] text-xs font-bold rounded-full">
                     {{ $cat->savoirFaires->count() }} métier(s)
                 </span>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
                 @foreach($cat->savoirFaires as $sf)
-                <a href="{{ route('savoir-faire.show', $sf->slug) }}" class="group bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 hover:border-amber-400 hover:shadow-xl hover:-translate-y-1 transition-all">
-                    <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center text-amber-600 mb-4 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white transition-all">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                <a href="{{ route('savoir-faire.show', $sf->slug) }}" class="group bg-white rounded-2xl p-7 shadow-sm border border-gray-100 hover:border-[#C99424]/40 hover:shadow-xl hover:-translate-y-1 transition-all">
+                    @if($sf->image_url)
+                    <div class="h-40 rounded-xl overflow-hidden mb-5">
+                        <img src="{{ $sf->image_url }}" alt="{{ $sf->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 group-hover:text-amber-600 transition-colors mb-2">{{ $sf->name }}</h3>
-                    <p class="text-slate-600 text-sm line-clamp-2 leading-relaxed mb-4">{{ $sf->description }}</p>
-                    <div class="flex items-center justify-between pt-4 border-t border-slate-100 text-xs font-bold text-slate-500">
-                        <span>{{ $sf->artisans->count() }} artisan(s) praticien(s)</span>
-                        <span class="text-amber-500 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">Voir les artisans →</span>
+                    @else
+                    <div class="w-14 h-14 bg-[#F8F6F0] rounded-full flex items-center justify-center text-[#064E3B] mb-5 group-hover:bg-[#064E3B] group-hover:text-white transition-all shadow-sm">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                    </div>
+                    @endif
+                    <h3 class="serif text-xl text-[#17201D] group-hover:text-[#064E3B] transition-colors mb-3">{{ $sf->name }}</h3>
+                    <p class="text-[#17201D]/60 text-sm line-clamp-2 leading-relaxed mb-5">{{ $sf->description }}</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-gray-100 text-xs font-bold">
+                        <span class="text-[#17201D]/50">{{ $sf->artisans->count() }} praticien(s)</span>
+                        <span class="text-[#C99424] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">Voir →</span>
                     </div>
                 </a>
                 @endforeach
@@ -84,16 +63,6 @@
         @endforeach
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-300 py-12 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center text-white font-bold text-sm">Ɖ</div>
-                <span class="font-black tracking-tighter text-white">ƆKUN</span>
-            </div>
-            <p class="text-sm">© 2026 Projet PitchLab - Porto-Novo, Bénin.</p>
-        </div>
-    </footer>
-
+    @include('partials.footer')
 </body>
 </html>
