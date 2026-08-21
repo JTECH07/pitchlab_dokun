@@ -88,7 +88,8 @@
                         </button>
                         <div x-show="open" x-transition.opacity x-cloak
                              class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 z-50 overflow-hidden">
-                            <a href="{{ route('dashboard') }}" class="block px-4 py-3 text-sm text-dokun-charcoal hover:bg-dokun-ivory hover:text-dokun-green rounded-t-xl font-semibold">{{ __('app.admin_dashboard') }}</a>
+                            <a href="{{ route('visitor.profile') }}" class="block px-4 py-3 text-sm text-dokun-charcoal hover:bg-dokun-ivory hover:text-dokun-green font-semibold">🧭 {{ __('app.nav_my_trip') }}</a>
+                            <a href="{{ route('dashboard') }}" class="block px-4 py-3 text-sm text-dokun-charcoal hover:bg-dokun-ivory hover:text-dokun-green font-semibold">{{ __('app.admin_dashboard') }}</a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit" class="block w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 rounded-b-xl font-semibold">
