@@ -174,5 +174,6 @@ return array (
   'learn_flip_hint' => 'Flip the cards to learn —',
   'learn_start_quiz' => 'Start the quiz',
   'learn_back_course' => 'Back to course',
+  'nav_my_trip' => 'My trip',
 );
 

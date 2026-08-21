@@ -174,5 +174,6 @@ return array (
   'learn_flip_hint' => 'Retourne les cartes pour apprendre —',
   'learn_start_quiz' => 'Lancer le quiz',
   'learn_back_course' => 'Retour au cours',
+  'nav_my_trip' => 'Mon voyage',
 );
 
