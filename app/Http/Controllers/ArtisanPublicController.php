@@ -34,7 +34,11 @@ class ArtisanPublicController extends Controller
         $savoirFaires = SavoirFaire::orderBy('name')->get();
         $categories = Category::with('savoirFaires')->get();
 
-        return view('artisans.index', compact('artisans', 'savoirFaires', 'categories'));
+        $favoriteIds = auth()->check()
+            ? \App\Models\ArtisanFavorite::where('user_id', auth()->id())->pluck('artisan_id')->all()
+            : [];
+
+        return view('artisans.index', compact('artisans', 'savoirFaires', 'categories', 'favoriteIds'));
     }
 
     public function show($id)
