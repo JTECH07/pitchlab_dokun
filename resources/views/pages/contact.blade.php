@@ -11,22 +11,21 @@
         body { font-family: 'Manrope', sans-serif; }
         h1, h2, h3, .serif { font-family: 'DM Serif Display', serif; }
         .wax-pattern{background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C99424' stroke-opacity='0.25'%3E%3Ccircle cx='30' cy='30' r='12'/%3E%3Ccircle cx='0' cy='0' r='8'/%3E%3Ccircle cx='60' cy='0' r='8'/%3E%3Ccircle cx='0' cy='60' r='8'/%3E%3Ccircle cx='60' cy='60' r='8'/%3E%3Cpath d='M30 18l10 12-10 12-10-12z'/%3E%3C/g%3E%3C/svg%3E");}
-        .kente-stripe{background:repeating-linear-gradient(90deg,#064E3B 0 24px,#C99424 24px 32px,#17201D 32px 40px,#C99424 40px 48px);}
         @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
         .fade-up{animation:fadeUp .7s ease both}
     </style>
 </head>
 <body class="antialiased bg-dokun-ivory text-dokun-charcoal">
-<div class="kente-stripe h-2 w-full"></div>
 @include('partials.navbar', ['active' => ''])
 
 <main class="pt-28">
 
     {{-- ══════════ HERO ══════════ --}}
     <section class="relative overflow-hidden">
+        <img src="{{ asset('images/dokun_bg2.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-10" alt="" loading="lazy">
         <div class="absolute inset-0 wax-pattern opacity-50"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-dokun-ivory"></div>
-        <div class="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 text-center">
+        <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 text-center">
             <span class="fade-up inline-block mb-5 px-5 py-2 rounded-full border border-dokun-gold/40 bg-dokun-gold/10 text-dokun-gold text-xs font-bold uppercase tracking-[0.2em]">Parlons ensemble</span>
             <h1 class="fade-up text-4xl md:text-5xl text-dokun-green" style="animation-delay:.15s">Contactez ƉƆKUN</h1>
             <p class="fade-up mt-4 text-gray-600 text-lg max-w-xl mx-auto" style="animation-delay:.3s">
@@ -41,7 +40,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
 
                 {{-- Colonne gauche : infos --}}
-                <div class="space-y-5">
+                <div class="space-y-5 fade-up">
                     <div class="fade-up bg-white rounded-2xl p-6 shadow-sm flex items-start gap-4">
                         <div class="w-11 h-11 rounded-full bg-dokun-green flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5 text-dokun-gold" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -143,8 +142,9 @@
     <section class="pb-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <a href="{{ route('carte') }}" class="group relative block overflow-hidden rounded-2xl bg-dokun-charcoal text-white fade-up">
+                <img src="{{ asset('images/dokun_carte.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-25" alt="" loading="lazy">
                 <div class="absolute inset-0 wax-pattern opacity-30 group-hover:opacity-50 transition-opacity"></div>
-                <div class="relative flex flex-col md:flex-row items-center justify-between gap-6 px-8 py-10 md:px-14">
+                <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 px-8 py-10 md:px-14">
                     <div>
                         <span class="text-dokun-gold text-xs font-bold uppercase tracking-[0.2em]">Carte interactive</span>
                         <h2 class="mt-2 text-2xl md:text-3xl">Retrouvez nos artisans à Porto-Novo</h2>
@@ -161,7 +161,6 @@
 
 </main>
 
-<div class="kente-stripe h-2 w-full"></div>
 @include('partials.footer')
 </body>
 </html>
