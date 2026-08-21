@@ -35,6 +35,12 @@ class LearnController extends Controller
     {
         abort_unless($lesson->course_id === $course->id, 404);
 
+        // Verrou serveur : première leçon ou précédente terminée
+        $completed = $this->userCompletedLessonIds();
+        $lessons = $course->lessons()->orderBy('sort_order')->get();
+        $index = $lessons->search(fn ($l) => $l->id === $lesson->id);
+        abort_if($index > 0 && !isset($completed[$lessons[$index - 1]->id]), 403);
+
         $words = $lesson->words;
         $isEn = app()->getLocale() === 'en';
         $progress = Auth::check()
