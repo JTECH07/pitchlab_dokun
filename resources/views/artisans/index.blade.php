@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Catalogue des Artisans — ƉƆKUN Porto-Novo</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -111,6 +112,13 @@
                     <div class="absolute top-4 left-4 bg-white/95 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-bold text-dokun-green flex items-center gap-1">
                         {{ $artisan->address }}
                     </div>
+                    @auth
+                    <button type="button" onclick="toggleFavorite(event, {{ $artisan->id }}, this)"
+                        data-fav="{{ in_array($artisan->id, $favoriteIds ?? []) ? '1' : '0' }}"
+                        class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/95 backdrop-blur flex items-center justify-center shadow hover:scale-110 transition z-10">
+                        <svg class="w-5 h-5 transition {{ in_array($artisan->id, $favoriteIds ?? []) ? 'text-red-500 fill-current' : 'text-dokun-charcoal/40' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                    @endauth
                 </div>
                 <div class="p-8 relative flex-1 flex flex-col">
                     <div class="absolute -top-12 right-8 w-16 h-16 rounded-xl bg-dokun-green p-1 shadow-lg border-2 border-white">
@@ -145,6 +153,26 @@
     </main>
 
     @include('partials.footer')
+
+    <script>
+    async function toggleFavorite(event, artisanId, btn) {
+        event.preventDefault();
+        event.stopPropagation();
+        try {
+            const res = await fetch(`/favoris/${artisanId}`, {
+                method: 'POST',
+                headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content, 'Accept': 'application/json' },
+            });
+            const data = await res.json();
+            if (data.status === 'guest') { window.location.href = '/login'; return; }
+            const svg = btn.querySelector('svg');
+            const isFav = data.status === 'added';
+            svg.classList.toggle('text-red-500', isFav);
+            svg.classList.toggle('fill-current', isFav);
+            svg.classList.toggle('text-dokun-charcoal/40', !isFav);
+        } catch (e) {}
+    }
+    </script>
 
 </body>
 </html>
