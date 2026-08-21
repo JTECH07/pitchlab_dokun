@@ -15,6 +15,7 @@ use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LearnController;
 use App\Http\Controllers\MapController;
+use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
@@ -57,6 +58,12 @@ Route::get('/learn',                          [LearnController::class, 'index'])
 Route::get('/learn/{course}',                 [LearnController::class, 'course'])->name('learn.course');
 Route::get('/learn/{course}/{lesson}',        [LearnController::class, 'play'])->name('learn.play');
 Route::post('/learn/{lesson}/complete',       [LearnController::class, 'complete'])->name('learn.complete');
+
+// ─── Espace visiteur / touriste ──────────────────────────────
+Route::middleware('auth')->group(function () {
+    Route::get('/mon-voyage', [VisitorController::class, 'profile'])->name('visitor.profile');
+    Route::post('/favoris/{artisan}', [VisitorController::class, 'toggleFavorite'])->name('visitor.favorites.toggle');
+});
 
 Route::get('/a-propos', function () {
     return view('pages.about');
