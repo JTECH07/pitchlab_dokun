@@ -150,4 +150,52 @@ class ArtisanAdminController extends Controller
         return redirect()->route('admin.artisans.index')
             ->with('success', "Artisan {$name} supprimé avec succès.");
     }
+
+    public function approveProfile(Artisan $artisan)
+    {
+        if ($artisan->pending_profile_data) {
+            $pending = $artisan->pending_profile_data;
+            $updates = [
+                'first_name'        => $pending['first_name'] ?? $artisan->first_name,
+                'last_name'         => $pending['last_name'] ?? $artisan->last_name,
+                'professional_name' => $pending['professional_name'] ?? $artisan->professional_name,
+                'phone'             => $pending['phone'] ?? $artisan->phone,
+                'whatsapp'          => $pending['whatsapp'] ?? $artisan->whatsapp,
+                'description'       => $pending['description'] ?? $artisan->description,
+                'history'           => $pending['history'] ?? $artisan->history,
+                'experience_years'  => $pending['experience_years'] ?? $artisan->experience_years,
+                'address'           => $pending['address'] ?? $artisan->address,
+                'latitude'          => $pending['latitude'] ?? $artisan->latitude,
+                'longitude'         => $pending['longitude'] ?? $artisan->longitude,
+                'status'            => 'published',
+                'pending_profile_data' => null,
+            ];
+
+            if ($artisan->pending_photo_path) {
+                $updates['photo_path'] = $artisan->pending_photo_path;
+                $updates['pending_photo_path'] = null;
+            }
+
+            $artisan->update($updates);
+
+            if (isset($pending['savoir_faires'])) {
+                $artisan->savoirFaires()->sync($pending['savoir_faires']);
+            }
+        } else {
+            $artisan->update(['status' => 'published']);
+        }
+
+        return back()->with('success', "Profil de {$artisan->first_name} {$artisan->last_name} approuvé et publié.");
+    }
+
+    public function rejectProfile(Artisan $artisan)
+    {
+        $artisan->update([
+            'status' => 'published',
+            'pending_profile_data' => null,
+            'pending_photo_path' => null,
+        ]);
+
+        return back()->with('success', "Modifications de {$artisan->first_name} {$artisan->last_name} rejetées.");
+    }
 }

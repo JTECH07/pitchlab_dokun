@@ -1,4 +1,5 @@
 {{-- Shared Footer Partial --}}
+<div class="kente-stripe h-2 w-full"></div>
 <footer class="bg-dokun-charcoal text-white">
     <!-- Main Footer -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10 grid grid-cols-1 md:grid-cols-4 gap-10">
@@ -6,14 +7,14 @@
         <div class="md:col-span-2">
             <div class="flex items-center gap-3 mb-5">
                 <div class="w-12 h-12 bg-dokun-green rounded flex items-center justify-center shrink-0 overflow-hidden"><img src="{{ asset('images/dokun_logo.png') }}" alt="Logo ƉƆKUN" class="w-full h-full object-contain"></div>
-                <div>
-                    <span class="font-serif text-2xl tracking-wide block">ƉƆKUN</span>
-                    <span class="text-[10px] tracking-[0.15em] text-white/50 uppercase">Patrimoine Vivant & Tourisme Culturel</span>
+                <div class="flex flex-col leading-tight">
+                    <span class="serif text-3xl">ƉƆKUN</span>
+                    <span class="text-[9.5px] tracking-[0.15em] opacity-70 uppercase font-semibold">Patrimoine Vivant &<br>Tourisme Culturel</span>
                 </div>
             </div>
             <p class="text-white/60 max-w-sm leading-relaxed text-sm mb-6">
                 Le patrimoine vivant, une richesse partagée.<br>
-                <em class="text-dokun-gold/80">Transmettre · Valoriser · Connecter.</em>
+                <b class="text-dokun-gold/80">Transmettre · Valoriser · Connecter.</b>
             </p>
             <div class="flex gap-3">
                 <span class="text-xs px-3 py-1.5 rounded-full bg-white/10 text-white/60">Porto-Novo, Bénin</span>
@@ -29,6 +30,8 @@
                 <li><a href="{{ route('artisans.index') }}" class="hover:text-white hover:pl-1 transition-all">Artisans</a></li>
                 <li><a href="{{ route('carte') }}" class="hover:text-white hover:pl-1 transition-all">Carte interactive</a></li>
                 <li><a href="{{ route('experiences.index') }}" class="hover:text-white hover:pl-1 transition-all">Expériences</a></li>
+                <li><a href="{{ route('about') }}" class="hover:text-white hover:pl-1 transition-all">{{ __('app.nav_about') }}</a></li>
+                <li><a href="{{ route('contact') }}" class="hover:text-white hover:pl-1 transition-all">{{ __('app.nav_contact') }}</a></li>
             </ul>
         </div>
 

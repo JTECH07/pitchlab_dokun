@@ -35,4 +35,21 @@ return [
         ],
     ],
 
+    'kkiapay' => [
+        'public_key'  => env('KKIAPAY_PUBLIC_KEY', ''),
+        'private_key' => env('KKIAPAY_PRIVATE_KEY', ''),
+        'secret'      => env('KKIAPAY_SECRET', ''),
+        'sandbox'     => env('KKIAPAY_SANDBOX', true),
+    ],
+
+    'fedapay' => [
+        'public_key'  => env('FEDAPAY_PUBLIC_KEY', ''),
+        'secret_key'  => env('FEDAPAY_SECRET_KEY', ''),
+        'environment' => env('FEDAPAY_ENV', 'sandbox'), // 'sandbox' ou 'live'
+    ],
+
+    'gemini' => [
+        'api_key' => env('GEMINI_API_KEY', ''),
+    ],
+
 ];

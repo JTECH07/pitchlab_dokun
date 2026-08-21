@@ -10,7 +10,8 @@ class HomeController extends Controller
     {
         $categories = \App\Models\Category::all();
         $artisans = \App\Models\Artisan::with('savoirFaires')->where('status', 'published')->take(3)->get();
-        
-        return view('welcome', compact('categories', 'artisans'));
+        $quartiers = \App\Http\Controllers\MapController::quartiersWithArtisans();
+
+        return view('welcome', compact('categories', 'artisans', 'quartiers'));
     }
 }

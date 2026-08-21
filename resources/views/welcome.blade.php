@@ -8,15 +8,41 @@
     <link href="https://fonts.bunny.net/css?family=dm-serif-display:400|manrope:400,600,700,800&display=swap" rel="stylesheet"/>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config={theme:{extend:{colors:{dokun:{green:'#064E3B',gold:'#C99424',ivory:'#F8F6F0',charcoal:'#17201D'}},fontFamily:{sans:['Manrope','sans-serif'],serif:['"DM Serif Display"','serif']}}}}</script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         body{font-family:'Manrope',sans-serif;}
         h1,h2,.serif{font-family:'DM Serif Display',serif;}
         .slide{transition:opacity 1s ease;}
         .slider-content{opacity:0;transform:translateY(20px);transition:all .8s ease .3s;}
         .slide.active .slider-content{opacity:1;transform:translateY(0);}
+        .kente-stripe{background:repeating-linear-gradient(90deg,#064E3B 0 24px,#C99424 24px 32px,#17201D 32px 40px,#C99424 40px 48px);}
+        .wax-pattern{background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C99424' stroke-opacity='0.25'%3E%3Ccircle cx='30' cy='30' r='12'/%3E%3Ccircle cx='0' cy='0' r='8'/%3E%3Ccircle cx='60' cy='0' r='8'/%3E%3Ccircle cx='0' cy='60' r='8'/%3E%3Ccircle cx='60' cy='60' r='8'/%3E%3Cpath d='M30 18l10 12-10 12-10-12z'/%3E%3C/g%3E%3C/svg%3E");}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+        .fade-up{animation:fadeUp .7s ease both;}
+
+        /* Home map card styles */
+        #home-map .leaflet-control-zoom { border: none !important; box-shadow: 0 2px 10px rgba(0,0,0,0.15) !important; border-radius: 10px !important; overflow: hidden; }
+        #home-map .leaflet-control-zoom a { background: #1a1a1a !important; color: #ffffff !important; width: 32px !important; height: 32px !important; line-height: 32px !important; font-size: 16px !important; font-weight: 700 !important; border: none !important; }
+        #home-map .leaflet-control-zoom a:hover { background: #333 !important; }
+        #home-map .leaflet-control-zoom a:first-child { border-radius: 10px 10px 0 0 !important; }
+        #home-map .leaflet-control-zoom a:last-child { border-radius: 0 0 10px 10px !important; }
+        #home-map .leaflet-control-attribution { display: none !important; }
+
+        .drop-marker {
+            width: 28px; height: 36px;
+            position: relative;
+        }
+        .drop-marker svg { width: 100%; height: 100%; }
+        .drop-marker .drop-shadow {
+            position: absolute; bottom: -3px; left: 50%; transform: translateX(-50%);
+            width: 14px; height: 6px; background: rgba(0,0,0,0.25); border-radius: 50%;
+            filter: blur(2px);
+        }
     </style>
 </head>
 <body class="antialiased bg-[#F8F6F0] text-[#17201D]">
+<div class="kente-stripe h-2 w-full fixed top-0 left-0 z-[60]"></div>
 
 <!-- NAVBAR -->
 <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 bg-transparent border-b border-white/10 text-white">
@@ -32,14 +58,14 @@
                 </div>
             </a>
             <div class="hidden md:flex items-center gap-7 font-semibold text-sm">
-                <a href="#savoir-faire" class="hover:text-[#C99424] transition-colors">Savoir-faire</a>
-                <a href="#artisans" class="hover:text-[#C99424] transition-colors">Artisans</a>
-                <a href="{{ route('carte') }}" class="hover:text-[#C99424] transition-colors">Carte</a>
-                <a href="{{ route('savoir-faire.index') }}" class="hover:text-[#C99424] transition-colors">Expériences</a>
+                <a href="{{ route('savoir-faire.index') }}" class="hover:text-[#C99424] transition-colors">Savoir-faire</a>
+                <a href="{{ route('artisans.index') }}" class="hover:text-[#C99424] transition-colors">{{ __('app.nav_artisans') }}</a>
+                <a href="{{ route('carte') }}" class="hover:text-[#C99424] transition-colors">{{ __('app.nav_map') }}</a>
+                <a href="{{ route('experiences.index') }}" class="hover:text-[#C99424] transition-colors">{{ __('app.nav_experiences') }}</a>
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="px-5 py-2.5 bg-[#064E3B] text-white rounded-full hover:bg-[#064E3B]/90 transition shadow-lg text-sm">Mon Espace</a>
+                    <a href="{{ url('/dashboard') }}" class="px-5 py-2.5 bg-[#064E3B] text-white rounded-full hover:bg-[#064E3B]/90 transition shadow-lg text-sm">{{ __('app.nav_my_space') }}</a>
                 @else
-                    <a href="{{ route('login') }}" class="px-5 py-2.5 bg-[#C99424] text-white rounded-full hover:bg-yellow-600 transition shadow-lg text-sm">Connexion</a>
+                    <a href="{{ route('login') }}" class="px-5 py-2.5 bg-[#C99424] text-white rounded-full hover:bg-yellow-600 transition shadow-lg text-sm">{{ __('app.nav_login') }}</a>
                 @endauth
             </div>
             <button id="menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white/20 transition">
@@ -49,15 +75,15 @@
     </div>
     <div id="mobile-menu" class="hidden md:hidden bg-white text-[#17201D] border-t border-gray-100 shadow-xl">
         <div class="p-5 space-y-2">
-            <a href="#savoir-faire" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-[#F8F6F0] font-semibold">Savoir-faire</a>
-            <a href="#artisans" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-[#F8F6F0] font-semibold">Artisans</a>
-            <a href="{{ route('carte') }}" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-[#F8F6F0] font-semibold">Carte interactive</a>
-            <a href="{{ route('experiences.index') }}" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-[#F8F6F0] font-semibold">Expériences</a>
+            <a href="#savoir-faire" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-[#F8F6F0] font-semibold">{{ __('app.nav_artisans') }}</a>
+            <a href="#artisans" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-[#F8F6F0] font-semibold">{{ __('app.nav_artisans') }}</a>
+            <a href="{{ route('carte') }}" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-[#F8F6F0] font-semibold">{{ __('app.nav_map') }}</a>
+            <a href="{{ route('experiences.index') }}" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-[#F8F6F0] font-semibold">{{ __('app.nav_experiences') }}</a>
             <div class="pt-3 border-t border-gray-100">
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="block w-full text-center py-4 bg-[#064E3B] text-white font-bold rounded-xl">Mon Espace</a>
+                    <a href="{{ url('/dashboard') }}" class="block w-full text-center py-4 bg-[#064E3B] text-white font-bold rounded-xl">{{ __('app.nav_my_space') }}</a>
                 @else
-                    <a href="{{ route('login') }}" class="block w-full text-center py-4 bg-[#C99424] text-white font-bold rounded-xl">Se connecter</a>
+                    <a href="{{ route('login') }}" class="block w-full text-center py-4 bg-[#C99424] text-white font-bold rounded-xl">{{ __('app.nav_login') }}</a>
                 @endauth
             </div>
         </div>
@@ -265,23 +291,81 @@
     </div>
 </section>
 
+<!-- CARTE INTÉGRÉE -->
+<section class="py-20 bg-[#17201D] wax-pattern relative">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-10">
+            <h2 class="serif text-3xl md:text-4xl text-white mb-3">{{ __('app.home_map_title') }}</h2>
+            <p class="text-white/60 text-base max-w-xl mx-auto">{{ __('app.home_map_desc') }}</p>
+        </div>
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden" style="height: 420px;">
+            <div id="home-map" style="height: 100%; width: 100%;"></div>
+        </div>
+        <div class="text-center mt-6">
+            <a href="{{ route('carte') }}" class="inline-flex items-center gap-2 px-7 py-3 bg-[#C99424] text-white font-bold rounded-full hover:bg-[#b3831f] transition shadow-lg text-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                {{ __('app.home_cta_map') }}
+            </a>
+        </div>
+    </div>
+</section>
+
 <!-- CTA FINAL -->
 <section class="py-24 bg-white text-center relative overflow-hidden">
     <div class="absolute inset-0 opacity-5">
         <img src="{{ asset('images/reel_marche_arts.png') }}" class="w-full h-full object-cover" alt="background" onerror="">
     </div>
     <div class="relative z-10 max-w-3xl mx-auto px-4">
-        <h2 class="serif text-4xl md:text-5xl text-[#064E3B] mb-6">Prêt à découvrir Porto-Novo autrement ?</h2>
-        <p class="text-[#17201D]/70 text-lg mb-10">Explorez la carte interactive, trouvez un artisan près de vous et vivez une expérience culturelle unique.</p>
+        <h2 class="serif text-4xl md:text-5xl text-[#064E3B] mb-6">{{ __('app.home_final_title') }}</h2>
+        <p class="text-[#17201D]/70 text-lg mb-10">{{ __('app.home_final_desc') }}</p>
         <div class="flex flex-col sm:flex-row justify-center gap-5">
-            <a href="{{ route('carte') }}" class="px-8 py-4 bg-[#064E3B] text-white font-bold rounded-full hover:bg-[#064E3B]/90 shadow-xl transition-all text-lg">Explorer la carte</a>
-            <a href="{{ route('artisans.index') }}" class="px-8 py-4 border-2 border-[#064E3B] text-[#064E3B] font-bold rounded-full hover:bg-[#064E3B] hover:text-white transition-all text-lg">Voir les artisans</a>
+            <a href="{{ route('carte') }}" class="px-8 py-4 bg-[#064E3B] text-white font-bold rounded-full hover:bg-[#064E3B]/90 shadow-xl transition-all text-lg">{{ __('app.home_final_map') }}</a>
+            <a href="{{ route('artisans.index') }}" class="px-8 py-4 border-2 border-[#064E3B] text-[#064E3B] font-bold rounded-full hover:bg-[#064E3B] hover:text-white transition-all text-lg">{{ __('app.home_final_artisans') }}</a>
         </div>
     </div>
 </section>
 
 <!-- FOOTER -->
 @include('partials.footer')
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    const homeMap = L.map('home-map', { zoomControl: true, scrollWheelZoom: false }).setView([6.4969, 2.6289], 13);
+    L.control.zoom({ position: 'topleft' }).addTo(homeMap);
+
+    // OSM standard tiles (gris clair ville, vert végétation, bleu lagune, routes orange/jaune)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap',
+        maxZoom: 19
+    }).addTo(homeMap);
+
+    // Marqueurs goutte bleu roi
+    const dropIcon = L.divIcon({
+        className: 'drop-marker',
+        html: `<svg viewBox="0 0 28 36" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14 0C6.3 0 0 6.3 0 14c0 10.5 14 22 14 22s14-11.5 14-22C28 6.3 21.7 0 14 0z" fill="#2563EB"/>
+            <circle cx="14" cy="13.5" r="5.5" fill="#ffffff"/>
+        </svg><div class="drop-shadow"></div>`,
+        iconSize: [28, 36],
+        iconAnchor: [14, 34],
+        popupAnchor: [0, -30]
+    });
+
+    const quartiers = @json($quartiers ?? []);
+    const artisans = @json($artisans ?? []);
+
+    (quartiers.length ? quartiers : [{ name: 'Porto-Novo', lat: 6.4969, lng: 2.6289 }]).forEach(q => {
+        const m = L.marker([q.lat, q.lng], { icon: dropIcon }).addTo(homeMap);
+        m.bindPopup(`<strong style="font-family:'Manrope'">${q.name}</strong>`);
+    });
+
+    artisans.forEach(a => {
+        if (!a.latitude || !a.longitude) return;
+        L.marker([a.latitude, a.longitude], { icon: dropIcon }).addTo(homeMap)
+            .bindPopup(`<strong style="font-family:'Manrope'">${a.professional_name || (a.first_name + ' ' + a.last_name)}</strong><br><a href="/artisans/${a.id}" style="color:#2563EB;font-size:12px;">Voir la fiche</a>`);
+    });
+</script>
 
 </body>
 </html>

@@ -69,17 +69,18 @@
             <h3 class="font-bold text-lg text-slate-900 mb-5 pb-3 border-b border-slate-100">Localisation & Statut</h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="sm:col-span-3">
-                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Adresse</label>
-                    <input type="text" name="address" value="{{ old('address', $artisan->address) }}" placeholder="Quartier, Porto-Novo" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none bg-slate-50">
+                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Quartier / Adresse (Porto-Novo) *</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="address_input" name="address" value="{{ old('address', $artisan->address) }}" placeholder="Ex: Ouando, Porto-Novo" class="flex-1 w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none bg-slate-50">
+                        <button type="button" id="geocode_btn" class="px-4 py-2.5 bg-dokun-gold text-white font-bold rounded-xl hover:bg-yellow-600 transition-colors">
+                            Localiser
+                        </button>
+                    </div>
+                    <p id="geocode_status" class="text-xs text-slate-500 mt-2">Cliquez sur Localiser pour mettre à jour la position sur la carte.</p>
                 </div>
-                <div class="sm:col-span-1">
-                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Latitude</label>
-                    <input type="number" step="any" name="latitude" value="{{ old('latitude', $artisan->latitude) }}" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none bg-slate-50">
-                </div>
-                <div class="sm:col-span-1">
-                    <label class="block text-sm font-bold text-slate-700 mb-1.5">Longitude</label>
-                    <input type="number" step="any" name="longitude" value="{{ old('longitude', $artisan->longitude) }}" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none bg-slate-50">
-                </div>
+                <!-- Hidden coordinates -->
+                <input type="hidden" id="latitude_input" name="latitude" value="{{ old('latitude', $artisan->latitude) }}">
+                <input type="hidden" id="longitude_input" name="longitude" value="{{ old('longitude', $artisan->longitude) }}">
                 <div class="sm:col-span-1">
                     <label class="block text-sm font-bold text-slate-700 mb-1.5">Statut</label>
                     <select name="status" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none bg-slate-50">
@@ -117,4 +118,40 @@
         </div>
     </form>
 </div>
+</div>
+
+<script>
+    document.getElementById('geocode_btn').addEventListener('click', function() {
+        const address = document.getElementById('address_input').value;
+        const status = document.getElementById('geocode_status');
+        
+        if (!address) {
+            status.textContent = 'Veuillez entrer une adresse valide.';
+            status.className = 'text-xs text-red-500 mt-2';
+            return;
+        }
+
+        status.textContent = 'Recherche en cours...';
+        status.className = 'text-xs text-slate-500 mt-2';
+
+        const query = encodeURIComponent(address + ', Benin');
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}&limit=1`)
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    document.getElementById('latitude_input').value = data[0].lat;
+                    document.getElementById('longitude_input').value = data[0].lon;
+                    status.textContent = `✅ Localisation trouvée ! (Lat: ${parseFloat(data[0].lat).toFixed(4)}, Lng: ${parseFloat(data[0].lon).toFixed(4)})`;
+                    status.className = 'text-xs text-emerald-600 font-bold mt-2';
+                } else {
+                    status.textContent = '❌ Adresse introuvable. Essayez d\'être plus précis.';
+                    status.className = 'text-xs text-amber-600 mt-2';
+                }
+            })
+            .catch(err => {
+                status.textContent = '❌ Erreur de réseau.';
+                status.className = 'text-xs text-red-500 mt-2';
+            });
+    });
+</script>
 @endsection

@@ -9,6 +9,9 @@ class Artisan extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $casts = [
+        'pending_profile_data' => 'array',
+    ];
 
     public function savoirFaires()
     {
@@ -35,8 +38,21 @@ class Artisan extends Model
         return $this->hasMany(ReservationRequest::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public function getImageUrlAttribute()
     {
+        if ($this->photo_path) {
+            return asset('storage/' . $this->photo_path);
+        }
         $firstMedia = $this->media()->where('type', 'image')->first();
         if ($firstMedia && $firstMedia->path) {
             return asset($firstMedia->path);
