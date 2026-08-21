@@ -44,7 +44,7 @@ class MapController extends Controller
 
     public function adminMap()
     {
-        $artisans = Artisan::with(['user', 'savoirFaire.category'])
+        $artisans = Artisan::with(['user', 'savoirFaires.category'])
             ->whereNotNull('latitude')
             ->whereNotNull('longitude')
             ->get();
