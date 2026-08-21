@@ -55,7 +55,7 @@
             ['img'=>'images/artisans/koffi_dossou.png','tag'=>'Transmission','title'=>'Rencontrez nos Maîtres Artisans','sub'=>'Derrière chaque objet se cache une histoire, un visage, des mains expertes.','cta_label'=>'Voir le répertoire','cta_url'=>route('artisans.index'),'cta_style'=>'green'],
             ['img'=>'images/artisans/messan_akakpo.png','tag'=>'Valorisation','title'=>'Des Savoir-Faire Inestimables','sub'=>'Du tissage Kanvo à la poterie, des techniques transmises de génération en génération.','cta_label'=>'Découvrir les métiers','cta_url'=>'#savoir-faire','cta_style'=>'outline'],
             ['img'=>'images/artisans/yvette_gbaguidi.png','tag'=>'Opportunités Locales','title'=>'Saisissez les Opportunités','sub'=>'ƉƆKUN crée de nouvelles opportunités économiques pour les communautés locales.','cta_label'=>'Explorer la carte','cta_url'=>route('carte'),'cta_style'=>'gold'],
-            ['img'=>'images/poterie_en_action.png','tag'=>'Expériences','title'=>'Vivez une Expérience Unique','sub'=>'Réservez une visite d\'atelier et apprenez directement auprès d\'un maître artisan.','cta_label'=>'Voir les expériences','cta_url'=>route('savoir-faire.index'),'cta_style'=>'green'],
+            ['img'=>'images/poterie_en_action.png','tag'=>'Expériences','title'=>'Vivez une Expérience Unique','sub'=>'Réservez une visite d\'atelier et apprenez directement auprès d\'un maître artisan.','cta_label'=>'Voir les expériences','cta_url'=>route('experiences.index'),'cta_style'=>'green'],
         ];
         @endphp
         @foreach($slides as $i => $slide)
