@@ -1,5 +1,4 @@
 {{-- Shared Footer Partial --}}
-<div class="kente-stripe h-2 w-full"></div>
 <footer class="bg-dokun-charcoal text-white">
     <!-- Main Footer -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10 grid grid-cols-1 md:grid-cols-4 gap-10">
