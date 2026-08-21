@@ -33,6 +33,7 @@
                 <a href="{{ route('artisans.index') }}" class="hover:text-dokun-gold transition-colors {{ $active==='artisans' ? 'text-dokun-gold' : '' }}">Artisans</a>
                 <a href="{{ route('carte') }}" class="hover:text-dokun-gold transition-colors {{ $active==='carte' ? 'text-dokun-gold' : '' }}">Carte</a>
                 <a href="{{ route('experiences.index') }}" class="hover:text-dokun-gold transition-colors {{ $active==='experiences' ? 'text-dokun-gold' : '' }}">Expériences</a>
+                <a href="{{ route('learn.index') }}" class="hover:text-dokun-gold transition-colors {{ $active==='learn' ? 'text-dokun-gold' : '' }}">{{ __('app.nav_learn') }}</a>
                 <a href="{{ route('about') }}" class="hover:text-dokun-gold transition-colors {{ $active==='about' ? 'text-dokun-gold' : '' }}">{{ __('app.nav_about') }}</a>
                 <a href="{{ route('contact') }}" class="hover:text-dokun-gold transition-colors {{ $active==='contact' ? 'text-dokun-gold' : '' }}">{{ __('app.nav_contact') }}</a>
 
@@ -114,7 +115,7 @@
     <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 text-dokun-charcoal shadow-xl">
         <div class="max-w-7xl mx-auto px-4 py-6 space-y-1">
             <a href="{{ route('home') }}#savoir-faire" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-dokun-ivory font-semibold text-base">
-                <svg class="w-5 h-5 text-dokun-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 3h6m-5 0v6L4.8 18.3A2 2 0 006.4 21h11.2a2 2 0 001.6-2.7L14 9V3"/></svg> {{ __('app.nav_artisans') }}
+                <svg class="w-5 h-5 text-dokun-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 3h6m-5 0v6L4.8 18.3A2 2 0 006.4 21h11.2a2 2 0 001.6-2.7L14 9V3"/></svg>Savoir-faire
             </a>
             <a href="{{ route('artisans.index') }}" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-dokun-ivory font-semibold text-base">
                 <svg class="w-5 h-5 text-dokun-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 12a4 4 0 100-8 4 4 0 000 8zm7 9a7 7 0 00-14 0"/></svg> {{ __('app.nav_artisans') }}
@@ -124,6 +125,9 @@
             </a>
             <a href="{{ route('experiences.index') }}" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-dokun-ivory font-semibold text-base">
                 <svg class="w-5 h-5 text-dokun-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 3v3m8-3v3M4 10h16M6 5h12a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2z"/></svg> {{ __('app.nav_experiences') }}
+            </a>
+            <a href="{{ route('learn.index') }}" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-dokun-ivory font-semibold text-base">
+                <svg class="w-5 h-5 text-dokun-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg> {{ __('app.nav_learn') }}
             </a>
             <a href="{{ route('about') }}" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-dokun-ivory font-semibold text-base">
                 <svg class="w-5 h-5 text-dokun-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> {{ __('app.nav_about') }}
