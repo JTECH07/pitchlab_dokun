@@ -42,53 +42,9 @@
     </style>
 </head>
 <body class="antialiased bg-[#F8F6F0] text-[#17201D]">
-<div class="kente-stripe h-2 w-full fixed top-0 left-0 z-[60]"></div>
 
-<!-- NAVBAR -->
-<nav id="navbar" class="fixed w-full z-50 transition-all duration-500 bg-transparent border-b border-white/10 text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-20">
-            <a href="{{ route('home') }}" class="flex items-center gap-3">
-                <div class="w-12 h-12 bg- rounded flex items-center justify-center overflow-hidden">
-                    <img src="{{ asset('images/dokun_logo.png') }}" alt="ƉƆKUN" class="w-full h-full object-contain" onerror="this.outerHTML='<span class=\'text-[#C99424] font-bold text-2xl\'>Ɖ</span>'">
-                </div>
-                <div class="flex flex-col leading-tight">
-                    <span class="serif text-3xl">ƉƆKUN</span>
-                    <span class="text-[9.5px] tracking-[0.15em] opacity-70 uppercase font-semibold">Patrimoine Vivant &<br>Tourisme Culturel</span>
-                </div>
-            </a>
-            <div class="hidden md:flex items-center gap-7 font-semibold text-sm">
-                <a href="{{ route('savoir-faire.index') }}" class="hover:text-[#C99424] transition-colors">Savoir-faire</a>
-                <a href="{{ route('artisans.index') }}" class="hover:text-[#C99424] transition-colors">{{ __('app.nav_artisans') }}</a>
-                <a href="{{ route('carte') }}" class="hover:text-[#C99424] transition-colors">{{ __('app.nav_map') }}</a>
-                <a href="{{ route('experiences.index') }}" class="hover:text-[#C99424] transition-colors">{{ __('app.nav_experiences') }}</a>
-                @auth
-                    <a href="{{ url('/dashboard') }}" class="px-5 py-2.5 bg-[#064E3B] text-white rounded-full hover:bg-[#064E3B]/90 transition shadow-lg text-sm">{{ __('app.nav_my_space') }}</a>
-                @else
-                    <a href="{{ route('login') }}" class="px-5 py-2.5 bg-[#C99424] text-white rounded-full hover:bg-yellow-600 transition shadow-lg text-sm">{{ __('app.nav_login') }}</a>
-                @endauth
-            </div>
-            <button id="menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white/20 transition">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            </button>
-        </div>
-    </div>
-    <div id="mobile-menu" class="hidden md:hidden bg-white text-[#17201D] border-t border-gray-100 shadow-xl">
-        <div class="p-5 space-y-2">
-            <a href="#savoir-faire" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-[#F8F6F0] font-semibold">{{ __('app.nav_artisans') }}</a>
-            <a href="#artisans" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-[#F8F6F0] font-semibold">{{ __('app.nav_artisans') }}</a>
-            <a href="{{ route('carte') }}" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-[#F8F6F0] font-semibold">{{ __('app.nav_map') }}</a>
-            <a href="{{ route('experiences.index') }}" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-[#F8F6F0] font-semibold">{{ __('app.nav_experiences') }}</a>
-            <div class="pt-3 border-t border-gray-100">
-                @auth
-                    <a href="{{ url('/dashboard') }}" class="block w-full text-center py-4 bg-[#064E3B] text-white font-bold rounded-xl">{{ __('app.nav_my_space') }}</a>
-                @else
-                    <a href="{{ route('login') }}" class="block w-full text-center py-4 bg-[#C99424] text-white font-bold rounded-xl">{{ __('app.nav_login') }}</a>
-                @endauth
-            </div>
-        </div>
-    </div>
-</nav>
+{{-- Navbar partagée (transparente sur le hero, devient blanche au scroll) --}}
+@include('partials.navbar', ['transparent' => true])
 
 <!-- HERO SLIDER -->
 <section id="hero" class="relative h-screen overflow-hidden bg-[#17201D]">
@@ -162,7 +118,7 @@
 <!-- COMMENT ÇA MARCHE -->
 <section id="comment-ca-marche" class="py-24 bg-[#F8F6F0]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16 fade-up">
             <h2 class="serif text-4xl md:text-5xl text-[#064E3B] mb-4">Comment ça marche ?</h2>
             <p class="text-[#17201D]/60 max-w-2xl mx-auto text-lg">Simple comme une visite chez un ami artisan.</p>
             <div class="h-1 w-20 bg-[#C99424] mx-auto mt-5"></div>
@@ -189,7 +145,7 @@
 <!-- SAVOIR-FAIRE -->
 <section id="savoir-faire" class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-14 gap-6">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-14 gap-6 fade-up">
             <div>
                 <h2 class="serif text-4xl md:text-5xl text-[#064E3B] mb-3">Savoir-Faire Traditionnels</h2>
                 <p class="text-[#17201D]/60 text-lg max-w-xl">L'héritage d'un peuple raconté par la matière et le geste.</p>
@@ -228,7 +184,7 @@
 <!-- ARTISANS -->
 <section id="artisans" class="py-24 bg-[#F8F6F0]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-14 gap-6">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-14 gap-6 fade-up">
             <div>
                 <h2 class="serif text-4xl md:text-5xl text-[#064E3B] mb-3">Portraits d'Artisans</h2>
                 <p class="text-[#17201D]/60 text-lg max-w-xl">Les visages et les histoires de ceux qui font vivre notre patrimoine.</p>
@@ -265,9 +221,11 @@
 </section>
 
 <!-- POUR QUI ? -->
-<section class="py-24 bg-[#064E3B] text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
+<section class="py-24 bg-[#064E3B] text-white relative overflow-hidden">
+    <img src="{{ asset('images/vannerie.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-15" alt="" loading="lazy">
+    <div class="absolute inset-0 wax-pattern opacity-40"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-16 fade-up">
             <h2 class="serif text-4xl md:text-5xl mb-4">Pour qui est ƉƆKUN ?</h2>
             <div class="h-1 w-20 bg-[#C99424] mx-auto mt-5"></div>
         </div>
@@ -292,9 +250,11 @@
 </section>
 
 <!-- CARTE INTÉGRÉE -->
-<section class="py-20 bg-[#17201D] wax-pattern relative">
+<section class="py-20 bg-[#17201D] relative overflow-hidden">
+    <img src="{{ asset('images/dokun_carte.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-10" alt="" loading="lazy">
+    <div class="absolute inset-0 wax-pattern opacity-30"></div>
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="text-center mb-10">
+        <div class="text-center mb-10 fade-up">
             <h2 class="serif text-3xl md:text-4xl text-white mb-3">{{ __('app.home_map_title') }}</h2>
             <p class="text-white/60 text-base max-w-xl mx-auto">{{ __('app.home_map_desc') }}</p>
         </div>
@@ -311,16 +271,16 @@
 </section>
 
 <!-- CTA FINAL -->
-<section class="py-24 bg-white text-center relative overflow-hidden">
-    <div class="absolute inset-0 opacity-5">
-        <img src="{{ asset('images/reel_marche_arts.png') }}" class="w-full h-full object-cover" alt="background" onerror="">
-    </div>
-    <div class="relative z-10 max-w-3xl mx-auto px-4">
-        <h2 class="serif text-4xl md:text-5xl text-[#064E3B] mb-6">{{ __('app.home_final_title') }}</h2>
-        <p class="text-[#17201D]/70 text-lg mb-10">{{ __('app.home_final_desc') }}</p>
+<section class="py-28 text-center relative overflow-hidden">
+    <img src="{{ asset('images/dokun_bg.jpeg') }}" class="absolute inset-0 w-full h-full object-cover" alt="" loading="lazy">
+    <div class="absolute inset-0 bg-[#064E3B]/85"></div>
+    <div class="absolute inset-0 wax-pattern opacity-40"></div>
+    <div class="relative z-10 max-w-3xl mx-auto px-4 fade-up">
+        <h2 class="serif text-4xl md:text-5xl text-white mb-6">{{ __('app.home_final_title') }}</h2>
+        <p class="text-white/80 text-lg mb-10">{{ __('app.home_final_desc') }}</p>
         <div class="flex flex-col sm:flex-row justify-center gap-5">
-            <a href="{{ route('carte') }}" class="px-8 py-4 bg-[#064E3B] text-white font-bold rounded-full hover:bg-[#064E3B]/90 shadow-xl transition-all text-lg">{{ __('app.home_final_map') }}</a>
-            <a href="{{ route('artisans.index') }}" class="px-8 py-4 border-2 border-[#064E3B] text-[#064E3B] font-bold rounded-full hover:bg-[#064E3B] hover:text-white transition-all text-lg">{{ __('app.home_final_artisans') }}</a>
+            <a href="{{ route('carte') }}" class="px-8 py-4 bg-[#C99424] text-white font-bold rounded-full hover:bg-[#b3831f] shadow-xl transition-all text-lg">{{ __('app.home_final_map') }}</a>
+            <a href="{{ route('artisans.index') }}" class="px-8 py-4 border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-[#064E3B] transition-all text-lg">{{ __('app.home_final_artisans') }}</a>
         </div>
     </div>
 </section>
@@ -353,7 +313,7 @@
     });
 
     const quartiers = @json($quartiers ?? []);
-    const artisans = @json($artisans ?? []);
+    const artisans = @json($mapArtisans ?? []);
 
     (quartiers.length ? quartiers : [{ name: 'Porto-Novo', lat: 6.4969, lng: 2.6289 }]).forEach(q => {
         const m = L.marker([q.lat, q.lng], { icon: dropIcon }).addTo(homeMap);
