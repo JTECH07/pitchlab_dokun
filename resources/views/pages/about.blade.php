@@ -11,22 +11,21 @@
         body { font-family: 'Manrope', sans-serif; }
         h1, h2, h3, .serif { font-family: 'DM Serif Display', serif; }
         .wax-pattern{background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C99424' stroke-opacity='0.25'%3E%3Ccircle cx='30' cy='30' r='12'/%3E%3Ccircle cx='0' cy='0' r='8'/%3E%3Ccircle cx='60' cy='0' r='8'/%3E%3Ccircle cx='0' cy='60' r='8'/%3E%3Ccircle cx='60' cy='60' r='8'/%3E%3Cpath d='M30 18l10 12-10 12-10-12z'/%3E%3C/g%3E%3C/svg%3E");}
-        .kente-stripe{background:repeating-linear-gradient(90deg,#064E3B 0 24px,#C99424 24px 32px,#17201D 32px 40px,#C99424 40px 48px);}
         @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
         .fade-up{animation:fadeUp .7s ease both}
     </style>
 </head>
 <body class="antialiased bg-dokun-ivory text-dokun-charcoal">
-<div class="kente-stripe h-2 w-full"></div>
 @include('partials.navbar', ['active' => ''])
 
 <main class="pt-28">
 
     {{-- ══════════ HERO ══════════ --}}
     <section class="relative bg-dokun-charcoal text-white overflow-hidden">
+        <img src="{{ asset('images/dokun_bg1.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-15" alt="" loading="lazy">
         <div class="absolute inset-0 wax-pattern opacity-40"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-dokun-charcoal/70 via-transparent to-dokun-charcoal/80"></div>
-        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 text-center">
+        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 text-center">
             <span class="fade-up inline-block mb-6 px-5 py-2 rounded-full border border-dokun-gold/50 bg-dokun-gold/10 text-dokun-gold text-xs font-bold uppercase tracking-[0.2em]">Notre histoire</span>
             <h1 class="fade-up text-4xl md:text-6xl leading-tight" style="animation-delay:.15s">ƉƆKUN, le patrimoine vivant<br class="hidden md:block"> de Porto-Novo</h1>
             <p class="fade-up mt-6 text-white/75 text-lg leading-relaxed max-w-2xl mx-auto" style="animation-delay:.3s">
@@ -123,8 +122,9 @@
 
     {{-- ══════════ CHIFFRES ══════════ --}}
     <section class="relative bg-dokun-green text-white py-16 md:py-20 overflow-hidden">
+        <img src="{{ asset('images/forgeron.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-15" alt="" loading="lazy">
         <div class="absolute inset-0 wax-pattern opacity-20"></div>
-        <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
             <div class="fade-up">
                 <p class="font-serif text-5xl md:text-6xl text-dokun-gold">8</p>
                 <p class="mt-3 font-semibold text-white/80 uppercase tracking-wide text-sm">quartiers cartographiés</p>
@@ -159,7 +159,6 @@
 
 </main>
 
-<div class="kente-stripe h-2 w-full"></div>
 @include('partials.footer')
 </body>
 </html>
