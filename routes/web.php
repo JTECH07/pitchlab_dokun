@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LearnController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PaymentController;
@@ -50,6 +51,12 @@ Route::get('/savoir-faire',        [SavoirFairePublicController::class, 'index']
 Route::get('/savoir-faire/{slug}', [SavoirFairePublicController::class, 'show'])->name('savoir-faire.show');
 Route::get('/experiences',         [ExperienceController::class, 'index'])->name('experiences.index');
 Route::get('/carte',               [MapController::class, 'index'])->name('carte');
+
+// ─── ƉƆKUN Learn ─────────────────────────────────────────────
+Route::get('/learn',                          [LearnController::class, 'index'])->name('learn.index');
+Route::get('/learn/{course}',                 [LearnController::class, 'course'])->name('learn.course');
+Route::get('/learn/{course}/{lesson}',        [LearnController::class, 'play'])->name('learn.play');
+Route::post('/learn/{lesson}/complete',       [LearnController::class, 'complete'])->name('learn.complete');
 
 Route::get('/a-propos', function () {
     return view('pages.about');
