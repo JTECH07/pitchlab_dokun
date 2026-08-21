@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call(QuartierSeeder::class);
+        $this->call(LearnContentSeeder::class);
 
         // ─── Admin ────────────────────────────────────────────────
         $admin = User::firstOrCreate(
