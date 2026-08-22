@@ -58,6 +58,10 @@
                 <div class="flashcard-inner shadow-xl">
                     <div class="flashcard-face bg-white border border-black/5">
                         <span class="absolute top-4 left-5 text-[10px] font-bold uppercase tracking-widest text-dokun-gold" id="card-lang-label">Fon / Gun</span>
+                        <button type="button" onclick="event.stopPropagation(); speakWord()" title="{{ app()->getLocale()==='en' ? 'Listen' : 'Écouter' }}"
+                                class="absolute top-3 right-4 w-10 h-10 rounded-full bg-dokun-green/5 hover:bg-dokun-green/15 flex items-center justify-center transition group">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-dokun-green"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        </button>
                         <span id="card-front" class="font-serif text-4xl md:text-5xl text-dokun-green"></span>
                         <span class="mt-6 text-[11px] text-dokun-charcoal/30 font-semibold uppercase tracking-wider">Cliquer pour retourner</span>
                     </div>
@@ -120,7 +124,15 @@
 </main>
 
 <script>
-const WORDS = @json($words->map(fn($w) => ['fon' => $w->local_word, 'fr' => $w->french_translation, 'en' => $w->english_translation]));
+@php
+$wordsJson = $words->map(fn($w) => [
+    'fon' => $w->local_word,
+    'fr'  => $w->french_translation,
+    'en'  => $w->english_translation,
+    'audio' => $w->audio_path ? asset('storage/' . $w->audio_path) : null,
+])->values()->toJson();
+@endphp
+const WORDS = @json($wordsJson);
 const IS_EN = {{ $isEn ? 'true' : 'false' }};
 const CSRF = document.querySelector('meta[name="csrf-token"]').content;
 const COMPLETE_URL = '{{ route("learn.complete", $lesson) }}';
@@ -129,6 +141,29 @@ const LESSON_KEY = 'dokun_learn_{{ $lesson->id }}';
 
 let cardIndex = 0;
 let quiz = [], quizIndex = 0, quizScore = 0;
+
+// ---------- PRONONCIATION ----------
+function speakWord() {
+    const w = WORDS[cardIndex];
+    if (!w) return;
+    // 1. Audio réel si disponible (upload admin)
+    if (w.audio) {
+        try {
+            const a = new Audio(w.audio);
+            a.play();
+            return;
+        } catch (e) {}
+    }
+    // 2. Synthèse vocale du navigateur (approximation FR)
+    if ('speechSynthesis' in window) {
+        speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(w.fon);
+        u.lang = 'fr-FR';
+        u.rate = 0.85;
+        u.pitch = 1;
+        speechSynthesis.speak(u);
+    }
+}
 
 // ---------- FLASHCARDS ----------
 function renderCard() {

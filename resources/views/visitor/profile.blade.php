@@ -25,7 +25,7 @@
 <main class="pt-28 pb-24">
     {{-- Hero --}}
     <section class="bg-dokun-charcoal relative overflow-hidden mb-14">
-        <img src="{{ asset('images/dokun_bg3.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-15" alt="" loading="lazy">
+        <img src="{{ url('images/dokun_bg3.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-15" alt="" loading="lazy">
         <div class="absolute inset-0 wax-pattern opacity-30"></div>
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14 relative z-10 fade-up">
             <span class="inline-block px-4 py-1.5 bg-dokun-gold/15 text-dokun-gold border border-dokun-gold/30 rounded-full text-xs font-bold uppercase tracking-widest mb-4">Mon voyage</span>
@@ -53,6 +53,62 @@
                 <p class="text-[11px] font-bold uppercase tracking-wider text-dokun-charcoal/45 mt-0.5">{{ $s['label'] }}</p>
             </div>
             @endforeach
+        </section>
+
+        {{-- Fidélisation --}}
+        <section class="fade-up" style="animation-delay:.08s">
+            <div class="bg-dokun-charcoal rounded-2xl relative overflow-hidden">
+                <div class="absolute inset-0 wax-pattern opacity-20"></div>
+                <div class="relative z-10 p-7">
+                    <h2 class="font-serif text-2xl text-white mb-1">Programme fidélité</h2>
+                    <p class="text-white/50 text-sm mb-6">Chaque action compte — gagne des points, monte de niveau, débloque des badges.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-7">
+                        {{-- Niveau + progression --}}
+                        <div class="md:col-span-2 bg-white/5 border border-white/10 rounded-xl p-5">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-dokun-gold/15 text-dokun-gold text-xs font-bold uppercase tracking-wider">
+                                    <x-icon name="gem" class="w-4 h-4"/>
+                                    {{ app()->getLocale()==='en' ? $level['en'] : $level['fr'] }}
+                                </span>
+                                <span class="text-white font-bold">{{ number_format($totalPoints, 0, ',', ' ') }} <span class="text-white/40 text-sm font-semibold">pts</span></span>
+                            </div>
+                            @if($nextLevel)
+                            @php $pct = min(100, round(($totalPoints - $level['threshold']) / max(1, $nextLevel['threshold'] - $level['threshold']) * 100)); @endphp
+                            <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-dokun-gold to-yellow-400 rounded-full transition-all duration-700" style="width:{{ $pct }}%"></div>
+                            </div>
+                            <p class="text-white/40 text-xs mt-2">{{ number_format($nextLevel['threshold'] - $totalPoints, 0, ',', ' ') }} pts pour devenir
+                                <strong class="text-dokun-gold/90">{{ app()->getLocale()==='en' ? $nextLevel['en'] : $nextLevel['fr'] }}</strong>
+                            </p>
+                            @else
+                            <p class="text-dokun-gold/90 text-xs font-bold mt-1">Niveau maximum atteint — ayibobo !</p>
+                            @endif
+                        </div>
+
+                        {{-- Streak --}}
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-5 flex flex-col items-center justify-center text-center">
+                            <x-icon name="flame" class="w-8 h-8 {{ $summary->streak_days > 0 ? 'text-orange-500' : 'text-white/25' }}"/>
+                            <p class="font-serif text-3xl text-white mt-2">{{ $summary->streak_days }}</p>
+                            <p class="text-[11px] font-bold uppercase tracking-wider text-white/40 mt-0.5">jour(s) de suite</p>
+                            <p class="text-[10px] text-white/30 mt-1">+5 pts par jour de visite</p>
+                        </div>
+                    </div>
+
+                    {{-- Badges --}}
+                    <p class="text-white/60 text-xs font-bold uppercase tracking-wider mb-3">Badges</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+                        @foreach($allBadges as $b)
+                        @php $earned = isset($earnedBadgeIds[$b->id]); @endphp
+                        <div title="{{ app()->getLocale()==='en' ? $b->desc_en : $b->desc_fr }}"
+                             class="rounded-xl p-3 text-center border transition {{ $earned ? 'bg-dokun-gold/15 border-dokun-gold/40' : 'bg-white/5 border-white/10 opacity-45 grayscale' }}">
+                            <x-icon name="{{ $b->icon }}" class="w-6 h-6 mx-auto {{ $earned ? 'text-dokun-gold' : 'text-white/40' }}"/>
+                            <p class="text-[9px] font-bold uppercase tracking-wide mt-2 {{ $earned ? 'text-dokun-gold' : 'text-white/35' }}">{{ app()->getLocale()==='en' ? $b->name_en : $b->name_fr }}</p>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
         </section>
 
         {{-- Réservations à venir --}}
