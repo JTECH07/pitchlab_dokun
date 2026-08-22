@@ -32,7 +32,7 @@
         <header class="bg-white rounded-2xl border border-black/5 p-8 mb-10 relative overflow-hidden fade-up">
             <div class="absolute inset-0 wax-pattern opacity-[0.06]"></div>
             <div class="relative z-10 flex items-start gap-5">
-                <span class="w-16 h-16 rounded-2xl flex items-center justify-center text-4xl flex-shrink-0" style="background:{{ $course->accent }}15">{{ $course->icon }}</span>
+                <span class="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0" style="background:{{ $course->accent }}15"><x-icon name="{{ $course->icon }}" class="w-8 h-8" style="color:{{ $course->accent }}"/></span>
                 <div>
                     <h1 class="font-serif text-2xl md:text-3xl text-dokun-green mb-2">{{ app()->getLocale()==='en' ? $course->title_en : $course->title_fr }}</h1>
                     <p class="text-dokun-charcoal/60 text-sm leading-relaxed">{{ app()->getLocale()==='en' ? $course->desc_en : $course->desc_fr }}</p>

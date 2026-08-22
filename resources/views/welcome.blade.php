@@ -51,10 +51,11 @@
     <div id="slides-container" class="absolute inset-0">
         @php
         $slides = [
-            ['img'=>'images/hero/tourisme_porto_novo.png','tag'=>'Voyage Culturel','title'=>"L'Âme de Porto-Novo",'sub'=>'Le patrimoine vivant, une richesse partagée. Explorez la ville aux trois noms.','cta_label'=>'Découvrir sur la carte','cta_url'=>route('carte'),'cta_style'=>'gold'],
-            ['img'=>'images/artisans/koffi_dossou.png','tag'=>'Transmission','title'=>'Rencontrez nos Maîtres Artisans','sub'=>'Derrière chaque objet se cache une histoire, un visage, des mains expertes.','cta_label'=>'Voir le répertoire','cta_url'=>route('artisans.index'),'cta_style'=>'green'],
-            ['img'=>'images/artisans/messan_akakpo.png','tag'=>'Valorisation','title'=>'Des Savoir-Faire Inestimables','sub'=>'Du tissage Kanvo à la poterie, des techniques transmises de génération en génération.','cta_label'=>'Découvrir les métiers','cta_url'=>'#savoir-faire','cta_style'=>'outline'],
-            ['img'=>'images/artisans/yvette_gbaguidi.png','tag'=>'Opportunités Locales','title'=>'Saisissez les Opportunités','sub'=>'ƉƆKUN crée de nouvelles opportunités économiques pour les communautés locales.','cta_label'=>'Explorer la carte','cta_url'=>route('carte'),'cta_style'=>'gold'],
+            ['img'=>'images/dokun_bg1.jpg','tag'=>'Voyage Culturel','title'=>"L'Âme de Porto-Novo",'sub'=>'Le patrimoine vivant, une richesse partagée. Explorez la ville aux trois noms.','cta_label'=>'Découvrir sur la carte','cta_url'=>route('carte'),'cta_style'=>'gold'],
+            ['img'=>'images/tisserand.png','tag'=>'Transmission','title'=>'Rencontrez nos Maîtres Artisans','sub'=>'Derrière chaque objet se cache une histoire, un visage, des mains expertes.','cta_label'=>'Voir le répertoire','cta_url'=>route('artisans.index'),'cta_style'=>'green'],
+            ['img'=>'images/tisserand.jpg','tag'=>'Savoir-Faire','title'=>'Le Tissage Kanvo','sub'=>'Un art textile unique, fierté des familles de Porto-Novo depuis des générations.','cta_label'=>'Découvrir les métiers','cta_url'=>route('savoir-faire.index'),'cta_style'=>'outline'],
+            ['img'=>'images/forgeron.jpg','tag'=>'Valorisation','title'=>'Des Savoir-Faire Inestimables','sub'=>'Du tissage Kanvo à la poterie, des techniques transmises de génération en génération.','cta_label'=>'Découvrir les métiers','cta_url'=>route('savoir-faire.index') ,'cta_style'=>'outline'],
+            ['img'=>'images/dokun_bg3.jpg','tag'=>'Opportunités Locales','title'=>'Saisissez les Opportunités','sub'=>'ƉƆKUN crée de nouvelles opportunités économiques pour les communautés locales.','cta_label'=>'Explorer la carte','cta_url'=>route('carte'),'cta_style'=>'gold'],
             ['img'=>'images/poterie_en_action.png','tag'=>'Expériences','title'=>'Vivez une Expérience Unique','sub'=>'Réservez une visite d\'atelier et apprenez directement auprès d\'un maître artisan.','cta_label'=>'Voir les expériences','cta_url'=>route('experiences.index'),'cta_style'=>'green'],
         ];
         @endphp
@@ -83,18 +84,11 @@
 </section>
 
 <script>
-    // Mobile menu
-    document.getElementById('menu-btn').addEventListener('click',()=>document.getElementById('mobile-menu').classList.toggle('hidden'));
-    // Navbar scroll
-    const nav=document.getElementById('navbar');
-    window.addEventListener('scroll',()=>{
-        if(window.scrollY>60){nav.classList.replace('bg-transparent','bg-white');nav.classList.replace('text-white','text-[#17201D]');nav.classList.replace('border-white/10','border-gray-200');nav.classList.add('shadow-sm');}
-        else{nav.classList.replace('bg-white','bg-transparent');nav.classList.replace('text-[#17201D]','text-white');nav.classList.replace('border-gray-200','border-white/10');nav.classList.remove('shadow-sm');}
-    });
-    // Slider
+    // Slider héros — autonome (la navbar partagée gère elle-même son menu/scroll)
     const slides=document.querySelectorAll('.slide'),dots=document.querySelectorAll('#dots button');
     let cur=0,timer;
     function goTo(i){
+        if(!slides.length) return;
         slides[cur].classList.remove('opacity-100','active');slides[cur].classList.add('opacity-0');
         dots[cur].classList.remove('bg-[#C99424]');dots[cur].classList.add('bg-white/30');
         cur=i;
@@ -116,7 +110,8 @@
 </section>
 
 <!-- COMMENT ÇA MARCHE -->
-<section id="comment-ca-marche" class="py-24 bg-[#F8F6F0]">
+<section id="comment-ca-marche" class="py-24">
+    <img src="{{ asset('images/tisserand.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-10" alt="Tisserand en action" onerror="this.src='{{ asset('images/hero/tourisme_porto_novo.png') }}'">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16 fade-up">
             <h2 class="serif text-4xl md:text-5xl text-[#064E3B] mb-4">Comment ça marche ?</h2>
@@ -131,8 +126,8 @@
                 ['num'=>'4','title'=>'Vivez','desc'=>'Rencontrez l\'artisan, participez à l\'atelier, vivez l\'expérience.'],
             ]; @endphp
             @foreach($steps as $step)
-            <div class="relative bg-white rounded-2xl p-8 text-center shadow-lg border border-gray-100 hover:-translate-y-1 transition-transform">
-                <div class="w-14 h-14 rounded-full bg-[#064E3B]/10 text-[#064E3B] flex items-center justify-center mx-auto mb-4"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6v6l4 2m4-2a8 8 0 11-16 0 8 8 0 0116 0z"/></svg></div>
+            <div class="relative bg-white rounded-2xl p-8 text-center shadow-lg border border-gray-100 hover:-translate-y-1 transition-transform">                
+                <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 h-12 bg-[#C99424] text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">✓</div>
                 <div class="w-8 h-8 bg-[#064E3B] text-white rounded-full flex items-center justify-center font-bold text-sm mx-auto mb-4">{{ $step['num'] }}</div>
                 <h3 class="serif text-2xl text-[#064E3B] mb-3">{{ $step['title'] }}</h3>
                 <p class="text-[#17201D]/70 text-sm leading-relaxed">{{ $step['desc'] }}</p>
@@ -231,8 +226,8 @@
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             @php $publics = [
-                ['label'=>'Touristes','desc'=>'Visiteurs qui cherchent des expériences authentiques'],
                 ['label'=>'Artisans','desc'=>'Détenteurs qui souhaitent valoriser leurs savoir-faire'],
+                ['label'=>'Touristes','desc'=>'Visiteurs qui cherchent des expériences authentiques'],
                 ['label'=>'Guides','desc'=>'Professionnels qui construisent des parcours culturels'],
                 ['label'=>'Écoles','desc'=>'Établissements qui organisent des sorties pédagogiques'],
                 ['label'=>'Chercheurs','desc'=>'Universitaires et étudiants en quête de documentation'],

@@ -22,14 +22,15 @@
                     <span class="hidden text-dokun-gold font-bold text-2xl">Ɖ</span>
                 </div>
                 <div class="flex flex-col leading-tight">
-                    <span class="font-serif text-2xl tracking-wide leading-none">ƉƆKUN</span>
-                    <span class="text-[9px] tracking-[0.15em] font-semibold opacity-70 uppercase">Patrimoine Vivant</span>
+                    <span class="font-serif text-3xl tracking-wide leading-none">ƉƆKUN</span>
+                    <span class="text-[9.5px] tracking-[0.2em] font-semibold opacity-70 uppercase">Patrimoine Vivant</span>
                 </div>
             </a>
 
             <!-- Desktop Links -->
-            <div class="hidden md:flex items-center gap-7 font-semibold text-sm">
-                <a href="{{ route('home') }}#savoir-faire" class="hover:text-dokun-gold transition-colors {{ $active==='savoir-faire' ? 'text-dokun-gold' : '' }}">Savoir-faire</a>
+            <!-- Faut bien gérer le menu bien centré -->
+            <div class="hidden md:flex items-center gap-7 font-semibold text-sm ">
+                <a href="{{ route('savoir-faire.index') }}" class="hover:text-dokun-gold transition-colors {{ $active==='savoir-faire' ? 'text-dokun-gold' : '' }}">Savoir-faire</a>
                 <a href="{{ route('artisans.index') }}" class="hover:text-dokun-gold transition-colors {{ $active==='artisans' ? 'text-dokun-gold' : '' }}">Artisans</a>
                 <a href="{{ route('carte') }}" class="hover:text-dokun-gold transition-colors {{ $active==='carte' ? 'text-dokun-gold' : '' }}">Carte</a>
                 <a href="{{ route('experiences.index') }}" class="hover:text-dokun-gold transition-colors {{ $active==='experiences' ? 'text-dokun-gold' : '' }}">Expériences</a>
@@ -61,25 +62,6 @@
                     </div>
                 </div>
 
-                <!-- Sélecteur devise (Alpine click-based) -->
-                <div class="relative" x-data="{ open: false }" @click.away="open = false">
-                    <button @click="open = !open" class="flex items-center gap-1 text-xs font-bold px-3 py-2 rounded-lg border border-current/20 hover:bg-black/5 transition">
-                        <span>{{ $allCurrencies[$currentCurrency]['flag'] ?? '🌍' }}</span>
-                        <span>{{ $currentCurrency }}</span>
-                        <svg class="w-3 h-3 opacity-50" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                    </button>
-                    <div x-show="open" x-transition.opacity x-cloak
-                         class="absolute right-0 mt-1 w-44 bg-white rounded-xl shadow-xl border border-gray-100 z-50 overflow-hidden">
-                        @foreach($allCurrencies ?? [] as $code => $info)
-                        <a href="?currency={{ $code }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-dokun-charcoal hover:bg-dokun-ivory font-semibold {{ $currentCurrency === $code ? 'bg-dokun-ivory text-dokun-green' : '' }}">
-                            <span>{{ $info['flag'] }}</span>
-                            <span>{{ $code }}</span>
-                            <span class="text-xs text-gray-400 ml-auto">{{ $info['symbol'] }}</span>
-                        </a>
-                        @endforeach
-                    </div>
-                </div>
-
                 @auth
                     <div class="relative" x-data="{ open: false }" @click.away="open = false">
                         <button @click="open = !open" class="flex items-center gap-2 px-5 py-2.5 bg-dokun-green text-white rounded-full hover:bg-dokun-green/90 transition shadow-lg text-sm">
@@ -88,7 +70,7 @@
                         </button>
                         <div x-show="open" x-transition.opacity x-cloak
                              class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 z-50 overflow-hidden">
-                            <a href="{{ route('visitor.profile') }}" class="block px-4 py-3 text-sm text-dokun-charcoal hover:bg-dokun-ivory hover:text-dokun-green font-semibold">🧭 {{ __('app.nav_my_trip') }}</a>
+                            <a href="{{ route('visitor.profile') }}" class="block px-4 py-3 text-sm text-dokun-charcoal hover:bg-dokun-ivory hover:text-dokun-green font-semibold">{{ __('app.nav_my_trip') }}</a>
                             <a href="{{ route('dashboard') }}" class="block px-4 py-3 text-sm text-dokun-charcoal hover:bg-dokun-ivory hover:text-dokun-green font-semibold">{{ __('app.admin_dashboard') }}</a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
@@ -115,7 +97,7 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 text-dokun-charcoal shadow-xl">
         <div class="max-w-7xl mx-auto px-4 py-6 space-y-1">
-            <a href="{{ route('home') }}#savoir-faire" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-dokun-ivory font-semibold text-base">
+            <a href="{{ route('savoir-faire.index') }}" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-dokun-ivory font-semibold text-base">
                 <svg class="w-5 h-5 text-dokun-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 3h6m-5 0v6L4.8 18.3A2 2 0 006.4 21h11.2a2 2 0 001.6-2.7L14 9V3"/></svg>Savoir-faire
             </a>
             <a href="{{ route('artisans.index') }}" class="flex items-center gap-3 py-3 px-4 rounded-xl hover:bg-dokun-ivory font-semibold text-base">

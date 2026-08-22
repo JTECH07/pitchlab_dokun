@@ -40,15 +40,15 @@
         <section class="grid grid-cols-2 md:grid-cols-4 gap-4 fade-up">
             @php
                 $stats = [
-                    ['label' => 'À venir', 'value' => $upcoming->count(), 'icon' => '🗓️'],
-                    ['label' => 'Favoris', 'value' => $favorites->count(), 'icon' => '❤️'],
-                    ['label' => 'Leçons Learn', 'value' => $learnStats['lessons_done'], 'icon' => '📚'],
-                    ['label' => 'Avis donnés', 'value' => $reviewsCount, 'icon' => '⭐'],
+                    ['label' => 'À venir', 'value' => $upcoming->count(), 'icon' => 'calendar'],
+                    ['label' => 'Favoris', 'value' => $favorites->count(), 'icon' => 'heart'],
+                    ['label' => 'Leçons Learn', 'value' => $learnStats['lessons_done'], 'icon' => 'book-open'],
+                    ['label' => 'Avis donnés', 'value' => $reviewsCount, 'icon' => 'star'],
                 ];
             @endphp
             @foreach($stats as $s)
             <div class="bg-white rounded-2xl border border-black/5 p-5 text-center">
-                <span class="text-2xl">{{ $s['icon'] }}</span>
+                <x-icon :name="$s['icon']" class="w-7 h-7 mx-auto text-dokun-gold"/>
                 <p class="font-serif text-3xl text-dokun-green mt-1">{{ $s['value'] }}</p>
                 <p class="text-[11px] font-bold uppercase tracking-wider text-dokun-charcoal/45 mt-0.5">{{ $s['label'] }}</p>
             </div>
@@ -58,7 +58,7 @@
         {{-- Réservations à venir --}}
         <section class="fade-up" style="animation-delay:.1s">
             <h2 class="font-serif text-2xl text-dokun-green mb-5 flex items-center gap-3">
-                🗓️ Réservations à venir
+                <x-icon name="calendar" class="w-6 h-6 text-dokun-green"/> Réservations à venir
                 <span class="text-sm font-sans font-bold text-dokun-charcoal/40">{{ $upcoming->count() }}</span>
             </h2>
             @forelse($upcoming as $r)
@@ -102,7 +102,7 @@
         @if($past->isNotEmpty())
         <section class="fade-up" style="animation-delay:.15s">
             <h2 class="font-serif text-2xl text-dokun-green mb-5 flex items-center gap-3">
-                📜 Historique
+                <x-icon name="history" class="w-6 h-6 text-dokun-green"/> Historique
                 <span class="text-sm font-sans font-bold text-dokun-charcoal/40">{{ $past->count() }}</span>
             </h2>
             @foreach($past as $r)
@@ -133,7 +133,7 @@
         {{-- Favoris --}}
         <section class="fade-up" style="animation-delay:.2s">
             <h2 class="font-serif text-2xl text-dokun-green mb-5 flex items-center gap-3">
-                ❤️ Mes favoris
+                <x-icon name="heart" class="w-6 h-6 text-dokun-green"/> Mes favoris
                 <span class="text-sm font-sans font-bold text-dokun-charcoal/40">{{ $favorites->count() }}</span>
             </h2>
             @forelse($favorites as $a)
@@ -158,7 +158,7 @@
             </a>
             @empty
             <div class="bg-white rounded-2xl border border-dashed border-black/10 p-10 text-center">
-                <p class="text-dokun-charcoal/40 text-sm mb-4">Aucun favori. Clique sur le cœur ❤️ d'un artisan pour l'ajouter.</p>
+                <p class="text-dokun-charcoal/40 text-sm mb-4">Aucun favori pour le moment — ajoute des artisans depuis le catalogue.</p>
                 <a href="{{ route('artisans.index') }}" class="inline-flex px-6 py-3 bg-dokun-green text-white text-sm font-bold rounded-xl hover:bg-dokun-green/90 transition">Explorer les artisans</a>
             </div>
             @endforelse
@@ -166,7 +166,7 @@
 
         {{-- Progression Learn --}}
         <section class="fade-up" style="animation-delay:.25s">
-            <h2 class="font-serif text-2xl text-dokun-green mb-5">📚 Ma progression Learn</h2>
+            <h2 class="font-serif text-2xl text-dokun-green mb-5"><x-icon name="graduation" class="w-6 h-6 text-dokun-green inline-block align-middle mr-2"/> Ma progression Learn</h2>
             <div class="bg-white rounded-2xl border border-black/5 p-7 relative overflow-hidden">
                 <div class="absolute inset-0 wax-pattern opacity-[0.05]"></div>
                 <div class="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">

@@ -17,7 +17,7 @@ class LearnContentSeeder extends Seeder
 
         $courses = [
             [
-                'slug' => 'salutations', 'icon' => '👋', 'accent' => '#064E3B',
+                'slug' => 'salutations', 'icon' => 'hand-wave', 'accent' => '#064E3B',
                 'title_fr' => 'Salutations & Politesse', 'title_en' => 'Greetings & Politeness',
                 'desc_fr' => 'Dire bonjour, merci et se présenter en fon — la base de toute rencontre à Porto-Novo.',
                 'desc_en' => 'Say hello, thank you and introduce yourself in Fon — the basis of every encounter in Porto-Novo.',
@@ -46,7 +46,7 @@ class LearnContentSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'marche', 'icon' => '🧺', 'accent' => '#C99424',
+                'slug' => 'marche', 'icon' => 'basket', 'accent' => '#C99424',
                 'title_fr' => 'Au Marché', 'title_en' => 'At the Market',
                 'desc_fr' => 'Négocier, compter et acheter au marché Dantokpa ou aux marchés de Porto-Novo.',
                 'desc_en' => 'Negotiate, count and buy at Dantokpa market or Porto-Novo markets.',
@@ -75,7 +75,7 @@ class LearnContentSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'atelier', 'icon' => '🛠️', 'accent' => '#2563EB',
+                'slug' => 'atelier', 'icon' => 'tools', 'accent' => '#2563EB',
                 'title_fr' => "Dans l'Atelier d'Artisan", 'title_en' => "In the Artisan's Workshop",
                 'desc_fr' => 'Le vocabulaire des métiers : poterie, tissage Kanvo, sculpture et bronze.',
                 'desc_en' => 'Craft vocabulary: pottery, Kanvo weaving, sculpture and bronze.',
@@ -104,7 +104,7 @@ class LearnContentSeeder extends Seeder
                 ],
             ],
             [
-                'slug' => 'en-ville', 'icon' => '🗺️', 'accent' => '#17201D',
+                'slug' => 'en-ville', 'icon' => 'compass', 'accent' => '#17201D',
                 'title_fr' => 'Se Repérer en Ville', 'title_en' => 'Getting Around Town',
                 'desc_fr' => 'Demander son chemin, prendre un zémidjan et découvrir les lieux de Porto-Novo.',
                 'desc_en' => 'Ask directions, take a zémidjan and discover Porto-Novo places.',

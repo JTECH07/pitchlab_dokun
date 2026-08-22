@@ -47,9 +47,9 @@
             <a href="{{ route('learn.course', $course) }}"
                class="course-card bg-white rounded-2xl border border-black/5 p-7 block fade-up" style="animation-delay:{{ $i * 0.08 }}s">
                 <div class="flex items-start justify-between mb-4">
-                    <span class="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl" style="background:{{ $course->accent }}15">{{ $course->icon }}</span>
+                    <span class="w-14 h-14 rounded-2xl flex items-center justify-center" style="background:{{ $course->accent }}15"><x-icon name="{{ $course->icon }}" class="w-7 h-7" style="color:{{ $course->accent }}"/></span>
                     @if($pct === 100)
-                        <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-bold uppercase tracking-wider rounded-full border border-emerald-200">✓ Terminé</span>
+                        <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-bold uppercase tracking-wider rounded-full border border-emerald-200 inline-flex items-center gap-1"><x-icon name="check-circle" class="w-3.5 h-3.5"/> Terminé</span>
                     @elseif($pct > 0)
                         <span class="text-xs font-bold text-dokun-gold">{{ $pct }}%</span>
                     @endif

@@ -79,7 +79,8 @@
             </div>
 
             <button onclick="startQuiz()" class="mt-10 w-full py-4 rounded-xl font-bold text-white transition shadow-lg flex items-center justify-center gap-2" style="background:#C99424">
-                🎯 {{ __('app.learn_start_quiz') }}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                {{ __('app.learn_start_quiz') }}
             </button>
         </section>
 
@@ -139,7 +140,7 @@ function renderCard() {
     document.getElementById('card-lang-label').textContent = 'Fon / Gun';
     document.getElementById('card-counter').textContent = (cardIndex + 1) + ' / ' + WORDS.length;
     document.getElementById('btn-prev').disabled = cardIndex === 0;
-    document.getElementById('btn-card-next').textContent = cardIndex === WORDS.length - 1 ? 'Quiz 🎯' : 'Suivant →';
+    document.getElementById('btn-card-next').textContent = cardIndex === WORDS.length - 1 ? 'Quiz →' : 'Suivant →';
     renderDots();
 }
 
@@ -251,13 +252,19 @@ function finishQuiz() {
     document.getElementById('phase-label').textContent = IS_EN ? 'Result' : 'Résultat';
     document.getElementById('global-progress').style.width = '100%';
 
-    const emoji = score >= 90 ? '🏆' : score >= 70 ? '🎉' : score >= 50 ? '💪' : '📚';
+    const iconMap = {
+        trophy:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-dokun-gold"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>',
+        sparkles:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-emerald-500"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.287 1.288L3 12l5.8 1.9a2 2 0 0 1 1.288 1.287L12 21l1.9-5.8a2 2 0 0 1 1.287-1.288L21 12l-5.8-1.9a2 2 0 0 1-1.288-1.287Z"/><path d="M5 3v4M19 17v4M3 5h4M17 19h4"/></svg>',
+        bolt:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-amber-500"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/></svg>',
+        book:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-dokun-green"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>'
+    };
+    const icon = score >= 90 ? 'trophy' : score >= 70 ? 'sparkles' : score >= 50 ? 'bolt' : 'book';
     const msg = score >= 90 ? (IS_EN ? 'Outstanding! You master this lesson.' : 'Exceptionnel ! Cette leçon est la tienne.')
               : score >= 70 ? (IS_EN ? 'Very well! Keep going.' : 'Très bien ! Continue comme ça.')
               : score >= 50 ? (IS_EN ? 'Good effort. Review and try again!' : 'Bon effort. Revois les cartes et réessaie !')
               : (IS_EN ? 'No worries — repetition is the mother of learning.' : "Pas grave — la répétition est la mère de l'apprentissage.");
 
-    document.getElementById('result-emoji').textContent = emoji;
+    document.getElementById('result-emoji').innerHTML = iconMap[icon];
     document.getElementById('result-score').textContent = score;
     document.getElementById('result-message').textContent = msg;
 
@@ -279,7 +286,7 @@ function saveProgress(score) {
         body: JSON.stringify({ score }),
     })
     .then(r => r.json())
-    .then(d => { if (d.status === 'saved') status.textContent = IS_EN ? '✓ Progress saved to your account.' : '✓ Progression enregistrée dans ton compte.'; })
+    .then(d => { if (d.status === 'saved') status.textContent = IS_EN ? 'Progress saved to your account.' : 'Progression enregistrée dans ton compte.'; })
     .catch(() => {});
 }
 
