@@ -36,6 +36,16 @@
         .reveal{opacity:0;transform:translateY(28px);transition:all .7s cubic-bezier(.22,.61,.36,1);}
         .reveal.visible{opacity:1;transform:translateY(0);}
 
+        /* Ken Burns : léger zoom sur l'image active du slider */
+        @keyframes kenburns{0%{transform:scale(1)}100%{transform:scale(1.08)}}
+        .slide.active img{animation:kenburns 7s ease-out forwards;}
+
+        /* Cartes savoir-faire : lift + balayage lumineux */
+        .sf-card{transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s,border-color .45s;}
+        .sf-card:hover{transform:translateY(-8px);box-shadow:0 24px 48px -16px rgba(6,78,59,.18);}
+        .sf-card::after{content:'';position:absolute;top:0;left:-80%;width:55%;height:100%;background:linear-gradient(105deg,transparent,rgba(201,148,36,.14),transparent);transform:skewX(-20deg);transition:left .8s ease;pointer-events:none;}
+        .sf-card:hover::after{left:135%;}
+
         /* Home map card styles */
         #home-map .leaflet-control-zoom { border: none !important; box-shadow: 0 2px 10px rgba(0,0,0,0.15) !important; border-radius: 10px !important; overflow: hidden; }
         #home-map .leaflet-control-zoom a { background: #1a1a1a !important; color: #ffffff !important; width: 32px !important; height: 32px !important; line-height: 32px !important; font-size: 16px !important; font-weight: 700 !important; border: none !important; }
@@ -67,8 +77,8 @@
         @php
         $slides = [
             ['img'=>'images/dokun_bg1.jpg','tag'=>'Voyage Culturel','title'=>"L'Âme de Porto-Novo",'sub'=>'Le patrimoine vivant, une richesse partagée. Explorez la ville aux trois noms.','cta_label'=>'Découvrir sur la carte','cta_url'=>route('carte'),'cta_style'=>'gold'],
-            ['img'=>'images/tisserand.jpg','tag'=>'Transmission','title'=>'Rencontrez nos Maîtres Artisans','sub'=>'Derrière chaque objet se cache une histoire, un visage, des mains expertes.','cta_label'=>'Voir le répertoire','cta_url'=>route('artisans.index'),'cta_style'=>'green'],
-            ['img'=>'images/forgeron.jpg','tag'=>'Savoir-Faire','title'=>'Des Savoir-Faire Inestimables','sub'=>'Du tissage Kanvo à la poterie, des techniques transmises de génération en génération.','cta_label'=>'Découvrir les métiers','cta_url'=>route('savoir-faire.index'),'cta_style'=>'outline'],
+            ['img'=>'images/tisserand.jpg','tag'=>'Transmission','title'=>'Rencontrez nos Maîtres Artisans','sub'=>'Du tissage Kanvo à la poterie, des techniques transmises de génération en génération.','cta_label'=>'Voir le répertoire','cta_url'=>route('artisans.index'),'cta_style'=>'green'],
+            ['img'=>'images/forgeron.jpg','tag'=>'Savoir-Faire','title'=>'Des Savoir-Faire Inestimables','sub'=>'Derrière chaque objet se cache une histoire, un visage, des mains expertes.','cta_label'=>'Découvrir les métiers','cta_url'=>route('savoir-faire.index'),'cta_style'=>'outline'],
             ['img'=>'images/dokun_bg3.jpg','tag'=>'Opportunités Locales','title'=>'Saisissez les Opportunités','sub'=>'ƉƆKUN crée de nouvelles opportunités économiques pour les communautés locales.','cta_label'=>'Explorer la carte','cta_url'=>route('carte'),'cta_style'=>'gold'],
             ['img'=>'images/poterie_en_action.png','tag'=>'Expériences','title'=>'Vivez une Expérience Unique','sub'=>'Réservez une visite d\'atelier et apprenez directement auprès d\'un maître artisan.','cta_label'=>'Voir les expériences','cta_url'=>route('experiences.index'),'cta_style'=>'green'],
         ];
@@ -76,8 +86,8 @@
         @foreach($slides as $i => $slide)
         <div class="slide absolute inset-0 w-full h-full {{ $i===0?'opacity-100 active':'opacity-0' }}">
             <img src="/{{ $slide['img'] }}" class="w-full h-full object-cover" alt="{{ $slide['tag'] }}" loading="eager">
-            <div class="absolute inset-0 bg-gradient-to-b from-[#17201D]/45 via-[#17201D]/15 to-[#17201D]/60"></div>
-            <div class="absolute inset-0 flex items-center justify-center pt-20">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#17201D]/65 via-[#17201D]/35 to-[#17201D]/80 pointer-events-none"></div>
+            <div class="absolute inset-0 flex items-center justify-center pt-20 z-10">
                 <div class="slider-content max-w-4xl mx-auto px-4 text-center text-white">
                     <span class="inline-block py-1.5 px-4 rounded-full bg-[#C99424]/20 text-[#C99424] font-bold text-xs tracking-[0.2em] uppercase mb-6 border border-[#C99424]/30">{{ $slide['tag'] }}</span>
                     <h1 class="serif text-5xl md:text-7xl mb-6 leading-tight" style="text-shadow:0 2px 28px rgba(23,32,29,.6)">{{ $slide['title'] }}</h1>
@@ -131,17 +141,18 @@
 <!-- STATS BAR -->
 <section class="bg-[#064E3B] text-white py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-        <div><div class="serif text-4xl text-[#C99424]">{{ $artisans->count() }}+</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">Artisans</div></div>
-        <div><div class="serif text-4xl text-[#C99424]">{{ $categories->count() }}+</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">Savoir-faire</div></div>
+        <div><div class="serif text-4xl text-[#C99424]">{{ number_format($artisansCount) }}+</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">Artisans</div></div>
+        <div><div class="serif text-4xl text-[#C99424]">{{ number_format($categoriesCount) }}+</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">Savoir-faire</div></div>
         <div><div class="serif text-4xl text-[#C99424]">1</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">Ville pilote</div></div>
         <div><div class="serif text-4xl text-[#C99424]">100%</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">Patrimoine vivant</div></div>
     </div>
 </section>
 
 <!-- COMMENT ÇA MARCHE -->
-<section id="comment-ca-marche" class="py-24">
-    <img src="{{ url('images/tisserand.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-10" alt="Tisserand en action" onerror="this.src='{{ url('images/hero/tourisme_porto_novo.png') }}'">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section id="comment-ca-marche" class="py-24 relative overflow-hidden bg-[#F8F6F0]">
+    <img src="{{ url('images/tisserand.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-[0.3]" alt="" loading="lazy">
+    <div class="absolute inset-0 wax-pattern opacity-30"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center mb-16 fade-up">
             <h2 class="serif text-4xl md:text-5xl text-[#064E3B] mb-4">Comment ça marche ?</h2>
             <p class="text-[#17201D]/60 max-w-2xl mx-auto text-lg">Simple comme une visite chez un ami artisan.</p>
@@ -230,9 +241,17 @@
                 {{-- Barre accent animée --}}
                 <span class="absolute top-0 left-0 h-1 w-0 bg-gradient-to-r from-[#064E3B] to-[#C99424] group-hover:w-full transition-all duration-500"></span>
                 {{-- Motif wax au survol --}}
-                <span class="absolute inset-0 wax-pattern opacity-0 group-hover:opacity-[0.06] transition-opacity duration-700 pointer-events-none"></span>
-                <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-[#064E3B] mb-6 group-hover:bg-[#064E3B] group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-lg group-hover:-rotate-6 group-hover:scale-110">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                <span class="absolute inset-0 wax-pattern opacity-0 group-hover:opacity-[0.07] transition-opacity duration-700 pointer-events-none"></span>
+                {{-- Badge : artisans référencés --}}
+                <span class="absolute top-5 right-5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#064E3B]/15 text-[11px] font-bold text-[#064E3B] shadow-sm">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-3.5 h-3.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    {{ $artisanCounts[$cat->id] ?? 0 }} artisan{{ ($artisanCounts[$cat->id] ?? 0) > 1 ? 's' : '' }}
+                </span>
+                <div class="relative w-16 h-16 mb-6">
+                    <span class="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#C99424]/25 to-transparent opacity-0 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500"></span>
+                    <span class="relative w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-[#064E3B] group-hover:bg-[#064E3B] group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-lg group-hover:-rotate-6 group-hover:scale-110">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                    </span>
                 </div>
                 <h3 class="serif text-2xl text-[#17201D] mb-3 group-hover:text-[#064E3B] transition-colors">{{ $cat->name }}</h3>
                 <p class="text-[#17201D]/60 text-sm leading-relaxed mb-6">{{ $cat->description }}</p>
