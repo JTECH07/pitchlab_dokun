@@ -4,19 +4,38 @@
         <p class="text-[#17201D]/60 text-sm">Rejoignez la communauté ƉƆKUN</p>
     </div>
 
-    <form method="POST" action="{{ route('register') }}" class="space-y-5">
+    <form method="POST" action="{{ route('register') }}" class="space-y-5" x-data="{ role: '{{ old('role', 'tourist') }}' }">
         @csrf
         <div>
-            <label for="role" class="block text-sm font-bold text-[#17201D] mb-2">Je rejoins ƉƆKUN en tant que</label>
-            <select id="role" name="role" required class="w-full px-4 py-3.5 bg-[#F8F6F0] border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#064E3B] outline-none transition font-semibold">
-                <option value="tourist" @selected(old('role', 'tourist') === 'tourist')>Visiteur ou touriste</option>
-                <option value="artisan" @selected(old('role') === 'artisan')>Détenteur de savoir-faire</option>
-                <option value="guide" @selected(old('role') === 'guide')>Guide touristique</option>
-                <option value="institution" @selected(old('role') === 'institution')>École ou institution</option>
-                <option value="researcher" @selected(old('role') === 'researcher')>Étudiant ou chercheur</option>
-                <option value="partner" @selected(old('role') === 'partner')>Partenaire culturel ou touristique</option>
-            </select>
-            <p class="mt-2 text-xs text-[#17201D]/55">Vous pourrez compléter votre profil après l’inscription.</p>
+            <label class="block text-sm font-bold text-[#17201D] mb-3">Je rejoins ƉƆKUN en tant que</label>
+            <div class="grid grid-cols-2 gap-3">
+                <label class="relative cursor-pointer rounded-2xl border-2 p-4 text-center transition-all duration-200"
+                       :class="role === 'tourist' ? 'border-[#064E3B] bg-[#064E3B]/5 shadow-md' : 'border-gray-200 hover:border-gray-300'">
+                    <input type="radio" name="role" value="tourist" class="sr-only" x-model="role">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                         class="w-8 h-8 mx-auto mb-2 transition-colors" :class="role === 'tourist' ? 'text-[#064E3B]' : 'text-gray-400'">
+                        <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                    <span class="block font-bold text-sm" :class="role === 'tourist' ? 'text-[#064E3B]' : 'text-[#17201D]/60'">Visiteur</span>
+                    <span class="block text-[11px] text-[#17201D]/45 mt-1 leading-snug">Explorer, réserver, apprendre le fon</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="w-5 h-5 absolute top-2 right-2 text-[#064E3B]" x-show="role === 'tourist'" x-cloak><path d="M20 6L9 17l-5-5"/></svg>
+                </label>
+                <label class="relative cursor-pointer rounded-2xl border-2 p-4 text-center transition-all duration-200"
+                       :class="role === 'artisan' ? 'border-[#C99424] bg-[#C99424]/5 shadow-md' : 'border-gray-200 hover:border-gray-300'">
+                    <input type="radio" name="role" value="artisan" class="sr-only" x-model="role">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                         class="w-8 h-8 mx-auto mb-2 transition-colors" :class="role === 'artisan' ? 'text-[#C99424]' : 'text-gray-400'">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                    </svg>
+                    <span class="block font-bold text-sm" :class="role === 'artisan' ? 'text-[#C99424]' : 'text-[#17201D]/60'">Artisan</span>
+                    <span class="block text-[11px] text-[#17201D]/45 mt-1 leading-snug">Présenter mon atelier, recevoir des visiteurs</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="w-5 h-5 absolute top-2 right-2 text-[#C99424]" x-show="role === 'artisan'" x-cloak><path d="M20 6L9 17l-5-5"/></svg>
+                </label>
+            </div>
+            <p class="mt-3 text-xs text-[#17201D]/55 flex items-center gap-1.5">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-3.5 h-3.5 flex-shrink-0"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                Guide, institution ou partenaire ? Contactez-nous — ces comptes sont créés par l'équipe ƉƆKUN.
+            </p>
             <x-input-error :messages="$errors->get('role')" class="mt-2"/>
         </div>
         <div>

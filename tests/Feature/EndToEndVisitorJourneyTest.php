@@ -25,6 +25,9 @@ class EndToEndVisitorJourneyTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
+        // L'inscription publique ne vérifie pas l'email automatiquement :
+        // on simule la vérification pour la suite du parcours.
+        $this->app['auth']->user()->markEmailAsVerified();
         return [$this->app['auth']->user()];
     }
 
@@ -59,6 +62,7 @@ class EndToEndVisitorJourneyTest extends TestCase
             'password_confirmation' => 'MotDePasse1!',
         ])->assertRedirect();
         $this->assertAuthenticated();
+        $this->app['auth']->user()->markEmailAsVerified();
 
         // ── 2. Catalogue artisans accessible ────────────────────
         $this->get(route('artisans.index'))->assertOk();
@@ -166,11 +170,69 @@ class EndToEndVisitorJourneyTest extends TestCase
             'name' => 'Test', 'email' => 't@t.bj',
             'password' => 'MotDePasse1!', 'password_confirmation' => 'MotDePasse1!',
         ]);
+        $this->app['auth']->user()->markEmailAsVerified();
 
         $this->get(route('learn.play', [$course, $l1]))->assertOk();      // l1 ouverte
         $this->get(route('learn.play', [$course, $l2]))->assertForbidden(); // l2 verrouillée
 
         $this->post(route('learn.complete', $l1), ['score' => 60])->assertOk();
         $this->get(route('learn.play', [$course, $l2]))->assertOk();      // débloquée
+    }
+
+    public function test_registration_role_whitelist_rejects_privileged_roles(): void
+    {
+        // Rôle privilégié existant → rejeté par la validation
+        $this->post(route('register'), [
+            'name' => 'Malin', 'email' => 'malin@t.bj',
+            'password' => 'MotDePasse1!', 'password_confirmation' => 'MotDePasse1!',
+            'role' => 'guide',
+        ])->assertSessionHasErrors('role');
+        $this->assertDatabaseMissing('users', ['email' => 'malin@t.bj']);
+
+        // Rôle inexistant / réservé → rejeté aussi
+        $this->from(route('register'))->post(route('register'), [
+            'name' => 'Fouineur', 'email' => 'fouine@t.bj',
+            'password' => 'MotDePasse1!', 'password_confirmation' => 'MotDePasse1!',
+            'role' => 'admin',
+        ])->assertSessionHasErrors('role');
+        $this->assertDatabaseMissing('users', ['email' => 'fouine@t.bj']);
+
+        // Sans rôle → visiteur par défaut, redirection carnet de voyage
+        $this->post(route('register'), [
+            'name' => 'Simple', 'email' => 'simple@t.bj',
+            'password' => 'MotDePasse1!', 'password_confirmation' => 'MotDePasse1!',
+        ])->assertRedirect(route('visitor.profile'));
+        $this->assertDatabaseHas('users', ['email' => 'simple@t.bj', 'role' => 'tourist']);
+    }
+
+    public function test_registration_artisan_redirects_to_atelier(): void
+    {
+        $this->post(route('register'), [
+            'name' => 'Koffi Atelier', 'email' => 'koffi@t.bj',
+            'password' => 'MotDePasse1!', 'password_confirmation' => 'MotDePasse1!',
+            'role' => 'artisan',
+        ])->assertRedirect(route('artisan-space.index'));
+        $this->assertDatabaseHas('users', ['email' => 'koffi@t.bj', 'role' => 'artisan']);
+    }
+
+    public function test_verified_email_required_for_member_areas(): void
+    {
+        $artisan = Artisan::factory()->create(['status' => 'published']);
+
+        $this->post(route('register'), [
+            'name' => 'Non Verifie', 'email' => 'nv@t.bj',
+            'password' => 'MotDePasse1!', 'password_confirmation' => 'MotDePasse1!',
+        ]);
+        $user = $this->app['auth']->user();
+        $this->assertNull($user->email_verified_at);
+
+        // Non vérifié → redirection vers la notice de vérification
+        $this->get(route('visitor.profile'))->assertRedirect(route('verification.notice'));
+        $this->get(route('learn.index'))->assertRedirect(route('verification.notice'));
+        $this->post(route('visitor.favorites.toggle', $artisan))->assertRedirect(route('verification.notice'));
+
+        // Vérifié → accès autorisé
+        $user->markEmailAsVerified();
+        $this->get(route('visitor.profile'))->assertOk();
     }
 }

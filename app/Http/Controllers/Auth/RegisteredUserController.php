@@ -34,20 +34,24 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['nullable', 'in:tourist,artisan,guide,institution,researcher,partner'],
+            // Inscription publique : visiteur ou artisan uniquement.
+            // Les autres rôles (guide, institution, admin...) sont attribués par un administrateur.
+            'role' => ['nullable', 'in:'.implode(',', User::PUBLIC_ROLES)],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->input('role', 'tourist'),
+            'role' => in_array($request->input('role'), User::PUBLIC_ROLES, true)
+                ? $request->input('role')
+                : 'tourist',
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect($user->homeRoute());
     }
 }

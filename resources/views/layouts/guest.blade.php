@@ -13,6 +13,8 @@
 
         <!-- Tailwind CDN -->
         <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Alpine.js -->
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script>
             tailwind.config = {
                 theme: {
@@ -39,6 +41,7 @@
         <style>
             body { font-family: 'Manrope', sans-serif; }
             h1, h2, h3, h4, .font-serif { font-family: 'DM Serif Display', serif; }
+            [x-cloak] { display: none !important; }
         </style>
     </head>
     <body class="font-sans text-dokun-charcoal antialiased bg-dokun-ivory bg-dokun-pattern">

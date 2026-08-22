@@ -26,6 +26,7 @@ class RegistrationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        // Redirection par rôle : un visiteur arrive sur son carnet de voyage
+        $response->assertRedirect(route('visitor.profile', absolute: false));
     }
 }

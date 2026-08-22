@@ -43,8 +43,8 @@ Route::post('/locale/{locale}', function (string $locale) {
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/artisans', [ArtisanPublicController::class, 'index'])->name('artisans.index');
 
-// ─── ƉƆKUN Bridge · Voice · Learn — accès réservés aux membres ──────────
-Route::middleware('auth')->group(function () {
+// ─── ƉƆKUN Bridge · Voice · Learn — accès réservés aux membres vérifiés ──
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/artisans/{artisan}/bridge', [FeatureController::class, 'showBridge'])->name('features.bridge.page');
     Route::get('/artisans/{artisan}/voice',  [FeatureController::class, 'showVoice'])->name('features.voice.page');
     Route::get('/artisans/{artisan}/learn',  [FeatureController::class, 'showLearn'])->name('features.learn.page');
@@ -61,12 +61,13 @@ Route::get('/experiences',         [ExperienceController::class, 'index'])->name
 Route::get('/carte',               [MapController::class, 'index'])->name('carte');
 
 // ─── ƉƆKUN Learn ─────────────────────────────────────────────
-Route::middleware('auth')->group(function () {
+// ─── ƉƆKUN Learn ─────────────────────────────────────────────
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/learn/{lesson}/complete', [LearnController::class, 'complete'])->name('learn.complete');
 });
 
 // ─── Espace visiteur / touriste ──────────────────────────────
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/mon-voyage', [VisitorController::class, 'profile'])->name('visitor.profile');
     Route::post('/favoris/{artisan}', [VisitorController::class, 'toggleFavorite'])->name('visitor.favorites.toggle');
 });

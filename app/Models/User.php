@@ -12,10 +12,15 @@ use Illuminate\Notifications\Notifiable;
 
 #[Fillable(['name', 'email', 'password', 'role'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
+
+    public const ROLES = ['tourist', 'artisan', 'guide', 'institution', 'researcher', 'partner', 'admin'];
+
+    /** Rôles autorisés à l'inscription publique */
+    public const PUBLIC_ROLES = ['tourist', 'artisan'];
 
     /**
      * Get the attributes that should be cast.
@@ -39,4 +44,18 @@ class User extends Authenticatable
     }
     public function loyaltyEvents() { return $this->hasMany(LoyaltyEvent::class); }
     public function loyaltySummary() { return $this->hasOne(LoyaltySummary::class); }
+
+    public function isAdmin(): bool { return $this->role === 'admin'; }
+    public function isArtisan(): bool { return $this->role === 'artisan'; }
+    public function isTourist(): bool { return $this->role === 'tourist'; }
+
+    /** Destination après connexion/inscription selon le rôle */
+    public function homeRoute(): string
+    {
+        return match (true) {
+            $this->isAdmin()   => route('dashboard'),
+            $this->isArtisan() => route('artisan-space.index'),
+            default            => route('visitor.profile'),
+        };
+    }
 }
