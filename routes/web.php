@@ -43,9 +43,16 @@ Route::post('/locale/{locale}', function (string $locale) {
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/artisans', [ArtisanPublicController::class, 'index'])->name('artisans.index');
 
-Route::get('/artisans/{artisan}/bridge', [FeatureController::class, 'showBridge'])->name('features.bridge.page');
-Route::get('/artisans/{artisan}/voice', [FeatureController::class, 'showVoice'])->name('features.voice.page');
-Route::get('/artisans/{artisan}/learn', [FeatureController::class, 'showLearn'])->name('features.learn.page');
+// ─── ƉƆKUN Bridge · Voice · Learn — accès réservés aux membres ──────────
+Route::middleware('auth')->group(function () {
+    Route::get('/artisans/{artisan}/bridge', [FeatureController::class, 'showBridge'])->name('features.bridge.page');
+    Route::get('/artisans/{artisan}/voice',  [FeatureController::class, 'showVoice'])->name('features.voice.page');
+    Route::get('/artisans/{artisan}/learn',  [FeatureController::class, 'showLearn'])->name('features.learn.page');
+
+    Route::get('/learn',                     [LearnController::class, 'index'])->name('learn.index');
+    Route::get('/learn/{course}',            [LearnController::class, 'course'])->name('learn.course');
+    Route::get('/learn/{course}/{lesson}',   [LearnController::class, 'play'])->name('learn.play');
+});
 
 Route::get('/artisans/{id}', [ArtisanPublicController::class, 'show'])->name('artisans.show');
 Route::get('/savoir-faire',        [SavoirFairePublicController::class, 'index'])->name('savoir-faire.index');
@@ -54,10 +61,9 @@ Route::get('/experiences',         [ExperienceController::class, 'index'])->name
 Route::get('/carte',               [MapController::class, 'index'])->name('carte');
 
 // ─── ƉƆKUN Learn ─────────────────────────────────────────────
-Route::get('/learn',                          [LearnController::class, 'index'])->name('learn.index');
-Route::get('/learn/{course}',                 [LearnController::class, 'course'])->name('learn.course');
-Route::get('/learn/{course}/{lesson}',        [LearnController::class, 'play'])->name('learn.play');
-Route::post('/learn/{lesson}/complete',       [LearnController::class, 'complete'])->name('learn.complete');
+Route::middleware('auth')->group(function () {
+    Route::post('/learn/{lesson}/complete', [LearnController::class, 'complete'])->name('learn.complete');
+});
 
 // ─── Espace visiteur / touriste ──────────────────────────────
 Route::middleware('auth')->group(function () {
@@ -208,8 +214,8 @@ Route::middleware('auth')->prefix('features')->name('features.')->group(function
         ->name('bridge');
 });
 
-// Voice archives & Learn — public (consultation uniquement)
-Route::prefix('features')->name('features.')->group(function () {
+// API consultation — membres uniquement (pages déjà protégées)
+Route::middleware('auth')->prefix('features')->name('features.')->group(function () {
     Route::get('/voice/{artisan}/archives', [PitchlabFeaturesController::class, 'getVoiceArchives'])->name('voice.archives');
     Route::get('/learn/{artisan}', [PitchlabFeaturesController::class, 'getLearningWords'])->name('learn');
     Route::post('/translate', [PitchlabFeaturesController::class, 'translateText'])->name('translate');
