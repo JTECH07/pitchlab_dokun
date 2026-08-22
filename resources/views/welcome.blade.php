@@ -13,7 +13,8 @@
     <style>
         body{font-family:'Manrope',sans-serif;}
         h1,h2,.serif{font-family:'DM Serif Display',serif;}
-        .slide{transition:opacity 1s ease;}
+        .slide{transition:opacity 1s ease, visibility 1s;}
+        .slide:not(.active){visibility:hidden;}
         .slider-content{opacity:0;transform:translateY(20px);transition:all .8s ease .3s;}
         .slide.active .slider-content{opacity:1;transform:translateY(0);}
         .kente-stripe{background:repeating-linear-gradient(90deg,#064E3B 0 24px,#C99424 24px 32px,#17201D 32px 40px,#C99424 40px 48px);}
@@ -111,11 +112,20 @@
     }
     timer=setInterval(()=>goTo((cur+1)%slides.length),6000);
 
-    // Révélation au scroll (étapes + cartes savoir-faire)
-    const io = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
-    },{threshold:.15});
-    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+<script>
+    // Révélation au scroll — exécuté après le chargement du DOM complet
+    document.addEventListener('DOMContentLoaded', () => {
+        const io = new IntersectionObserver((entries)=>{
+            entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+        },{threshold:.12, rootMargin:'0px 0px -40px 0px'});
+        document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+        // Sécurité : tout révéler si l'observer ne supporte pas le navigateur
+        if (!('IntersectionObserver' in window)) {
+            document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
+        }
+    });
 </script>
 
 <!-- STATS BAR -->
