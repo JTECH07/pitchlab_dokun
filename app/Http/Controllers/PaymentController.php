@@ -194,8 +194,12 @@ class PaymentController extends Controller
                 $reservation = ReservationRequest::create($reservationData);
                 $pending->update(['status' => 'completed']);
 
-                // Notifier l'artisan
+                // Notifier l'artisan + points fidélité si visiteur connecté
                 $this->notifyArtisan($reservation);
+                if (!empty($reservationData['user_id'])) {
+                    $member = \App\Models\User::find($reservationData['user_id']);
+                    if ($member) app(\App\Services\LoyaltyService::class)->award($member, 'reservation_made', ['reference' => $reference]);
+                }
 
                 return redirect()->route('reservations.receipt', $reservation->qr_code_token)
                     ->with('success', 'Paiement confirmé ! Votre billet est prêt. Référence : ' . $reservationData['reference']);
@@ -219,6 +223,9 @@ class PaymentController extends Controller
                 $reservationData['status'] = 'pending';
                 $reservation = ReservationRequest::create($reservationData);
                 $pending->update(['status' => 'pending']);
+
+                // Paiement en cours de vérification : prévenir quand même l'artisan
+                $this->notifyArtisan($reservation);
 
                 return redirect()->route('reservations.receipt', $reservation->qr_code_token)
                     ->with('success', 'Réservation enregistrée. Vérification du paiement en cours. Référence : ' . $reservationData['reference']);
@@ -246,10 +253,19 @@ class PaymentController extends Controller
         }
 
         if ($eventName === 'transaction.approved') {
+            // Callback raté ? Si le pending était encore 'pending', l'artisan n'a pas été notifié
+            $callbackMissed = PendingPayment::where('fedapay_transaction_id', (string) $transactionId)
+                ->where('status', 'pending')->exists();
+
             ReservationRequest::where('fedapay_transaction_id', (string) $transactionId)
                 ->update(['payment_status' => 'paid']);
             PendingPayment::where('fedapay_transaction_id', (string) $transactionId)
                 ->update(['status' => 'completed']);
+
+            if ($callbackMissed) {
+                $missed = ReservationRequest::where('fedapay_transaction_id', (string) $transactionId)->first();
+                if ($missed) $this->notifyArtisan($missed);
+            }
         }
 
         if ($eventName === 'transaction.declined' || $eventName === 'transaction.canceled') {
@@ -276,7 +292,7 @@ class PaymentController extends Controller
                 ? 'Expérience pratique : ' . $reservation->experience_type
                 : 'Visite d\'atelier libre';
 
-            $subject = '🎟 Nouvelle réservation ƉƆKUN — ' . $reservation->reference;
+            $subject = 'Nouvelle réservation ƉƆKUN — ' . $reservation->reference;
             $body = "Bonjour {$artisan->first_name},\n\n"
                 . "Vous avez reçu une nouvelle réservation ƉƆKUN.\n\n"
                 . "═══════════════════════════════\n"
