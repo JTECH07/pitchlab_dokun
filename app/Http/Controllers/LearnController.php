@@ -65,6 +65,10 @@ class LearnController extends Controller
         $existing = \App\Models\LearnProgress::where('user_id', Auth::id())->where('lesson_id', $lesson->id)->first();
         $score = $data['score'];
 
+        $loyalty = app(\App\Services\LoyaltyService::class);
+        $loyalty->award(Auth::user(), 'lesson_completed', ['lesson_id' => $lesson->id]);
+        if ($score === 100) $loyalty->award(Auth::user(), 'perfect_quiz', ['lesson_id' => $lesson->id]);
+
         if ($existing) {
             $existing->update([
                 'best_score' => max($existing->best_score, $score),
