@@ -136,14 +136,54 @@
                 </h2>
                 <p class="text-dokun-charcoal/80 leading-relaxed text-[15px]">{{ $artisan->history }}</p>
             </section>
-            @endif
+            @endif             
         </div>
     </div>
 
     {{-- ═══════════════════════════════════════════
+         8. EXPÉRIENCES
+    ═══════════════════════════════════════════ --}}
+    @if($artisan->experiences->where('is_published', true)->count() > 0)
+    <section class="mb-20">
+        <h2 class="text-3xl font-serif text-dokun-green mb-6 flex items-center gap-3">
+            <span class="w-10 h-1 bg-dokun-gold rounded-full"></span>
+            {{ __('app.exp_title') }}s proposées
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach($artisan->experiences->where('is_published', true) as $exp)
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col">
+                <div class="p-6 flex-1">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="px-2.5 py-1 bg-dokun-green/10 text-dokun-green text-xs font-bold rounded-full">🎨 Expérience</span>
+                        <span class="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full">{{ $exp->duration_minutes }} min</span>
+                    </div>
+                    <h3 class="font-serif text-xl text-dokun-green mb-2">{{ $exp->title }}</h3>
+                    <p class="text-dokun-charcoal/70 text-sm leading-relaxed mb-4">{{ $exp->summary }}</p>
+                    <div class="flex items-center gap-4 text-xs text-dokun-charcoal/50">
+                        <span class="flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            Max {{ $exp->capacity }} pers.
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6 pt-0 border-t border-gray-50">
+                    <div class="flex items-center justify-between pt-4">
+                        <span class="font-serif text-2xl text-dokun-green font-bold">{{ number_format($exp->price, 0, ',', ' ') }} <span class="text-sm font-sans font-normal text-dokun-charcoal/50">FCFA</span></span>
+                        <a href="{{ route('payment.confirm', $artisan->id) }}" class="px-5 py-2.5 bg-dokun-green text-white font-bold text-sm rounded-xl hover:bg-dokun-green/90 active:scale-[.98] transition shadow-md shadow-dokun-green/15">
+                            Réserver
+                        </a>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </section>
+    @endif
+
+    {{-- ═══════════════════════════════════════════
          3. FEATURE CARDS — Quick Navigation
     ═══════════════════════════════════════════ --}}
-    <section class="mb-20">
+    <section class="mb-20 space-y-6" style="scroll-margin-top: 6rem;">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             <a href="{{ route('features.bridge.page', $artisan) }}"
                class="group bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg hover:border-dokun-gold/30 transition-all duration-300 text-center">
@@ -274,45 +314,7 @@
         </div>
     </section>
 
-    {{-- ═══════════════════════════════════════════
-         8. EXPÉRIENCES
-    ═══════════════════════════════════════════ --}}
-    @if($artisan->experiences->where('is_published', true)->count() > 0)
-    <section class="mb-20">
-        <h2 class="text-3xl font-serif text-dokun-green mb-6 flex items-center gap-3">
-            <span class="w-10 h-1 bg-dokun-gold rounded-full"></span>
-            {{ __('app.exp_title') }}s proposées
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach($artisan->experiences->where('is_published', true) as $exp)
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col">
-                <div class="p-6 flex-1">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="px-2.5 py-1 bg-dokun-green/10 text-dokun-green text-xs font-bold rounded-full">🎨 Expérience</span>
-                        <span class="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full">{{ $exp->duration_minutes }} min</span>
-                    </div>
-                    <h3 class="font-serif text-xl text-dokun-green mb-2">{{ $exp->title }}</h3>
-                    <p class="text-dokun-charcoal/70 text-sm leading-relaxed mb-4">{{ $exp->summary }}</p>
-                    <div class="flex items-center gap-4 text-xs text-dokun-charcoal/50">
-                        <span class="flex items-center gap-1">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                            Max {{ $exp->capacity }} pers.
-                        </span>
-                    </div>
-                </div>
-                <div class="p-6 pt-0 border-t border-gray-50">
-                    <div class="flex items-center justify-between pt-4">
-                        <span class="font-serif text-2xl text-dokun-green font-bold">{{ number_format($exp->price, 0, ',', ' ') }} <span class="text-sm font-sans font-normal text-dokun-charcoal/50">FCFA</span></span>
-                        <a href="{{ route('payment.confirm', $artisan->id) }}" class="px-5 py-2.5 bg-dokun-green text-white font-bold text-sm rounded-xl hover:bg-dokun-green/90 active:scale-[.98] transition shadow-md shadow-dokun-green/15">
-                            Réserver
-                        </a>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </section>
-    @endif
+    
 
     {{-- ═══════════════════════════════════════════
          9. AVIS

@@ -5,10 +5,10 @@
         <!-- Brand -->
         <div class="md:col-span-2">
             <div class="flex items-center gap-3 mb-5">
-                <div class="w-12 h-12 bg-dokun-green rounded flex items-center justify-center shrink-0 overflow-hidden"><img src="{{ asset('images/dokun_logo.png') }}" alt="Logo ƉƆKUN" class="w-full h-full object-contain"></div>
+                <div class="w-12 h-12 bg-dokun-green rounded flex items-center justify-center shrink-0 overflow-hidden"><img src="{{ url('images/dokun_logo.png') }}" alt="Logo ƉƆKUN" class="w-full h-full object-contain"></div>
                 <div class="flex flex-col leading-tight">
-                    <span class="serif text-3xl">ƉƆKUN</span>
-                    <span class="text-[9.5px] tracking-[0.15em] opacity-70 uppercase font-semibold">Patrimoine Vivant &<br>Tourisme Culturel</span>
+                    <span class="font-serif text-3xl">ƉƆKUN</span>
+                    <span class="text-[9.5px] tracking-[0.2em] opacity-70 uppercase font-semibold">Patrimoine Vivant &<br>Tourisme Culturel</span>
                 </div>
             </div>
             <p class="text-white/60 max-w-sm leading-relaxed text-sm mb-6">

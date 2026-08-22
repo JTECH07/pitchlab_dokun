@@ -44,7 +44,7 @@
     <!-- Header Banner -->
     <section class="pt-36 pb-24 bg-dokun-charcoal text-white relative overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img src="{{ asset('images/hero/tourisme_porto_novo.png') }}" class="w-full h-full object-cover opacity-20 mix-blend-luminosity" alt="Porto-Novo Culture">
+            <img src="{{ url('images/hero/tourisme_porto_novo.png') }}" class="w-full h-full object-cover opacity-20 mix-blend-luminosity" alt="Porto-Novo Culture">
             <div class="absolute inset-0 bg-gradient-to-t from-dokun-charcoal via-dokun-charcoal/80 to-transparent"></div>
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

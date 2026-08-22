@@ -224,7 +224,7 @@
                     <a href="{{ route('experiences.index') }}" class="hidden sm:inline-flex text-sm font-semibold text-dokun-charcoal hover:text-dokun-gold transition">{{ __('app.nav_experiences') }}</a>
                     <div class="w-px h-5 bg-gray-200 hidden sm:block"></div>
                     <div class="flex items-center gap-2">
-                        <img src="{{ asset('images/dokun_logo.png') }}" alt="Logo ƉƆKUN" class="w-9 h-9 object-contain bg-dokun-green rounded">
+                        <img src="{{ url('images/dokun_logo.png') }}" alt="Logo ƉƆKUN" class="w-9 h-9 object-contain bg-dokun-green rounded">
                         <span class="font-serif tracking-wide text-dokun-green text-xl">ƉƆKUN</span>
                     </div>
                 </div>

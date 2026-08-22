@@ -18,7 +18,7 @@
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex-shrink-0 flex items-center gap-3">
                 <div class="w-12 h-12 rounded overflow-hidden flex items-center justify-center bg-dokun-green">
-                    <img src="{{ asset('images/dokun_logo.png') }}" alt="ƉƆKUN" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <img src="{{ url('images/dokun_logo.png') }}" alt="ƉƆKUN" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                     <span class="hidden text-dokun-gold font-bold text-2xl">Ɖ</span>
                 </div>
                 <div class="flex flex-col leading-tight">

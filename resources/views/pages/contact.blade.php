@@ -22,7 +22,7 @@
 
     {{-- ══════════ HERO ══════════ --}}
     <section class="relative overflow-hidden">
-        <img src="{{ asset('images/dokun_bg2.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-10" alt="" loading="lazy">
+        <img src="{{ url('images/dokun_bg2.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-10" alt="" loading="lazy">
         <div class="absolute inset-0 wax-pattern opacity-50"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-dokun-ivory"></div>
         <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 text-center">
@@ -142,7 +142,7 @@
     <section class="pb-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <a href="{{ route('carte') }}" class="group relative block overflow-hidden rounded-2xl bg-dokun-charcoal text-white fade-up">
-                <img src="{{ asset('images/dokun_carte.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-25" alt="" loading="lazy">
+                <img src="{{ url('images/dokun_carte.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-25" alt="" loading="lazy">
                 <div class="absolute inset-0 wax-pattern opacity-30 group-hover:opacity-50 transition-opacity"></div>
                 <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 px-8 py-10 md:px-14">
                     <div>

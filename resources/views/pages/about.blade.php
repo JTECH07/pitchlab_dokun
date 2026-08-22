@@ -22,7 +22,7 @@
 
     {{-- ══════════ HERO ══════════ --}}
     <section class="relative bg-dokun-charcoal text-white overflow-hidden">
-        <img src="{{ asset('images/dokun_bg1.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-15" alt="" loading="lazy">
+        <img src="{{ url('images/dokun_bg1.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-15" alt="" loading="lazy">
         <div class="absolute inset-0 wax-pattern opacity-40"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-dokun-charcoal/70 via-transparent to-dokun-charcoal/80"></div>
         <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 text-center">
@@ -122,7 +122,7 @@
 
     {{-- ══════════ CHIFFRES ══════════ --}}
     <section class="relative bg-dokun-green text-white py-16 md:py-20 overflow-hidden">
-        <img src="{{ asset('images/forgeron.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-15" alt="" loading="lazy">
+        <img src="{{ url('images/forgeron.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-15" alt="" loading="lazy">
         <div class="absolute inset-0 wax-pattern opacity-20"></div>
         <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
             <div class="fade-up">

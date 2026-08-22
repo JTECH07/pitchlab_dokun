@@ -33,7 +33,7 @@
             width: 28px; height: 36px;
             position: relative;
         }
-        .drop-marker svg { width: 100%; height: 100%; }
+        .drop-marker svg { width: 100%; height: 100%; } 
         .drop-marker .drop-shadow {
             position: absolute; bottom: -3px; left: 50%; transform: translateX(-50%);
             width: 14px; height: 6px; background: rgba(0,0,0,0.25); border-radius: 50%;
@@ -52,22 +52,21 @@
         @php
         $slides = [
             ['img'=>'images/dokun_bg1.jpg','tag'=>'Voyage Culturel','title'=>"L'Âme de Porto-Novo",'sub'=>'Le patrimoine vivant, une richesse partagée. Explorez la ville aux trois noms.','cta_label'=>'Découvrir sur la carte','cta_url'=>route('carte'),'cta_style'=>'gold'],
-            ['img'=>'images/tisserand.png','tag'=>'Transmission','title'=>'Rencontrez nos Maîtres Artisans','sub'=>'Derrière chaque objet se cache une histoire, un visage, des mains expertes.','cta_label'=>'Voir le répertoire','cta_url'=>route('artisans.index'),'cta_style'=>'green'],
-            ['img'=>'images/tisserand.jpg','tag'=>'Savoir-Faire','title'=>'Le Tissage Kanvo','sub'=>'Un art textile unique, fierté des familles de Porto-Novo depuis des générations.','cta_label'=>'Découvrir les métiers','cta_url'=>route('savoir-faire.index'),'cta_style'=>'outline'],
-            ['img'=>'images/forgeron.jpg','tag'=>'Valorisation','title'=>'Des Savoir-Faire Inestimables','sub'=>'Du tissage Kanvo à la poterie, des techniques transmises de génération en génération.','cta_label'=>'Découvrir les métiers','cta_url'=>route('savoir-faire.index') ,'cta_style'=>'outline'],
+            ['img'=>'images/tisserand.jpg','tag'=>'Transmission','title'=>'Rencontrez nos Maîtres Artisans','sub'=>'Derrière chaque objet se cache une histoire, un visage, des mains expertes.','cta_label'=>'Voir le répertoire','cta_url'=>route('artisans.index'),'cta_style'=>'green'],
+            ['img'=>'images/forgeron.jpg','tag'=>'Savoir-Faire','title'=>'Des Savoir-Faire Inestimables','sub'=>'Du tissage Kanvo à la poterie, des techniques transmises de génération en génération.','cta_label'=>'Découvrir les métiers','cta_url'=>route('savoir-faire.index'),'cta_style'=>'outline'],
             ['img'=>'images/dokun_bg3.jpg','tag'=>'Opportunités Locales','title'=>'Saisissez les Opportunités','sub'=>'ƉƆKUN crée de nouvelles opportunités économiques pour les communautés locales.','cta_label'=>'Explorer la carte','cta_url'=>route('carte'),'cta_style'=>'gold'],
             ['img'=>'images/poterie_en_action.png','tag'=>'Expériences','title'=>'Vivez une Expérience Unique','sub'=>'Réservez une visite d\'atelier et apprenez directement auprès d\'un maître artisan.','cta_label'=>'Voir les expériences','cta_url'=>route('experiences.index'),'cta_style'=>'green'],
         ];
         @endphp
         @foreach($slides as $i => $slide)
         <div class="slide absolute inset-0 w-full h-full {{ $i===0?'opacity-100 active':'opacity-0' }}">
-            <img src="{{ asset($slide['img']) }}" class="w-full h-full object-cover" alt="{{ $slide['tag'] }}" onerror="this.src='{{ asset('images/hero/hero_dokun.png') }}'">
-            <div class="absolute inset-0 bg-gradient-to-b from-[#17201D]/80 via-[#17201D]/55 to-[#17201D]/90"></div>
+            <img src="/{{ $slide['img'] }}" class="w-full h-full object-cover" alt="{{ $slide['tag'] }}" loading="eager">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#17201D]/45 via-[#17201D]/15 to-[#17201D]/60"></div>
             <div class="absolute inset-0 flex items-center justify-center pt-20">
                 <div class="slider-content max-w-4xl mx-auto px-4 text-center text-white">
                     <span class="inline-block py-1.5 px-4 rounded-full bg-[#C99424]/20 text-[#C99424] font-bold text-xs tracking-[0.2em] uppercase mb-6 border border-[#C99424]/30">{{ $slide['tag'] }}</span>
-                    <h1 class="serif text-5xl md:text-7xl mb-6 leading-tight">{{ $slide['title'] }}</h1>
-                    <p class="text-white/80 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light leading-relaxed">{{ $slide['sub'] }}</p>
+                    <h1 class="serif text-5xl md:text-7xl mb-6 leading-tight" style="text-shadow:0 2px 28px rgba(23,32,29,.6)">{{ $slide['title'] }}</h1>
+                    <p class="text-white/90 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light leading-relaxed" style="text-shadow:0 1px 16px rgba(23,32,29,.7)">{{ $slide['sub'] }}</p>
                     <a href="{{ $slide['cta_url'] }}" class="{{ $slide['cta_style']==='gold' ? 'bg-[#C99424] text-white hover:bg-yellow-600 shadow-xl shadow-[#C99424]/20' : ($slide['cta_style']==='green' ? 'bg-[#064E3B] text-white hover:bg-[#064E3B]/90' : 'bg-white/10 border border-white/20 text-white hover:bg-white/20') }} px-8 py-4 rounded-full font-semibold transition-all inline-block">
                         {{ $slide['cta_label'] }}
                     </a>
@@ -111,7 +110,7 @@
 
 <!-- COMMENT ÇA MARCHE -->
 <section id="comment-ca-marche" class="py-24">
-    <img src="{{ asset('images/tisserand.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-10" alt="Tisserand en action" onerror="this.src='{{ asset('images/hero/tourisme_porto_novo.png') }}'">
+    <img src="{{ url('images/tisserand.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-10" alt="Tisserand en action" onerror="this.src='{{ url('images/hero/tourisme_porto_novo.png') }}'">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16 fade-up">
             <h2 class="serif text-4xl md:text-5xl text-[#064E3B] mb-4">Comment ça marche ?</h2>
@@ -167,7 +166,7 @@
 
 <!-- IMAGE CULTURELLE IMMERSIVE -->
 <section class="relative h-80 overflow-hidden">
-    <img src="{{ asset('images/poterie_en_action.png') }}" class="w-full h-full object-cover" alt="Artisanat en action" onerror="this.src='{{ asset('images/hero/tourisme_porto_novo.png') }}'">
+    <img src="{{ url('images/poterie_en_action.png') }}" class="w-full h-full object-cover" alt="Artisanat en action" onerror="this.src='{{ url('images/hero/tourisme_porto_novo.png') }}'">
     <div class="absolute inset-0 bg-[#064E3B]/75 flex items-center justify-center">
         <div class="text-center text-white px-4">
             <p class="serif text-3xl md:text-5xl mb-4">"La technologie sert le patrimoine.<br>Elle ne le remplace pas."</p>
@@ -217,7 +216,7 @@
 
 <!-- POUR QUI ? -->
 <section class="py-24 bg-[#064E3B] text-white relative overflow-hidden">
-    <img src="{{ asset('images/vannerie.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-15" alt="" loading="lazy">
+    <img src="{{ url('images/vannerie.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-15" alt="" loading="lazy">
     <div class="absolute inset-0 wax-pattern opacity-40"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center mb-16 fade-up">
@@ -246,7 +245,7 @@
 
 <!-- CARTE INTÉGRÉE -->
 <section class="py-20 bg-[#17201D] relative overflow-hidden">
-    <img src="{{ asset('images/dokun_carte.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-10" alt="" loading="lazy">
+    <img src="{{ url('images/dokun_carte.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-10" alt="" loading="lazy">
     <div class="absolute inset-0 wax-pattern opacity-30"></div>
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center mb-10 fade-up">
@@ -267,7 +266,7 @@
 
 <!-- CTA FINAL -->
 <section class="py-28 text-center relative overflow-hidden">
-    <img src="{{ asset('images/dokun_bg.jpeg') }}" class="absolute inset-0 w-full h-full object-cover" alt="" loading="lazy">
+    <img src="{{ url('images/dokun_bg.jpeg') }}" class="absolute inset-0 w-full h-full object-cover" alt="" loading="lazy">
     <div class="absolute inset-0 bg-[#064E3B]/85"></div>
     <div class="absolute inset-0 wax-pattern opacity-40"></div>
     <div class="relative z-10 max-w-3xl mx-auto px-4 fade-up">

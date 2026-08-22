@@ -16,7 +16,7 @@
     <!-- Hero -->
     <section class="pt-36 pb-24 bg-[#17201D] text-white relative overflow-hidden">
         <div class="absolute inset-0">
-            <img src="{{ asset('images/reel_marche_arts.png') }}" class="w-full h-full object-cover opacity-30" alt="Arts béninois" onerror="">
+            <img src="{{ url('images/reel_marche_arts.png') }}" class="w-full h-full object-cover opacity-30" alt="Arts béninois" onerror="">
             <div class="absolute inset-0 bg-gradient-to-t from-[#064E3B] via-[#17201D]/80 to-transparent"></div>
         </div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
