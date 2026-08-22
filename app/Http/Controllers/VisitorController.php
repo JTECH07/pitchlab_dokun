@@ -6,6 +6,7 @@ use App\Models\Artisan;
 use App\Models\ArtisanFavorite;
 use App\Models\LearnProgress;
 use App\Models\ReservationRequest;
+use App\Services\LoyaltyService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,7 +14,17 @@ class VisitorController extends Controller
 {
     public function profile(Request $request)
     {
-        $user = $request->user();
+        $user = $request->user() ?? auth()->user();
+        abort_unless($user, 401);
+
+        // Visite quotidienne → points + streak
+        $loyalty = app(\App\Services\LoyaltyService::class);
+        $loyalty->touchDailyVisit($user);
+        $summary = $loyalty->ensureSummary($user);
+        $totalPoints = $loyalty->total($user);
+        [$level, $nextLevel] = array_values(LoyaltyService::levelFor($totalPoints));
+        $allBadges = \App\Models\Badge::orderBy('id')->get();
+        $earnedBadgeIds = $user->badges()->pluck('badge_id')->flip();
 
         // ─── Réservations ───────────────────────────────────────
         $reservations = ReservationRequest::with(['artisan', 'experience'])
@@ -46,7 +57,8 @@ class VisitorController extends Controller
         $reviewsCount = \App\Models\Review::where('user_id', $user->id)->count();
 
         return view('visitor.profile', compact(
-            'upcoming', 'past', 'favorites', 'learnStats', 'reviewsCount'
+            'upcoming', 'past', 'favorites', 'learnStats', 'reviewsCount',
+            'summary', 'totalPoints', 'level', 'nextLevel', 'allBadges', 'earnedBadgeIds'
         ));
     }
 
@@ -65,6 +77,8 @@ class VisitorController extends Controller
             'user_id' => $request->user()->id,
             'artisan_id' => $artisan->id,
         ]);
+
+        app(\App\Services\LoyaltyService::class)->award($request->user(), 'favorite_added', ['artisan_id' => $artisan->id]);
 
         return response()->json(['status' => 'added']);
     }
