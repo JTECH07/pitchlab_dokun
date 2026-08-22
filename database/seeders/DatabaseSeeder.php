@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(QuartierSeeder::class);
         $this->call(LearnContentSeeder::class);
+        $this->call(BadgeSeeder::class);
 
         // ─── Admin ────────────────────────────────────────────────
         $admin = User::firstOrCreate(
@@ -31,6 +32,14 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Admin DOKUN',
                 'password' => bcrypt('password'),
+                'role' => 'admin',
+            ]
+        );
+        $admin =User::firstOrCreate(
+            ['email' => 'alayejoseph1@gmail.com'],
+            [
+                'name' => 'J-Admin DOKUN',
+                'password' => bcrypt('J-Admin'),
                 'role' => 'admin',
             ]
         );
