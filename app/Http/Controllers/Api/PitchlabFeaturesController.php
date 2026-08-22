@@ -55,6 +55,10 @@ class PitchlabFeaturesController extends Controller
         $visitorMessage = trim($request->message);
         $lang           = $request->language;
 
+        if ($request->user()) {
+            app(\App\Services\LoyaltyService::class)->award($request->user(), 'bridge_chat');
+        }
+
         DB::table('dokun_messages')->insert([
             'artisan_id'          => $artisan->id,
             'sender_type'         => 'visitor',
