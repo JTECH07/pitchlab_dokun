@@ -32,4 +32,11 @@ class User extends Authenticatable
 
     public function artisan() { return $this->hasOne(Artisan::class); }
     public function reservations() { return $this->hasMany(ReservationRequest::class); }
+    public function favorites() { return $this->hasMany(ArtisanFavorite::class); }
+    public function badges()
+    {
+        return $this->belongsToMany(Badge::class, 'badge_user')->withPivot('earned_at');
+    }
+    public function loyaltyEvents() { return $this->hasMany(LoyaltyEvent::class); }
+    public function loyaltySummary() { return $this->hasOne(LoyaltySummary::class); }
 }
