@@ -161,13 +161,14 @@ class EndToEndVisitorJourneyTest extends TestCase
         $l1 = LearnLesson::create(['course_id' => $course->id, 'slug' => 'compter', 'title_fr' => 'Compter', 'title_en' => 'Counting', 'sort_order' => 1]);
         $l2 = LearnLesson::create(['course_id' => $course->id, 'slug' => 'negocier', 'title_fr' => 'Négocier', 'title_en' => 'Bargaining', 'sort_order' => 2]);
 
-        $this->get(route('learn.play', [$course, $l1]))->assertOk();      // l1 ouverte
-        $this->get(route('learn.play', [$course, $l2]))->assertForbidden(); // l2 verrouillée
-
+        $this->get(route('learn.index'))->assertRedirect(route('login')); // membres uniquement
         $this->post(route('register'), [
             'name' => 'Test', 'email' => 't@t.bj',
             'password' => 'MotDePasse1!', 'password_confirmation' => 'MotDePasse1!',
         ]);
+
+        $this->get(route('learn.play', [$course, $l1]))->assertOk();      // l1 ouverte
+        $this->get(route('learn.play', [$course, $l2]))->assertForbidden(); // l2 verrouillée
 
         $this->post(route('learn.complete', $l1), ['score' => 60])->assertOk();
         $this->get(route('learn.play', [$course, $l2]))->assertOk();      // débloquée
