@@ -25,7 +25,7 @@
 <main class="pt-28 pb-24">
     {{-- Hero --}}
     <section class="bg-dokun-charcoal relative overflow-hidden mb-16">
-        <img src="{{ asset('images/tisserand.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-15" alt="" loading="lazy">
+        <img src="{{ url('images/tisserand.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-15" alt="" loading="lazy">
         <div class="absolute inset-0 wax-pattern opacity-30"></div>
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10 text-center fade-up">
             <span class="inline-block px-4 py-1.5 bg-dokun-gold/15 text-dokun-gold border border-dokun-gold/30 rounded-full text-xs font-bold uppercase tracking-widest mb-5">ƉƆKUN Learn</span>
