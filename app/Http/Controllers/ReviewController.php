@@ -45,6 +45,13 @@ class ReviewController extends Controller
             ->where('status', 'completed')
             ->firstOrFail();
 
+        // Un seul avis par réservation, même en POST direct
+        $already = Review::where('user_id', $request->user()->id)
+            ->where('reservation_request_id', $reservation->id)->exists();
+        abort_if($already, 403, 'Un avis a déjà été soumis pour cette réservation.');
+
+        app(\App\Services\LoyaltyService::class)->award($request->user(), 'review_published', ['reservation_id' => $reservation->id]);
+
         Review::create([
             'user_id'                => $request->user()->id,
             'artisan_id'             => $reservation->artisan_id,
