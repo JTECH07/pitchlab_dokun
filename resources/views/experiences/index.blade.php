@@ -58,30 +58,7 @@
                 </form>
             </div>
 
-            {{-- Sélecteur devise --}}
-            <div class="flex justify-end">
-                <div class="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-6 max-w-sm w-full">
-                    <p class="text-white/60 text-xs font-bold uppercase tracking-wider mb-3">💱 Votre devise</p>
-                    <form action="{{ route('experiences.index') }}" method="GET" id="currency-form">
-                        @foreach(request()->except('currency', 'page') as $key => $val)
-                            @if(is_array($val))
-                                @foreach($val as $v)<input type="hidden" name="{{ $key }}[]" value="{{ $v }}">@endforeach
-                            @else
-                                <input type="hidden" name="{{ $key }}" value="{{ $val }}">
-                            @endif
-                        @endforeach
-                        <select name="currency" onchange="this.form.submit()"
-                            class="w-full bg-white/15 border border-white/25 text-white rounded-xl px-4 py-3 text-sm font-bold focus:ring-2 focus:ring-dokun-gold focus:outline-none">
-                            @foreach($currencies as $code => $info)
-                                <option value="{{ $code }}" {{ $currency === $code ? 'selected' : '' }} class="text-dokun-charcoal bg-white">
-                                    {{ $info['flag'] }} {{ $code }} — {{ $info['label'] }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </form>
-                    <p class="text-white/40 text-xs mt-2">Les prix sont affichés dans votre devise.</p>
-                </div>
-            </div>
+            {{-- Note prix : la conversion de devise n'apparaît que dans le flux de réservation --}}
         </div>
     </div>
 </section>
@@ -92,7 +69,6 @@
         {{-- ══ SIDEBAR FILTRES ══ --}}
         <aside class="lg:w-72 flex-shrink-0">
             <form action="{{ route('experiences.index') }}" method="GET" id="filter-form">
-                <input type="hidden" name="currency" value="{{ $currency }}">
                 @if(request('q'))<input type="hidden" name="q" value="{{ request('q') }}">@endif
 
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-7 sticky top-28">
@@ -100,7 +76,7 @@
 
                     {{-- Savoir-faire / Intérêts --}}
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">🎯 Vos intérêts</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">Vos intérêts</h3>
                         <div class="flex flex-wrap gap-2">
                             @foreach($savoirFaires as $sf)
                             <label class="filter-chip">
@@ -117,21 +93,16 @@
 
                     {{-- Budget --}}
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">💰 Budget max</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3 flex items-center gap-1.5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Budget max</h3>
                         <div class="space-y-3">
                             <div class="flex items-center gap-2">
                                 <input type="number" name="budget_max"
                                     value="{{ request('budget_max') }}"
                                     min="0"
-                                    placeholder="Ex: {{ $currency === 'XOF' ? '15000' : round(15000 * $convRate) }}"
+                                    placeholder="Ex: 15000"
                                     class="w-full px-3 py-2 bg-dokun-ivory border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-dokun-gold focus:outline-none">
-                                <span class="text-sm font-bold text-dokun-green flex-shrink-0">{{ $currencyInfo['symbol'] }}</span>
+                                <span class="text-sm font-bold text-dokun-green flex-shrink-0">F CFA</span>
                             </div>
-                            @if(request('budget_max'))
-                            <p class="text-xs text-dokun-green font-semibold">
-                                ≡ {{ number_format(request('budget_max') / $convRate, 0, ',', ' ') }} FCFA
-                            </p>
-                            @endif
                         </div>
                     </div>
 
@@ -163,7 +134,7 @@
                             Appliquer les filtres
                         </button>
                         @if(request()->hasAny(['savoir_faire', 'budget_max', 'budget_min', 'duration', 'type', 'q', 'sort']))
-                        <a href="{{ route('experiences.index', ['currency' => $currency]) }}"
+                        <a href="{{ route('experiences.index', []) }}"
                            class="w-full py-2 text-center text-sm text-gray-400 hover:text-red-500 font-semibold transition">
                             ✕ Effacer les filtres
                         </a>
@@ -199,12 +170,7 @@
                             <h3 class="font-serif text-lg text-dokun-green leading-tight">{{ $rec->title }}</h3>
                             <div class="flex justify-between items-center mt-3">
                                 <strong class="text-dokun-green text-sm font-bold">
-                                    @php
-                                        $convertedPrice = $rec->price * $convRate;
-                                        echo $convRate == 1
-                                            ? number_format($rec->price, 0, ',', ' ') . ' FCFA'
-                                            : $currencyInfo['symbol'] . ' ' . number_format($convertedPrice, 2, '.', ' ');
-                                    @endphp
+                                    {{ number_format($rec->price, 0, ',', ' ') }} F CFA
                                 </strong>
                                 <a href="{{ route('artisans.show', $rec->artisan_id) }}#reservation-form"
                                    class="bg-dokun-green text-white px-3 py-1.5 rounded-lg font-bold text-xs hover:bg-dokun-green/90 transition">
@@ -230,7 +196,7 @@
                         @endif
                     </h2>
                     <p class="text-sm text-gray-400 mt-0.5">
-                        {{ $experiences->total() }} expérience(s) · Prix en {{ $currencyInfo['label'] }} ({{ $currencyInfo['symbol'] }})
+                        {{ $experiences->total() }} expérience(s) · Prix en F CFA
                     </p>
                 </div>
 
@@ -239,14 +205,14 @@
                     @foreach($savoirFaires->whereIn('id', $selectedSf) as $activeSf)
                     <span class="flex items-center gap-1 bg-dokun-green/10 text-dokun-green text-xs font-bold px-3 py-1 rounded-full">
                         {{ $activeSf->name }}
-                        <a href="{{ route('experiences.index', array_merge(request()->except('page'), ['savoir_faire' => array_diff($selectedSf, [$activeSf->id]), 'currency' => $currency])) }}"
+                        <a href="{{ route('experiences.index', array_merge(request()->except('page'), ['savoir_faire' => array_diff($selectedSf, [$activeSf->id]), ])) }}"
                            class="ml-1 hover:text-red-500">×</a>
                     </span>
                     @endforeach
                     @if(request('budget_max'))
                     <span class="flex items-center gap-1 bg-amber-100 text-amber-700 text-xs font-bold px-3 py-1 rounded-full">
-                        Budget ≤ {{ $currencyInfo['symbol'] }}{{ number_format(request('budget_max'), 0, ',', ' ') }}
-                        <a href="{{ route('experiences.index', array_merge(request()->except('budget_max', 'page'), ['currency' => $currency])) }}"
+                        Budget ≤ {{ number_format(request('budget_max'), 0, ',', ' ') }} F CFA
+                        <a href="{{ route('experiences.index', array_merge(request()->except('budget_max', 'page'), [])) }}"
                            class="ml-1 hover:text-red-500">×</a>
                     </span>
                     @endif
@@ -259,7 +225,7 @@
                 <div class="text-5xl mb-4">🔍</div>
                 <h3 class="font-serif text-2xl text-dokun-green mb-2">{{ __('app.exp_empty') }}</h3>
                 <p class="text-gray-500 text-sm mb-6">Essayez d'ajuster votre budget ou vos centres d'intérêt.</p>
-                <a href="{{ route('experiences.index', ['currency' => $currency]) }}"
+                <a href="{{ route('experiences.index', []) }}"
                    class="inline-block bg-dokun-green text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-dokun-green/90 transition">
                     Voir toutes les expériences
                 </a>
@@ -307,15 +273,8 @@
                         <div class="flex justify-between items-center pt-3 border-t border-gray-50">
                             <div>
                                 @php
-                                    $convPrice = $exp->price * $convRate;
-                                    $priceStr = $convRate == 1
-                                        ? number_format($exp->price, 0, ',', ' ') . ' FCFA'
-                                        : $currencyInfo['symbol'] . ' ' . number_format($convPrice, 2, '.', ' ');
                                 @endphp
-                                <strong class="text-dokun-green text-lg font-serif">{{ $priceStr }}</strong>
-                                @if($currency !== 'XOF')
-                                <p class="text-[10px] text-gray-300 font-semibold">≡ {{ number_format($exp->price, 0, ',', ' ') }} FCFA</p>
-                                @endif
+                                <strong class="text-dokun-green text-lg font-serif">{{ number_format($exp->price, 0, ',', ' ') }} F CFA</strong>
                                 <span class="text-xs text-gray-300">/ pers.</span>
                             </div>
                             <a href="{{ route('artisans.show', $exp->artisan_id) }}#reservation-form"

@@ -25,21 +25,15 @@ class ExperienceController extends Controller
 
     public function index(Request $request)
     {
-        // ── Devise sélectionnée ──────────────────────────────────────────
-        $currency     = $request->get('currency', 'XOF');
-        $currencies   = self::CURRENCIES;
-        if (!isset($currencies[$currency])) $currency = 'XOF';
-        $currencyInfo = $currencies[$currency];
-        $convRate     = $currencyInfo['rate'];
-
-        // ── Budget en XOF (converti depuis la devise de l'utilisateur) ──
+        // ── Prix affichés en F CFA ; la conversion de devise n'apparaît
+        //    que dans le flux de réservation (page confirm) ────────────────
         $budgetMin = null;
         $budgetMax = null;
         if ($request->filled('budget_max') && $request->budget_max > 0) {
-            $budgetMax = (int) round($request->budget_max / $convRate);
+            $budgetMax = (int) round($request->budget_max);
         }
         if ($request->filled('budget_min') && $request->budget_min > 0) {
-            $budgetMin = (int) round($request->budget_min / $convRate);
+            $budgetMin = (int) round($request->budget_min);
         }
 
         // ── Catégories / intérêts ────────────────────────────────────────
@@ -111,8 +105,8 @@ class ExperienceController extends Controller
 
         return view('experiences.index', compact(
             'experiences', 'savoirFaires', 'selectedSf', 'selectedTypes',
-            'availableTypes', 'currencies', 'currency', 'currencyInfo',
-            'convRate', 'recommended', 'sort'
+            'availableTypes',
+            'recommended', 'sort'
         ));
     }
 }
