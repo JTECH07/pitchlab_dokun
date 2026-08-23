@@ -58,7 +58,30 @@
                 </form>
             </div>
 
-            {{-- Note prix : la conversion de devise n'apparaît que dans le flux de réservation --}}
+            {{-- Sélecteur de devise --}}
+            <div class="flex justify-end items-start">
+                <div class="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-5 w-full max-w-xs">
+                    <p class="text-white/60 text-xs font-bold uppercase tracking-wider mb-3">Votre devise</p>
+                    <form action="{{ route('experiences.index') }}" method="GET" id="currency-form">
+                        @foreach(request()->except('currency', 'page') as $key => $val)
+                            @if(is_array($val))
+                                @foreach($val as $v)<input type="hidden" name="{{ $key }}[]" value="{{ $v }}">@endforeach
+                            @else
+                                <input type="hidden" name="{{ $key }}" value="{{ $val }}">
+                            @endif
+                        @endforeach
+                        <select name="currency" onchange="this.form.submit()"
+                            class="w-full bg-white/15 border border-white/25 text-white rounded-xl px-4 py-3 text-sm font-bold focus:ring-2 focus:ring-dokun-gold focus:outline-none">
+                            @foreach(\App\Http\Middleware\SetCurrency::CURRENCIES as $code => $info)
+                                <option value="{{ $code }}" {{ $currentCurrency === $code ? 'selected' : '' }} class="text-dokun-charcoal bg-white">
+                                    {{ $code }} — {{ $info['label'] }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </form>
+                    <p class="text-white/40 text-xs mt-2">Prix affichés dans votre devise.</p>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -170,7 +193,12 @@
                             <h3 class="font-serif text-lg text-dokun-green leading-tight">{{ $rec->title }}</h3>
                             <div class="flex justify-between items-center mt-3">
                                 <strong class="text-dokun-green text-sm font-bold">
-                                    {{ number_format($rec->price, 0, ',', ' ') }} F CFA
+                                    @if($currencyRate == 1)
+                                        {{ number_format($rec->price, 0, ',', ' ') }} F CFA
+                                    @else
+                                        {{ $currencyInfo['symbol'] }} {{ number_format($rec->price * $currencyRate, 2, '.', ' ') }}
+                                        <span class="text-[10px] text-dokun-charcoal/40 font-semibold">(≈ {{ number_format($rec->price, 0, ',', ' ') }} FCFA)</span>
+                                    @endif
                                 </strong>
                                 <a href="{{ route('artisans.show', $rec->artisan_id) }}#reservation-form"
                                    class="bg-dokun-green text-white px-3 py-1.5 rounded-lg font-bold text-xs hover:bg-dokun-green/90 transition">
@@ -196,7 +224,7 @@
                         @endif
                     </h2>
                     <p class="text-sm text-gray-400 mt-0.5">
-                        {{ $experiences->total() }} expérience(s) · Prix en F CFA
+                        {{ $experiences->total() }} expérience(s) · Prix en {{ $currencyInfo['label'] }}{{ $currencyRate == 1 ? '' : ' (base F CFA)' }}
                     </p>
                 </div>
 
@@ -274,7 +302,13 @@
                             <div>
                                 @php
                                 @endphp
-                                <strong class="text-dokun-green text-lg font-serif">{{ number_format($exp->price, 0, ',', ' ') }} F CFA</strong>
+                                <strong class="text-dokun-green text-lg font-serif">
+                                    @if($currencyRate == 1)
+                                        {{ number_format($exp->price, 0, ',', ' ') }} F CFA
+                                    @else
+                                        {{ $currencyInfo['symbol'] }} {{ number_format($exp->price * $currencyRate, 2, '.', ' ') }}
+                                    @endif
+                                </strong>
                                 <span class="text-xs text-gray-300">/ pers.</span>
                             </div>
                             <a href="{{ route('artisans.show', $exp->artisan_id) }}#reservation-form"

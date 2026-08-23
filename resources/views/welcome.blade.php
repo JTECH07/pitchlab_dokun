@@ -150,7 +150,7 @@
 
 <!-- COMMENT ÇA MARCHE -->
 <section id="comment-ca-marche" class="py-24 relative overflow-hidden bg-[#F8F6F0]">
-    <img src="{{ url('images/tisserand.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-[0.3]" alt="" loading="lazy">
+    <img src="{{ url('images/tisserand.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-[0.1] box-shadow" alt="" loading="lazy">
     <div class="absolute inset-0 wax-pattern opacity-30"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center mb-16 fade-up">
@@ -314,6 +314,44 @@
     </div>
 </section>
 
+<!-- GALERIE TERRAIN -->
+<section id="terrain" class="py-24 bg-[#17201D] relative overflow-hidden">
+    <div class="absolute inset-0 wax-pattern opacity-25"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-14 fade-up">
+            <h2 class="serif text-4xl md:text-5xl text-white mb-3">ƉƆKUN sur le terrain</h2>
+            <p class="text-white/60 text-lg max-w-2xl mx-auto">Des ateliers, des gestes, des matières vivantes — capturés au cœur de Porto-Novo.</p>
+            <div class="h-1 w-20 bg-[#C99424] mx-auto mt-5"></div>
+        </div>
+        @php
+        $galleryTiles = [
+            ['img'=>'images/van2.jpeg',   'label'=>'Vannerie & fibres de raphia', 'span'=>'md:col-span-2 md:row-span-2'],
+            ['img'=>'images/d1.jpeg',     'label'=>'Mains à l’ouvrage',          'span'=>''],
+            ['img'=>'images/drum.jpg',    'label'=>'Rythmes & cérémonies',        'span'=>''],
+            ['img'=>'images/d2.jpeg',     'label'=>'Terre et savoir-faire',       'span'=>''],
+            ['img'=>'images/van1.jpeg',   'label'=>'Tressage au quotidien',       'span'=>''],
+            ['img'=>'images/dokun_terrain.jpeg','label'=>'Rencontres du quartier', 'span'=>''],
+            ['img'=>'images/d3.jpeg',     'label'=>'Couleurs d’atelier',         'span'=>''],
+            ['img'=>'images/van3.jpeg',   'label'=>'Fibres tressées main',        'span'=>''],
+            ['img'=>'images/d4.jpeg',     'label'=>'Transmission vivante',        'span'=>''],
+        ];
+        @endphp
+        <div class="grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[200px] gap-4">
+            @foreach($galleryTiles as $i => $tile)
+            <figure class="group relative rounded-2xl overflow-hidden {{ $tile['span'] }} reveal" style="transition-delay:{{ ($i % 4) * 90 }}ms">
+                <img src="{{ url($tile['img']) }}" alt="{{ $tile['label'] }}" loading="lazy"
+                     class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500"></div>
+                <figcaption class="absolute bottom-0 left-0 right-0 p-4 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                    <span class="text-white text-sm font-bold drop-shadow">{{ $tile['label'] }}</span>
+                </figcaption>
+                <span class="absolute top-3 left-3 w-8 h-0.5 bg-[#C99424] scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500"></span>
+            </figure>
+            @endforeach
+        </div>
+    </div>
+</section>
+
 <!-- POUR QUI ? -->
 <section class="py-24 bg-[#064E3B] text-white relative overflow-hidden">
     <img src="{{ url('images/vannerie.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-15" alt="" loading="lazy">
@@ -406,14 +444,9 @@
         popupAnchor: [0, -30]
     });
 
-    const quartiers = @json($quartiers ?? []);
     const artisans = @json($mapArtisans ?? []);
 
-    (quartiers.length ? quartiers : [{ name: 'Porto-Novo', lat: 6.4969, lng: 2.6289 }]).forEach(q => {
-        const m = L.marker([q.lat, q.lng], { icon: dropIcon }).addTo(homeMap);
-        m.bindPopup(`<strong style="font-family:'Manrope'">${q.name}</strong>`);
-    });
-
+    // Un marqueur = un artisan (les quartiers servent uniquement au cadrage)
     artisans.forEach(a => {
         if (!a.latitude || !a.longitude) return;
         L.marker([a.latitude, a.longitude], { icon: dropIcon }).addTo(homeMap)

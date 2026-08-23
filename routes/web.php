@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ArtisanAdminController;
 use App\Http\Controllers\Admin\CategoryAdminController;
 use App\Http\Controllers\Admin\MediaAdminController;
+use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\Admin\ReservationAdminController;
 use App\Http\Controllers\Admin\SavoirFaireAdminController;
 use App\Http\Controllers\Admin\QuartierAdminController;
@@ -191,6 +192,13 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::delete('/media/{media}', [MediaAdminController::class, 'destroyMedia'])->name('media.destroy');
     Route::patch('/audio/{archiveId}/moderate', [MediaAdminController::class, 'moderateAudio'])->name('media.moderate-audio');
     Route::patch('/audio/{archiveId}', [MediaAdminController::class, 'updateAudio'])->name('media.update-audio');
+
+    // Utilisateurs & rôles (tous les acteurs de la plateforme)
+    Route::get('/users', [UserAdminController::class, 'index'])->name('users.index');
+    Route::post('/users', [UserAdminController::class, 'store'])->name('users.store');
+    Route::patch('/users/{user}/role', [UserAdminController::class, 'updateRole'])->name('users.role');
+    Route::post('/users/{user}/verify-email', [UserAdminController::class, 'verifyEmail'])->name('users.verify');
+    Route::delete('/users/{user}', [UserAdminController::class, 'destroy'])->name('users.destroy');
 
     // Quartiers
     Route::get('/quartiers', [QuartierAdminController::class, 'index'])->name('quartiers.index');
