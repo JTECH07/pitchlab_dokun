@@ -16,8 +16,11 @@
                 <b class="text-dokun-gold/80">Transmettre · Valoriser · Connecter.</b>
             </p>
             <div class="flex gap-3">
-                <span class="text-xs px-3 py-1.5 rounded-full bg-white/10 text-white/60">Porto-Novo, Bénin</span>
-                <span class="text-xs px-3 py-1.5 rounded-full bg-white/10 text-white/60">Projet PitchLab 2026</span>
+                <span class="text-xs px-3 py-1.5 rounded-full bg-white/10 text-white/60">
+                <!-- Font     -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="inline w-3 h-3 mr-1 -mt-[1px]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h6v-2h-4z"/></svg>
+                Porto-Novo, Bénin</span>
+                <span class="text-xs px-3 py-1.5 rounded-full bg-white/10 text-white/60"><svg xmlns="http://www.w3.org/2000/svg" class="inline w-3 h-3 mr-1 -mt-[1px]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h6v-2h-4z"/></svg>Projet PitchLab 2026</span>
             </div>
         </div>
 

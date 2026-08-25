@@ -24,6 +24,8 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SavoirFairePublicController;
 use App\Http\Controllers\Api\PitchlabFeaturesController;
+use App\Http\Controllers\ArtisanApplicationController;
+use App\Http\Controllers\Admin\AdminArtisanApplicationController;
 use App\Http\Controllers\FeatureController;
 use Illuminate\Support\Facades\Route;
 
@@ -65,6 +67,13 @@ Route::get('/carte',               [MapController::class, 'index'])->name('carte
 // ─── ƉƆKUN Learn ─────────────────────────────────────────────
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/learn/{lesson}/complete', [LearnController::class, 'complete'])->name('learn.complete');
+});
+
+// ── Candidature artisan (auth + vérifié) ─────────────────────
+Route::middleware(['auth', 'verified'])->prefix('devenir-artisan')->name('artisan.')->group(function () {
+    Route::get('/', [ArtisanApplicationController::class, 'showForm'])->name('apply');
+    Route::post('/', [ArtisanApplicationController::class, 'submit'])->name('apply.submit');
+    Route::get('/confirmation', [ArtisanApplicationController::class, 'confirmation'])->name('apply.confirmation');
 });
 
 // ─── Espace visiteur / touriste ──────────────────────────────
@@ -199,6 +208,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::patch('/users/{user}/role', [UserAdminController::class, 'updateRole'])->name('users.role');
     Route::post('/users/{user}/verify-email', [UserAdminController::class, 'verifyEmail'])->name('users.verify');
     Route::delete('/users/{user}', [UserAdminController::class, 'destroy'])->name('users.destroy');
+
+    // Candidatures artisans
+    Route::get('/applications', [AdminArtisanApplicationController::class, 'index'])->name('applications.index');
+    Route::get('/applications/{application}', [AdminArtisanApplicationController::class, 'show'])->name('applications.show');
+    Route::post('/applications/{application}/approve', [AdminArtisanApplicationController::class, 'approve'])->name('applications.approve');
+    Route::post('/applications/{application}/reject', [AdminArtisanApplicationController::class, 'reject'])->name('applications.reject');
 
     // Quartiers
     Route::get('/quartiers', [QuartierAdminController::class, 'index'])->name('quartiers.index');

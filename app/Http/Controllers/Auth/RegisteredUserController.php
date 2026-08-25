@@ -39,19 +39,39 @@ class RegisteredUserController extends Controller
             'role' => ['nullable', 'in:'.implode(',', User::PUBLIC_ROLES)],
         ]);
 
+        $wantsArtisan = in_array($request->input('role'), User::PUBLIC_ROLES, true)
+            && $request->input('role') === 'artisan';
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => in_array($request->input('role'), User::PUBLIC_ROLES, true)
-                ? $request->input('role')
-                : 'tourist',
+            'role' => 'tourist', // artisan → d'abord visiteur, puis candidature validée par admin
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect($user->homeRoute());
+        // Artisan : après vérification email, rediriger vers /devenir-artisan
+        if ($wantsArtisan) {
+            $request->session()->put('pending_artisan', true);
+        }
+
+        $request->session()->put('email', $user->email);
+        return redirect()->intended(route('verification.notice'));
+    }
+
+    public function updateEmail(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+        ]);
+
+        $user = $request->user();
+        $user->forceFill(['email' => $request->input('email')])->save();
+        $user->sendEmailVerificationNotification();
+
+        return back()->with('status', 'verification-link-sent');
     }
 }

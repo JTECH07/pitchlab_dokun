@@ -47,6 +47,11 @@ Route::middleware('auth')->group(function () {
         ->middleware('throttle:6,1')
         ->name('verification.send');
 
+    // Correction d'email avant vérification (faute de frapse)
+    Route::patch('email', [RegisteredUserController::class, 'updateEmail'])
+        ->middleware('throttle:5,1')
+        ->name('email.update');
+
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
         ->name('password.confirm');
 

@@ -4,35 +4,23 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>{{ config('app.name', 'ƉƆKUN') }}</title>
 
-        <title>{{ config('app.name', 'ƉƆKUN') }} - Authentification</title>
-
-        <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=dm-serif-display:400|manrope:400,600,700,800&display=swap" rel="stylesheet" />
 
-        <!-- Tailwind CDN -->
         <script src="https://cdn.tailwindcss.com"></script>
-        <!-- Alpine.js -->
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script>
             tailwind.config = {
                 theme: {
                     extend: {
                         colors: {
-                            dokun: {
-                                green: '#064E3B',
-                                gold: '#C99424',
-                                ivory: '#F8F6F0',
-                                charcoal: '#17201D',
-                            }
+                            dokun: { green: '#064E3B', gold: '#C99424', ivory: '#F8F6F0', charcoal: '#17201D' }
                         },
                         fontFamily: {
                             sans: ['Manrope', 'sans-serif'],
                             serif: ['"DM Serif Display"', 'serif'],
-                        },
-                        backgroundImage: {
-                            'dokun-pattern': "url('data:image/svg+xml,%3Csvg width=\\'20\\' height=\\'20\\' viewBox=\\'0 0 20 20\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cg fill=\\'%23064E3B\\' fill-opacity=\\'0.05\\' fill-rule=\\'evenodd\\'%3E%3Ccircle cx=\\'3\\' cy=\\'3\\' r=\\'3\\'/%3E%3Ccircle cx=\\'13\\' cy=\\'13\\' r=\\'3\\'/%3E%3C/g%3E%3C/svg%3E')",
                         }
                     }
                 }
@@ -42,20 +30,89 @@
             body { font-family: 'Manrope', sans-serif; }
             h1, h2, h3, h4, .font-serif { font-family: 'DM Serif Display', serif; }
             [x-cloak] { display: none !important; }
+            @keyframes float1 { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-18px) rotate(3deg)} }
+            @keyframes float2 { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-12px) rotate(-2deg)} }
+            @keyframes float3 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-22px)} }
+            .anim-float1 { animation: float1 6s ease-in-out infinite; }
+            .anim-float2 { animation: float2 7s ease-in-out infinite 0.5s; }
+            .anim-float3 { animation: float3 8s ease-in-out infinite 1s; }
         </style>
     </head>
-    <body class="font-sans text-dokun-charcoal antialiased bg-dokun-ivory bg-dokun-pattern">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-            <div>
-                <a href="/" class="flex flex-col items-center gap-2">
-                    <div class="w-16 h-16 bg-dokun-green rounded-xl flex items-center justify-center text-dokun-gold font-bold text-3xl shadow-xl">Ɖ</div>
-                    <span class="font-serif text-3xl tracking-wide text-dokun-green mt-2">ƆKUN</span>
-                </a>
+    <body class="font-sans text-dokun-charcoal antialiased">
+
+        {{-- ── DESKTOP : Split screen ── --}}
+        <div class="hidden md:flex min-h-screen">
+
+            {{-- ── Panneau gauche : illustration / brand ── --}}
+            <div class="relative w-1/2 bg-dokun-green flex flex-col items-center justify-center overflow-hidden p-12">
+
+                {{-- Motif géométrique tissage en fond --}}
+                <svg class="absolute inset-0 w-full h-full opacity-[0.07]" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="kente" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+                            <rect width="60" height="60" fill="none"/>
+                            <rect x="0" y="0" width="15" height="15" fill="#C99424"/>
+                            <rect x="30" y="0" width="15" height="15" fill="#C99424"/>
+                            <rect x="15" y="15" width="15" height="15" fill="#C99424"/>
+                            <rect x="45" y="15" width="15" height="15" fill="#C99424"/>
+                            <rect x="0" y="30" width="15" height="15" fill="#C99424"/>
+                            <rect x="30" y="30" width="15" height="15" fill="#C99424"/>
+                            <rect x="15" y="45" width="15" height="15" fill="#C99424"/>
+                            <rect x="45" y="45" width="15" height="15" fill="#C99424"/>
+                            <line x1="0" y1="30" x2="60" y2="30" stroke="#C99424" stroke-width="1"/>
+                            <line x1="30" y1="0" x2="30" y2="60" stroke="#C99424" stroke-width="1"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#kente)"/>
+                </svg>
+
+                {{-- Formes flottantes décoratives --}}
+                <div class="absolute top-[12%] left-[10%] w-20 h-20 border-2 border-dokun-gold/30 rounded-full anim-float1"></div>
+                <div class="absolute bottom-[18%] right-[12%] w-14 h-14 border-2 border-dokun-gold/25 rotate-45 anim-float2"></div>
+                <div class="absolute top-[55%] left-[8%] w-10 h-10 bg-dokun-gold/10 rounded-xl anim-float3"></div>
+                <div class="absolute top-[30%] right-[15%] w-6 h-6 bg-dokun-gold/20 rounded-full anim-float1" style="animation-delay:2s"></div>
+
+                {{-- Contenu central --}}
+                <div class="relative z-10 text-center max-w-sm">
+                    <img src="{{ url('images/dokun_logo.png') }}" alt="ƉƆKUN" class="w-36 h-36 mx-auto mb-6 drop-shadow-2xl">
+                    <h1 class="font-serif text-5xl text-white mb-4 leading-tight">ƉƆKUN</h1>
+                    <p class="text-dokun-gold font-bold text-lg tracking-wide mb-3">Patrimoine Vivant</p>
+                    <div class="w-16 h-0.5 bg-dokun-gold/60 mx-auto mb-6"></div>
+                    <p class="text-white/60 text-sm leading-relaxed">
+                        Découvrez les savoir-faire ancestraux du Bénin,<br>
+                        réservez des expériences authentiques<br>
+                        avec nos artisans passionnés.
+                    </p>
+                </div>
+
+                {{-- 3 features flottantes en bas --}}
+                <div class="relative z-10 mt-16 flex gap-8 text-white/50 text-xs font-semibold">
+                    <div class="flex items-center gap-2"><div class="w-2 h-2 bg-dokun-gold rounded-full"></div>Savoir-faire</div>
+                    <div class="flex items-center gap-2"><div class="w-2 h-2 bg-dokun-gold rounded-full"></div>Réservation</div>
+                    <div class="flex items-center gap-2"><div class="w-2 h-2 bg-dokun-gold rounded-full"></div>Paiement</div>
+                </div>
             </div>
 
-            <div class="w-full sm:max-w-md mt-8 px-8 py-10 bg-white shadow-2xl border border-dokun-green/10 sm:rounded-2xl">
-                {{ $slot }}
+            {{-- ── Panneau droit : formulaire ── --}}
+            <div class="w-1/2 flex items-center justify-center bg-dokun-ivory p-12">
+                <div class="w-full max-w-md">
+                    <a href="/" class="flex items-center gap-3 mb-8">
+                        <img src="{{ url('images/dokun_logo.png') }}" alt="ƉƆKUN" class="w-11 h-11">
+                        <span class="font-serif text-2xl text-dokun-green tracking-wide">ƉƆKUN</span>
+                    </a>
+                    <div>{{ $slot }}</div>
+                </div>
             </div>
         </div>
+
+        {{-- ── MOBILE : formulaire seul avec logo ── --}}
+        <div class="md:hidden min-h-screen flex flex-col items-center justify-start bg-dokun-ivory pt-8 pb-12 px-5">
+            <a href="/" class="flex items-center gap-3 mb-8">
+                <img src="{{ url('images/dokun_logo.png') }}" alt="ƉƆKUN" class="w-12 h-12">
+                <span class="font-serif text-2xl text-dokun-green tracking-wide">ƉƆKUN</span>
+            </a>
+            <div class="w-full max-w-md">{{ $slot }}</div>
+        </div>
+
     </body>
 </html>

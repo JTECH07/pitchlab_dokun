@@ -22,6 +22,11 @@ class VerifyEmailController extends Controller
             event(new Verified($request->user()));
         }
 
+        // Artisan : après vérification, rediriger vers la candidature
+        if ($request->session()->pull('pending_artisan')) {
+            return redirect()->intended(route('artisan.apply'));
+        }
+
         return redirect()->intended($request->user()->homeRoute().'?verified=1');
     }
 }

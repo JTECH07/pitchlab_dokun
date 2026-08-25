@@ -197,22 +197,30 @@ class EndToEndVisitorJourneyTest extends TestCase
         ])->assertSessionHasErrors('role');
         $this->assertDatabaseMissing('users', ['email' => 'fouine@t.bj']);
 
-        // Sans rôle → visiteur par défaut, redirection carnet de voyage
+        // Sans rôle → visiteur par défaut, redirection page vérification
         $this->post(route('register'), [
             'name' => 'Simple', 'email' => 'simple@t.bj',
             'password' => 'MotDePasse1!', 'password_confirmation' => 'MotDePasse1!',
-        ])->assertRedirect(route('visitor.profile'));
+        ])->assertRedirect(route('verification.notice'));
         $this->assertDatabaseHas('users', ['email' => 'simple@t.bj', 'role' => 'tourist']);
     }
 
-    public function test_registration_artisan_redirects_to_atelier(): void
+    public function test_registration_artisan_goes_through_candidature(): void
     {
         $this->post(route('register'), [
             'name' => 'Koffi Atelier', 'email' => 'koffi@t.bj',
             'password' => 'MotDePasse1!', 'password_confirmation' => 'MotDePasse1!',
             'role' => 'artisan',
-        ])->assertRedirect(route('artisan-space.index'));
-        $this->assertDatabaseHas('users', ['email' => 'koffi@t.bj', 'role' => 'artisan']);
+        ])->assertRedirect(route('verification.notice'));
+        $this->assertDatabaseHas('users', ['email' => 'koffi@t.bj', 'role' => 'tourist']);
+
+        $user = \App\Models\User::where('email', 'koffi@t.bj')->first();
+        $this->actingAs($user);
+        $verificationUrl = \Illuminate\Support\Facades\URL::temporarySignedRoute(
+            'verification.verify', now()->addMinutes(60),
+            ['id' => $user->id, 'hash' => sha1($user->email)]
+        );
+        $this->get($verificationUrl)->assertRedirect(route('artisan.apply'));
     }
 
     public function test_verified_email_required_for_member_areas(): void

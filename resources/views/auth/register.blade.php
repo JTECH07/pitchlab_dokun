@@ -32,6 +32,10 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="w-5 h-5 absolute top-2 right-2 text-[#C99424]" x-show="role === 'artisan'" x-cloak><path d="M20 6L9 17l-5-5"/></svg>
                 </label>
             </div>
+            <p x-show="role === 'artisan'" x-cloak class="mt-3 text-xs text-[#C99424]/80 bg-[#C99424]/5 rounded-lg px-3 py-2 flex items-start gap-1.5">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-3.5 h-3.5 flex-shrink-0 mt-0.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                <span>Vous créerez d'abord un compte, puis remplirez une courte candidature. Notre équipe valide votre profil avant publication.</span>
+            </p>
             <p class="mt-3 text-xs text-[#17201D]/55 flex items-center gap-1.5">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-3.5 h-3.5 flex-shrink-0"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
                 Guide, institution ou partenaire ? Contactez-nous — ces comptes sont créés par l'équipe ƉƆKUN.

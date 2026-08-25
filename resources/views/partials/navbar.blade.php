@@ -17,15 +17,12 @@
         <div class="flex justify-between items-center h-20">
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex-shrink-0 flex items-center gap-3">
-                <div class="w-12 h-12 rounded overflow-hidden flex items-center justify-center bg-dokun-green">
-                    <img src="{{ url('images/dokun_logo.png') }}" alt="ƉƆKUN" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                    <span class="hidden text-dokun-gold font-bold text-2xl">Ɖ</span>
-                </div>
-                <div class="flex flex-col leading-tight">
-                    <span class="font-serif text-3xl tracking-wide leading-none">ƉƆKUN</span>
-                    <span class="text-[9.5px] tracking-[0.2em] font-semibold opacity-70 uppercase">Patrimoine Vivant</span>
-                </div>
-            </a>
+                    <img src="{{ url('images/dokun_logo.png') }}" alt="ƉƆKUN" class="w-14 h-14">
+                    <div class="flex flex-col leading-tight">
+                        <span class="font-serif text-3xl tracking-wide leading-none">ƉƆKUN</span>
+                        <span class="text-[9.5px] tracking-[0.2em] font-semibold opacity-70 uppercase">Patrimoine Vivant</span>
+                    </div>
+                </a>
 
             <!-- Desktop Links -->
             <!-- Faut bien gérer le menu bien centré -->
@@ -71,6 +68,12 @@
                         <div x-show="open" x-transition.opacity x-cloak
                              class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 z-50 overflow-hidden">
                             <a href="{{ route('visitor.profile') }}" class="block px-4 py-3 text-sm text-dokun-charcoal hover:bg-dokun-ivory hover:text-dokun-green font-semibold">{{ __('app.nav_my_trip') }}</a>
+                            @if(Auth::user()->role === 'tourist')
+                                <a href="{{ route('artisan.apply') }}" class="block px-4 py-3 text-sm text-[#C99424] hover:bg-[#C99424]/5 font-semibold flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                                    Devenir artisan
+                                </a>
+                            @endif
                             <a href="{{ route('dashboard') }}" class="block px-4 py-3 text-sm text-dokun-charcoal hover:bg-dokun-ivory hover:text-dokun-green font-semibold">{{ __('app.admin_dashboard') }}</a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
