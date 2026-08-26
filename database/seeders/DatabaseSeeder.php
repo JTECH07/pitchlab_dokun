@@ -253,7 +253,7 @@ class DatabaseSeeder extends Seeder
                 'longitude' => 2.6200,
                 'status' => 'published',
                 'savoir_faire' => $sfPoterie,
-                'image_path' => 'images/artisans/adjovi_celine.png',
+                'image_path' => 'images/artisans/adjovi_celine.jpg',
                 'image_title' => 'Adjovi CÉLINE en train de modeler une pièce contemporaine',
             ],
             [

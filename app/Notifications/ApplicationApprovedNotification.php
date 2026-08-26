@@ -11,7 +11,7 @@ class ApplicationApprovedNotification extends Notification
 {
     use Queueable;
 
-    public function __construct(public ArtisanApplication $application)
+    public function __construct(public ArtisanApplication $application, public string $tempPassword)
     {
     }
 
@@ -26,11 +26,12 @@ class ApplicationApprovedNotification extends Notification
             ?? $this->application->first_name . ' ' . $this->application->last_name;
 
         return (new MailMessage)
-            ->subject('🎉 Votre candidature a été approuvée — ƉƆKUN')
+            ->subject('Votre candidature a été approuvée — ƉƆKUN')
             ->greeting("Félicitations {$name} !")
             ->line("Votre candidature pour rejoindre la communauté des artisans ƉƆKUN a été approuvée par notre équipe.")
-            ->line("Vous pouvez maintenant compléter votre profil et publier vos savoir-faire.")
+            ->line("Votre mot de passe temporaire : **{$this->tempPassword}**")
+            ->line("Connectez-vous et changez-le dès que possible.")
             ->action('Accéder à mon espace artisan', route('artisan-space.index'))
-            ->line('Si vous n\'avez pas encore défini votre mot de passe, cliquez sur "Mot de passe oublié" sur la page de connexion.');
+            ->line("Conservez ce mot de passe et changez-le dès votre première connexion.");
     }
 }

@@ -41,7 +41,7 @@
                 <x-input-error :messages="$errors->get('email')" class="mt-1.5"/>
             </div>
             <div>
-                <label class="block text-sm font-bold text-[#17201D] mb-2">Téléphone <span class="text-[#17201D]/30 normal-case">(optionnel)</span></label>
+                <label class="block text-sm font-bold text-[#17201D] mb-2">Téléphone <span class="text-[#17201D]/30 normal-case">(opti</span></label>
                 <input type="text" name="phone" value="{{ old('phone') }}"
                     class="w-full px-4 py-3 bg-[#F8F6F0] border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#064E3B] outline-none transition font-semibold text-sm"
                     placeholder="+229 97 00 00 00">

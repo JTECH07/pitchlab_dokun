@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ArtisanAdminController;
 use App\Http\Controllers\Admin\CategoryAdminController;
+use App\Http\Controllers\Admin\ExperienceAdminController;
 use App\Http\Controllers\Admin\MediaAdminController;
 use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\Admin\ReservationAdminController;
@@ -200,6 +201,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('artisans',      ArtisanAdminController::class);
     Route::resource('categories',    CategoryAdminController::class);
     Route::resource('savoir-faires', SavoirFaireAdminController::class);
+    Route::resource('experiences',   ExperienceAdminController::class)->except(['show']);
+    Route::patch('/experiences/{experience}/toggle', [ExperienceAdminController::class, 'toggle'])->name('experiences.toggle');
     Route::get('/carte', [MapController::class, 'adminMap'])->name('map');
     Route::get('/avis', [ReviewController::class, 'adminIndex'])->name('reviews.index');
     Route::patch('/avis/{review}/moderate', [ReviewController::class, 'adminModerate'])->name('reviews.moderate');

@@ -198,7 +198,7 @@ class PaymentController extends Controller
                 $this->notifyArtisan($reservation);
                 if (!empty($reservationData['user_id'])) {
                     $member = \App\Models\User::find($reservationData['user_id']);
-                    if ($member) app(\App\Services\LoyaltyService::class)->award($member, 'reservation_made', ['reference' => $reference]);
+                    if ($member) app(\App\Services\LoyaltyService::class)->award($member, 'reservation_made', ['reference' => $reservationData['reference']]);
                 }
 
                 return redirect()->route('reservations.receipt', $reservation->qr_code_token)

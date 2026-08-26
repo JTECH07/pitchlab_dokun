@@ -92,7 +92,7 @@ class MediaAdminController extends Controller
 
     public function destroyMedia(Request $request, Media $media)
     {
-        $diskPath = storage_path('app/' . $media->path);
+        $diskPath = public_path($media->path);
         if ($media->path && file_exists($diskPath)) {
             @unlink($diskPath);
         }
