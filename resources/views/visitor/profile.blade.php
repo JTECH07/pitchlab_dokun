@@ -29,7 +29,7 @@
         <div class="absolute inset-0 wax-pattern opacity-30"></div>
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14 relative z-10 fade-up">
             <span class="inline-block px-4 py-1.5 bg-dokun-gold/15 text-dokun-gold border border-dokun-gold/30 rounded-full text-xs font-bold uppercase tracking-widest mb-4">Mon voyage</span>
-            <h1 class="font-serif text-3xl md:text-5xl text-white mb-2">Akwaaba, {{ $upcoming->isEmpty() && $past->isEmpty() ? 'explorateur' : auth()->user()->name }} !</h1>
+            <h1 class="font-serif text-3xl md:text-5xl text-white mb-2">Kwabɔ, {{ $upcoming->isEmpty() && $past->isEmpty() ? 'explorateur' : auth()->user()->name }} !</h1>
             <p class="text-white/65">Tes réservations, tes artisans favoris et ta progression d'apprentissage — tout ton séjour à Porto-Novo au même endroit.</p>
         </div>
     </section>

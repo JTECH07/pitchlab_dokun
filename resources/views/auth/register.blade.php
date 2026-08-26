@@ -38,7 +38,7 @@
             </p>
             <p class="mt-3 text-xs text-[#17201D]/55 flex items-center gap-1.5">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-3.5 h-3.5 flex-shrink-0"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-                Guide, institution ou partenaire ? Contactez-nous — ces comptes sont créés par l'équipe ƉƆKUN.
+                Guide, institution ou partenaire ? <a href="{{ route('actor-requests.form') }}" class="text-[#C99424] font-bold hover:underline">Proposez-vous ici</a>.
             </p>
             <x-input-error :messages="$errors->get('role')" class="mt-2"/>
         </div>

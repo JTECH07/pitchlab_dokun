@@ -311,7 +311,7 @@
                                 </strong>
                                 <span class="text-xs text-gray-300">/ pers.</span>
                             </div>
-                            <a href="{{ route('artisans.show', $exp->artisan_id) }}#reservation-form"
+                            <a href="{{ route('artisans.show', $exp->artisan_id) }}/reserver"
                                class="bg-dokun-green text-white px-4 py-2.5 rounded-xl font-bold text-sm hover:bg-dokun-green/90 active:scale-95 transition">
                                 {{ __('app.exp_reserve') }}
                             </a>

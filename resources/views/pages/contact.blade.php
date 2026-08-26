@@ -57,7 +57,7 @@
                         </div>
                         <div>
                             <h3 class="font-bold text-dokun-green">Email</h3>
-                            <a href="mailto:contact@dokun.bj" class="mt-1 block text-gray-600 hover:text-dokun-gold transition-colors text-sm">contact@dokun.bj</a>
+                            <a href="mailto:{{ env('MAIL_FROM_ADDRESS') }}" class="mt-1 block text-gray-600 hover:text-dokun-gold transition-colors text-sm">{{ env('MAIL_FROM_ADDRESS') }}</a>
                         </div>
                     </div>
 
@@ -67,7 +67,7 @@
                         </div>
                         <div>
                             <h3 class="font-bold text-dokun-green">Téléphone</h3>
-                            <p class="mt-1 text-gray-600 text-sm">+229 01 XX XX XX XX</p>
+                            <p class="mt-1 text-gray-600 text-sm">+229 0１ XX XX XX XX</p>
                         </div>
                     </div>
 

@@ -25,7 +25,9 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SavoirFairePublicController;
 use App\Http\Controllers\Api\PitchlabFeaturesController;
 use App\Http\Controllers\ArtisanApplicationController;
+use App\Http\Controllers\ActorRequestController;
 use App\Http\Controllers\Admin\AdminArtisanApplicationController;
+use App\Http\Controllers\Admin\AdminActorRequestController;
 use App\Http\Controllers\FeatureController;
 use Illuminate\Support\Facades\Route;
 
@@ -74,6 +76,13 @@ Route::middleware(['auth', 'verified'])->prefix('devenir-artisan')->name('artisa
     Route::get('/', [ArtisanApplicationController::class, 'showForm'])->name('apply');
     Route::post('/', [ArtisanApplicationController::class, 'submit'])->name('apply.submit');
     Route::get('/confirmation', [ArtisanApplicationController::class, 'confirmation'])->name('apply.confirmation');
+});
+
+// ── Rejoindre ƉƆKUN (guide, institution, chercheur, partenaire) ─
+Route::prefix('rejoindre')->name('actor-requests.')->group(function () {
+    Route::get('/', [ActorRequestController::class, 'showForm'])->name('form');
+    Route::post('/', [ActorRequestController::class, 'submit'])->name('submit');
+    Route::get('/confirmation', [ActorRequestController::class, 'confirmation'])->name('confirmation');
 });
 
 // ─── Espace visiteur / touriste ──────────────────────────────
@@ -214,6 +223,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/applications/{application}', [AdminArtisanApplicationController::class, 'show'])->name('applications.show');
     Route::post('/applications/{application}/approve', [AdminArtisanApplicationController::class, 'approve'])->name('applications.approve');
     Route::post('/applications/{application}/reject', [AdminArtisanApplicationController::class, 'reject'])->name('applications.reject');
+
+    // Demandes d'acteurs (guide, institution, chercheur, partenaire)
+    Route::get('/actor-requests', [AdminActorRequestController::class, 'index'])->name('actor-requests.index');
+    Route::get('/actor-requests/{actorRequest}', [AdminActorRequestController::class, 'show'])->name('actor-requests.show');
+    Route::post('/actor-requests/{actorRequest}/approve', [AdminActorRequestController::class, 'approve'])->name('actor-requests.approve');
+    Route::post('/actor-requests/{actorRequest}/reject', [AdminActorRequestController::class, 'reject'])->name('actor-requests.reject');
 
     // Quartiers
     Route::get('/quartiers', [QuartierAdminController::class, 'index'])->name('quartiers.index');

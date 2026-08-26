@@ -16,11 +16,29 @@
                 <b class="text-dokun-gold/80">Transmettre · Valoriser · Connecter.</b>
             </p>
             <div class="flex gap-3">
+                <span class="text-xs px-3 py-1.5 rounded-full bg-white/10 text-white/60">                    
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    Porto-Novo, Bénin
+                </span>
                 <span class="text-xs px-3 py-1.5 rounded-full bg-white/10 text-white/60">
-                <!-- Font     -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="inline w-3 h-3 mr-1 -mt-[1px]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h6v-2h-4z"/></svg>
-                Porto-Novo, Bénin</span>
-                <span class="text-xs px-3 py-1.5 rounded-full bg-white/10 text-white/60"><svg xmlns="http://www.w3.org/2000/svg" class="inline w-3 h-3 mr-1 -mt-[1px]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-13h-2v6h6v-2h-4z"/></svg>Projet PitchLab 2026</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-6 0h6" />
+                    </svg> Projet PitchLab 2026
+                </span>               
+            </div>
+            <!-- Pour Infos et autres  -->
+            <div class="flex gap-3 mt-5">
+                <a href="mailto:{{ env('MAIL_FROM_ADDRESS') }}" class="text-xs px-3 py-1.5 rounded-full bg-white/10 text-white/60 hover:text-white hover:bg-white/20 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    
+                    <!-- Utilise MAIL_FROM_ADDRESS qui est dans l'environnement -->
+                    {{ env('MAIL_FROM_ADDRESS') }}
+                </a>
             </div>
         </div>
 
@@ -53,7 +71,7 @@
     <!-- Bottom Bar -->
     <div class="border-t border-white/10 py-5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-3 text-white/40 text-xs">
-            <p>© 2026 ƉƆKUN — Projet PitchLab Porto-Novo. Tous droits réservés.</p>
+            <p>© 2026 ƉƆKUN — Porto-Novo. Tous droits réservés.</p>
             <p>Valoriser le patrimoine vivant du Bénin.</p>
         </div>
     </div>
