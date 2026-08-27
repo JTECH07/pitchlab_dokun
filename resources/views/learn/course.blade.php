@@ -52,7 +52,7 @@
                     </span>
                     <div class="flex-1 min-w-0">
                         <h3 class="font-bold text-dokun-charcoal">{{ app()->getLocale()==='en' ? $lesson->title_en : $lesson->title_fr }}</h3>
-                        <p class="text-xs text-dokun-charcoal/45 mt-0.5">{{ $lesson->words_count }} mots · ~{{ max(2, ceil($lesson->words_count / 2)) }} min</p>
+                        <p class="text-xs text-dokun-charcoal/45 mt-0.5">{{ $lesson->words_count }} {{ __('app.learn_words') }} · ~{{ max(2, ceil($lesson->words_count / 2)) }} {{ __('app.learn_min') }}</p>
                     </div>
                     <svg class="w-5 h-5 text-dok-charcoal/25 flex-shrink-0" style="color:{{ $course->accent }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>

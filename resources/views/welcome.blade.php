@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ƉƆKUN — Patrimoine Vivant de Porto-Novo</title>
+    <title>{{ __('app.home_title') }} — ƉƆKUN</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=dm-serif-display:400|manrope:400,600,700,800&display=swap" rel="stylesheet"/>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -76,11 +76,11 @@
     <div id="slides-container" class="absolute inset-0">
         @php
         $slides = [
-            ['img'=>'images/dokun_bg1.jpg','tag'=>'Voyage Culturel','title'=>"L'Âme de Porto-Novo",'sub'=>'Le patrimoine vivant, une richesse partagée. Explorez la ville aux trois noms.','cta_label'=>'Découvrir sur la carte','cta_url'=>route('carte'),'cta_style'=>'gold'],
-            ['img'=>'images/tisserand.jpg','tag'=>'Transmission','title'=>'Rencontrez nos Maîtres Artisans','sub'=>'Du tissage Kanvo à la poterie, des techniques transmises de génération en génération.','cta_label'=>'Voir le répertoire','cta_url'=>route('artisans.index'),'cta_style'=>'green'],
-            ['img'=>'images/forgeron.jpg','tag'=>'Savoir-Faire','title'=>'Des Savoir-Faire Inestimables','sub'=>'Derrière chaque objet se cache une histoire, un visage, des mains expertes.','cta_label'=>'Découvrir les métiers','cta_url'=>route('savoir-faire.index'),'cta_style'=>'outline'],
-            ['img'=>'images/dokun_bg3.jpg','tag'=>'Opportunités Locales','title'=>'Saisissez les Opportunités','sub'=>'ƉƆKUN crée de nouvelles opportunités économiques pour les communautés locales.','cta_label'=>'Explorer la carte','cta_url'=>route('carte'),'cta_style'=>'gold'],
-            ['img'=>'images/poterie_en_action.png','tag'=>'Expériences','title'=>'Vivez une Expérience Unique','sub'=>'Réservez une visite d\'atelier et apprenez directement auprès d\'un maître artisan.','cta_label'=>'Voir les expériences','cta_url'=>route('experiences.index'),'cta_style'=>'green'],
+            ['img'=>'images/dokun_bg1.jpg','tag'=>__('app.welcome_slide1_tag'),'title'=>__('app.welcome_slide1_title'),'sub'=>__('app.welcome_slide1_sub'),'cta_label'=>__('app.welcome_slide1_cta'),'cta_url'=>route('carte'),'cta_style'=>'gold'],
+            ['img'=>'images/tisserand.jpg','tag'=>__('app.welcome_slide2_tag'),'title'=>__('app.welcome_slide2_title'),'sub'=>__('app.welcome_slide2_sub'),'cta_label'=>__('app.welcome_slide2_cta'),'cta_url'=>route('artisans.index'),'cta_style'=>'green'],
+            ['img'=>'images/forgeron.jpg','tag'=>__('app.welcome_slide3_tag'),'title'=>__('app.welcome_slide3_title'),'sub'=>__('app.welcome_slide3_sub'),'cta_label'=>__('app.welcome_slide3_cta'),'cta_url'=>route('savoir-faire.index'),'cta_style'=>'outline'],
+            ['img'=>'images/dokun_bg3.jpg','tag'=>__('app.welcome_slide4_tag'),'title'=>__('app.welcome_slide4_title'),'sub'=>__('app.welcome_slide4_sub'),'cta_label'=>__('app.welcome_slide4_cta'),'cta_url'=>route('carte'),'cta_style'=>'gold'],
+            ['img'=>'images/poterie_en_action.png','tag'=>__('app.welcome_slide5_tag'),'title'=>__('app.welcome_slide5_title'),'sub'=>__('app.welcome_slide5_sub'),'cta_label'=>__('app.welcome_slide5_cta'),'cta_url'=>route('experiences.index'),'cta_style'=>'green'],
         ];
         @endphp
         @foreach($slides as $i => $slide)
@@ -141,10 +141,10 @@
 <!-- STATS BAR -->
 <section class="bg-[#064E3B] text-white py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-        <div><div class="serif text-4xl text-[#C99424]">{{ number_format($artisansCount) }}+</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">Artisans</div></div>
-        <div><div class="serif text-4xl text-[#C99424]">{{ number_format($categoriesCount) }}+</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">Savoir-faire</div></div>
-        <div><div class="serif text-4xl text-[#C99424]">1</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">Ville pilote</div></div>
-        <div><div class="serif text-4xl text-[#C99424]">100%</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">Patrimoine vivant</div></div>
+        <div><div class="serif text-4xl text-[#C99424]">{{ number_format($artisansCount) }}+</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">{{ __('app.welcome_stat_artisans') }}</div></div>
+        <div><div class="serif text-4xl text-[#C99424]">{{ number_format($categoriesCount) }}+</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">{{ __('app.welcome_stat_skills') }}</div></div>
+        <div><div class="serif text-4xl text-[#C99424]">1</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">{{ __('app.welcome_stat_pilot') }}</div></div>
+        <div><div class="serif text-4xl text-[#C99424]">100%</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">{{ __('app.welcome_stat_heritage') }}</div></div>
     </div>
 </section>
 
@@ -154,27 +154,27 @@
     <div class="absolute inset-0 wax-pattern opacity-30"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center mb-16 fade-up">
-            <h2 class="serif text-4xl md:text-5xl text-[#064E3B] mb-4">Comment ça marche ?</h2>
-            <p class="text-[#17201D]/60 max-w-2xl mx-auto text-lg">Simple comme une visite chez un ami artisan.</p>
+            <h2 class="serif text-4xl md:text-5xl text-[#064E3B] mb-4">{{ __('app.welcome_steps_title') }}</h2>
+            <p class="text-[#17201D]/60 max-w-2xl mx-auto text-lg">{{ __('app.welcome_steps_sub') }}</p>
             <div class="h-1 w-20 bg-[#C99424] mx-auto mt-5"></div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
             {{-- Ligne de connexion entre les étapes (desktop) --}}
             <div class="hidden md:block absolute top-24 left-[12%] right-[12%] h-0.5 bg-gradient-to-r from-[#C99424]/20 via-[#C99424]/50 to-[#C99424]/20" aria-hidden="true"></div>
             @php $steps = [
-                ['num'=>'1','title'=>'Cherchez','desc'=>'Recherchez un savoir-faire, un artisan ou une expérience selon vos envies.','illus'=>'search'],
-                ['num'=>'2','title'=>'Découvrez','desc'=>'Consultez les profils détaillés, les photos et l\'histoire des artisans.','illus'=>'discover'],
-                ['num'=>'3','title'=>'Réservez','desc'=>'Envoyez une demande de visite directement depuis la plateforme.','illus'=>'reserve'],
-                ['num'=>'4','title'=>'Vivez','desc'=>'Rencontrez l\'artisan, participez à l\'atelier, vivez l\'expérience.','illus'=>'live'],
+                ['num'=>'1','title'=>__('app.welcome_step1_title'),'desc'=>__('app.welcome_step1_desc'),'illus'=>'search'],
+                ['num'=>'2','title'=>__('app.welcome_step2_title'),'desc'=>__('app.welcome_step2_desc'),'illus'=>'discover'],
+                ['num'=>'3','title'=>__('app.welcome_step3_title'),'desc'=>__('app.welcome_step3_desc'),'illus'=>'reserve'],
+                ['num'=>'4','title'=>__('app.welcome_step4_title'),'desc'=>__('app.welcome_step4_desc'),'illus'=>'live'],
             ]; @endphp
             @foreach($steps as $i => $step)
             <div class="relative bg-white rounded-2xl p-8 pt-10 text-center shadow-lg border border-gray-100 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 reveal" style="transition-delay:{{ $i * 100 }}ms">
-                <span class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-[#064E3B] text-white text-xs font-bold rounded-full shadow-md tracking-wider">Étape {{ $step['num'] }}</span>
+                <span class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-[#064E3B] text-white text-xs font-bold rounded-full shadow-md tracking-wider">{{ __('app.welcome_step_label') }} {{ $step['num'] }}</span>
 
                 {{-- Illustration vectorielle animée --}}
                 <div class="h-32 mb-5 flex items-center justify-center illus-float" style="animation-delay:{{ $i * 0.6 }}s">
                     @if($step['illus'] === 'search')
-                    <svg viewBox="0 0 160 110" class="h-full w-auto" fill="none" role="img" aria-label="Recherche">
+                    <svg viewBox="0 0 160 110" class="h-full w-auto" fill="none" role="img" aria-label="{{ __('app.welcome_illus_search') }}">
                         <ellipse cx="80" cy="98" rx="46" ry="6" fill="#064E3B" opacity=".08"/>
                         <rect x="30" y="18" width="70" height="52" rx="6" fill="#F8F6F0" stroke="#064E3B" stroke-width="2"/>
                         <circle cx="52" cy="38" r="7" fill="#C99424" opacity=".85"/>
@@ -183,7 +183,7 @@
                         <path d="M117 74l13 13" stroke="#C99424" stroke-width="6" stroke-linecap="round"/>
                     </svg>
                     @elseif($step['illus'] === 'discover')
-                    <svg viewBox="0 0 160 110" class="h-full w-auto" fill="none" role="img" aria-label="Découverte des profils">
+                    <svg viewBox="0 0 160 110" class="h-full w-auto" fill="none" role="img" aria-label="{{ __('app.welcome_illus_discover') }}">
                         <ellipse cx="80" cy="98" rx="46" ry="6" fill="#064E3B" opacity=".08"/>
                         <rect x="44" y="12" width="72" height="86" rx="8" fill="#F8F6F0" stroke="#064E3B" stroke-width="2"/>
                         <circle cx="80" cy="38" r="13" fill="#C99424" opacity=".9" class="illus-pulse"/>
@@ -192,7 +192,7 @@
                         <rect x="66" y="78" width="28" height="4.5" rx="2.25" fill="#064E3B" opacity=".3"/>
                     </svg>
                     @elseif($step['illus'] === 'reserve')
-                    <svg viewBox="0 0 160 110" class="h-full w-auto" fill="none" role="img" aria-label="Réservation">
+                    <svg viewBox="0 0 160 110" class="h-full w-auto" fill="none" role="img" aria-label="{{ __('app.welcome_illus_reserve') }}">
                         <ellipse cx="80" cy="98" rx="46" ry="6" fill="#064E3B" opacity=".08"/>
                         <rect x="40" y="18" width="76" height="64" rx="8" fill="#F8F6F0" stroke="#064E3B" stroke-width="2"/>
                         <path d="M40 34h76" stroke="#064E3B" stroke-width="2"/>
@@ -203,7 +203,7 @@
                         <rect x="52" y="56" width="30" height="5" rx="2.5" fill="#064E3B" opacity=".25"/>
                     </svg>
                     @else
-                    <svg viewBox="0 0 160 110" class="h-full w-auto" fill="none" role="img" aria-label="Vivre l'expérience">
+                    <svg viewBox="0 0 160 110" class="h-full w-auto" fill="none" role="img" aria-label="{{ __('app.welcome_illus_live') }}">
                         <ellipse cx="80" cy="98" rx="46" ry="6" fill="#064E3B" opacity=".08"/>
                         <path d="M46 84c0-22 12-36 34-36s34 14 34 36z" fill="#F8F6F0" stroke="#064E3B" stroke-width="2"/>
                         <path d="M62 48c2-14 8-22 18-22s16 8 18 22" stroke="#C99424" stroke-width="2.5" stroke-linecap="round" class="illus-smoke"/>
@@ -227,12 +227,12 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row justify-between items-end mb-14 gap-6 fade-up">
             <div>
-                <h2 class="serif text-4xl md:text-5xl text-[#064E3B] mb-3">Savoir-Faire Traditionnels</h2>
-                <p class="text-[#17201D]/60 text-lg max-w-xl">L'héritage d'un peuple raconté par la matière et le geste.</p>
+                <h2 class="serif text-4xl md:text-5xl text-[#064E3B] mb-3">{{ __('app.welcome_sf_title') }}</h2>
+                <p class="text-[#17201D]/60 text-lg max-w-xl">{{ __('app.welcome_sf_sub') }}</p>
                 <div class="h-1 w-20 bg-[#C99424] mt-5"></div>
             </div>
             <a href="{{ route('savoir-faire.index') }}" class="hidden md:inline-flex items-center gap-2 px-6 py-3 border-2 border-[#064E3B] text-[#064E3B] font-bold rounded-full hover:bg-[#064E3B] hover:text-white transition-colors">
-                Voir tout
+                {{ __('app.welcome_see_all') }}
             </a>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -245,7 +245,7 @@
                 {{-- Badge : artisans référencés --}}
                 <span class="absolute top-5 right-5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#064E3B]/15 text-[11px] font-bold text-[#064E3B] shadow-sm">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-3.5 h-3.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    {{ $artisanCounts[$cat->id] ?? 0 }} artisan{{ ($artisanCounts[$cat->id] ?? 0) > 1 ? 's' : '' }}
+                    {{ trans_choice('app.welcome_sf_artisan_count', $artisanCounts[$cat->id] ?? 0, ['count' => $artisanCounts[$cat->id] ?? 0]) }}
                 </span>
                 <div class="relative w-16 h-16 mb-6">
                     <span class="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#C99424]/25 to-transparent opacity-0 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500"></span>
@@ -255,7 +255,7 @@
                 </div>
                 <h3 class="serif text-2xl text-[#17201D] mb-3 group-hover:text-[#064E3B] transition-colors">{{ $cat->name }}</h3>
                 <p class="text-[#17201D]/60 text-sm leading-relaxed mb-6">{{ $cat->description }}</p>
-                <span class="text-[#C99424] font-bold text-xs uppercase tracking-wider inline-flex items-center gap-1 group-hover:gap-3 transition-all">Découvrir
+                <span class="text-[#C99424] font-bold text-xs uppercase tracking-wider inline-flex items-center gap-1 group-hover:gap-3 transition-all">{{ __('app.welcome_sf_discover') }}
                     <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                 </span>
             </a>
@@ -266,11 +266,11 @@
 
 <!-- IMAGE CULTURELLE IMMERSIVE -->
 <section class="relative h-80 overflow-hidden">
-    <img src="{{ url('images/poterie_en_action.png') }}" class="w-full h-full object-cover" alt="Artisanat en action" onerror="this.src='{{ url('images/hero/tourisme_porto_novo.png') }}'">
+    <img src="{{ url('images/poterie_en_action.png') }}" class="w-full h-full object-cover" alt="{{ __('app.welcome_craft_action_alt') }}" onerror="this.src='{{ url('images/hero/tourisme_porto_novo.png') }}'">
     <div class="absolute inset-0 bg-[#064E3B]/75 flex items-center justify-center">
         <div class="text-center text-white px-4">
-            <p class="serif text-3xl md:text-5xl mb-4">"La technologie sert le patrimoine.<br>Elle ne le remplace pas."</p>
-            <span class="text-[#C99424] font-bold text-sm uppercase tracking-widest">La règle d'or de ƉƆKUN</span>
+            <p class="serif text-3xl md:text-5xl mb-4">{{ __('app.welcome_quote') }}</p>
+            <span class="text-[#C99424] font-bold text-sm uppercase tracking-widest">{{ __('app.welcome_quote_label') }}</span>
         </div>
     </div>
 </section>
@@ -280,12 +280,12 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row justify-between items-end mb-14 gap-6 fade-up">
             <div>
-                <h2 class="serif text-4xl md:text-5xl text-[#064E3B] mb-3">Portraits d'Artisans</h2>
-                <p class="text-[#17201D]/60 text-lg max-w-xl">Les visages et les histoires de ceux qui font vivre notre patrimoine.</p>
+                <h2 class="serif text-4xl md:text-5xl text-[#064E3B] mb-3">{{ __('app.welcome_artisans_title') }}</h2>
+                <p class="text-[#17201D]/60 text-lg max-w-xl">{{ __('app.welcome_artisans_sub') }}</p>
                 <div class="h-1 w-20 bg-[#C99424] mt-5"></div>
             </div>
             <a href="{{ route('artisans.index') }}" class="hidden md:inline-flex items-center gap-2 px-6 py-3 border-2 border-[#064E3B] text-[#064E3B] font-bold rounded-full hover:bg-[#064E3B] hover:text-white transition-colors">
-                Explorer le répertoire
+                {{ __('app.welcome_explore_directory') }}
             </a>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -297,7 +297,7 @@
                 </div>
                 <div class="p-7">
                     <h3 class="serif text-2xl text-[#17201D] mb-1 group-hover:text-[#064E3B] transition-colors">{{ $artisan->first_name }} {{ $artisan->last_name }}</h3>
-                    <p class="text-[#C99424] text-xs font-bold uppercase tracking-wider mb-4">{{ $artisan->professional_name ?? 'Maître Artisan' }}</p>
+                    <p class="text-[#C99424] text-xs font-bold uppercase tracking-wider mb-4">{{ $artisan->professional_name ?? __('app.welcome_master_artisan') }}</p>
                     <p class="text-[#17201D]/60 text-sm leading-relaxed line-clamp-2 mb-6">"{{ $artisan->description }}"</p>
                     <div class="flex flex-wrap gap-2">
                         @foreach($artisan->savoirFaires as $sf)
@@ -309,7 +309,7 @@
             @endforeach
         </div>
         <div class="text-center mt-10 md:hidden">
-            <a href="{{ route('artisans.index') }}" class="inline-flex items-center gap-2 px-8 py-4 border-2 border-[#064E3B] text-[#064E3B] font-bold rounded-full hover:bg-[#064E3B] hover:text-white transition-colors">Explorer le répertoire</a>
+            <a href="{{ route('artisans.index') }}" class="inline-flex items-center gap-2 px-8 py-4 border-2 border-[#064E3B] text-[#064E3B] font-bold rounded-full hover:bg-[#064E3B] hover:text-white transition-colors">{{ __('app.welcome_explore_directory') }}</a>
         </div>
     </div>
 </section>
@@ -319,21 +319,21 @@
     <div class="absolute inset-0 wax-pattern opacity-25"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center mb-14 fade-up">
-            <h2 class="serif text-4xl md:text-5xl text-white mb-3">ƉƆKUN sur le terrain</h2>
-            <p class="text-white/60 text-lg max-w-2xl mx-auto">Des ateliers, des gestes, des matières vivantes — capturés au cœur de Porto-Novo.</p>
+            <h2 class="serif text-4xl md:text-5xl text-white mb-3">{{ __('app.welcome_terrain_title') }}</h2>
+            <p class="text-white/60 text-lg max-w-2xl mx-auto">{{ __('app.welcome_terrain_sub') }}</p>
             <div class="h-1 w-20 bg-[#C99424] mx-auto mt-5"></div>
         </div>
         @php
         $galleryTiles = [
-            ['img'=>'images/van2.jpeg',   'label'=>'Vannerie & fibres de raphia', 'span'=>'md:col-span-2 md:row-span-2'],
-            ['img'=>'images/d1.jpeg',     'label'=>'Mains à l’ouvrage',          'span'=>''],
-            ['img'=>'images/drum.jpg',    'label'=>'Rythmes & cérémonies',        'span'=>''],
-            ['img'=>'images/d2.jpeg',     'label'=>'Terre et savoir-faire',       'span'=>''],
-            ['img'=>'images/van1.jpeg',   'label'=>'Tressage au quotidien',       'span'=>''],
-            ['img'=>'images/dokun_terrain.jpeg','label'=>'Rencontres du quartier', 'span'=>''],
-            ['img'=>'images/d3.jpeg',     'label'=>'Couleurs d’atelier',         'span'=>''],
-            ['img'=>'images/van3.jpeg',   'label'=>'Fibres tressées main',        'span'=>''],
-            ['img'=>'images/d4.jpeg',     'label'=>'Transmission vivante',        'span'=>''],
+            ['img'=>'images/van2.jpeg',   'label'=>__('app.welcome_gal_1'), 'span'=>'md:col-span-2 md:row-span-2'],
+            ['img'=>'images/d1.jpeg',     'label'=>__('app.welcome_gal_2'),          'span'=>''],
+            ['img'=>'images/drum.jpg',    'label'=>__('app.welcome_gal_3'),        'span'=>''],
+            ['img'=>'images/d2.jpeg',     'label'=>__('app.welcome_gal_4'),       'span'=>''],
+            ['img'=>'images/van1.jpeg',   'label'=>__('app.welcome_gal_5'),       'span'=>''],
+            ['img'=>'images/dokun_terrain.jpeg','label'=>__('app.welcome_gal_6'), 'span'=>''],
+            ['img'=>'images/d3.jpeg',     'label'=>__('app.welcome_gal_7'),         'span'=>''],
+            ['img'=>'images/van3.jpeg',   'label'=>__('app.welcome_gal_8'),        'span'=>''],
+            ['img'=>'images/d4.jpeg',     'label'=>__('app.welcome_gal_9'),        'span'=>''],
         ];
         @endphp
         <div class="grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[200px] gap-4">
@@ -358,17 +358,17 @@
     <div class="absolute inset-0 wax-pattern opacity-40"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center mb-16 fade-up">
-            <h2 class="serif text-4xl md:text-5xl mb-4">Pour qui est ƉƆKUN ?</h2>
+            <h2 class="serif text-4xl md:text-5xl mb-4">{{ __('app.welcome_forwho_title') }}</h2>
             <div class="h-1 w-20 bg-[#C99424] mx-auto mt-5"></div>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             @php $publics = [
-                ['label'=>'Artisans','desc'=>'Détenteurs qui souhaitent valoriser leurs savoir-faire'],
-                ['label'=>'Touristes','desc'=>'Visiteurs qui cherchent des expériences authentiques'],
-                ['label'=>'Guides','desc'=>'Professionnels qui construisent des parcours culturels'],
-                ['label'=>'Écoles','desc'=>'Établissements qui organisent des sorties pédagogiques'],
-                ['label'=>'Chercheurs','desc'=>'Universitaires et étudiants en quête de documentation'],
-                ['label'=>'Partenaires','desc'=>'Hôtels, agences, structures culturelles et touristiques'],
+                ['label'=>__('app.welcome_pub_artisans'),'desc'=>__('app.welcome_pub_artisans_desc')],
+                ['label'=>__('app.welcome_pub_tourists'),'desc'=>__('app.welcome_pub_tourists_desc')],
+                ['label'=>__('app.welcome_pub_guides'),'desc'=>__('app.welcome_pub_guides_desc')],
+                ['label'=>__('app.welcome_pub_schools'),'desc'=>__('app.welcome_pub_schools_desc')],
+                ['label'=>__('app.welcome_pub_researchers'),'desc'=>__('app.welcome_pub_researchers_desc')],
+                ['label'=>__('app.welcome_pub_partners'),'desc'=>__('app.welcome_pub_partners_desc')],
             ]; @endphp
             @foreach($publics as $pub)
             <div class="text-center bg-white/10 rounded-2xl p-6 hover:bg-white/20 transition-colors">
@@ -450,7 +450,7 @@
     artisans.forEach(a => {
         if (!a.latitude || !a.longitude) return;
         L.marker([a.latitude, a.longitude], { icon: dropIcon }).addTo(homeMap)
-            .bindPopup(`<strong style="font-family:'Manrope'">${a.professional_name || (a.first_name + ' ' + a.last_name)}</strong><br><a href="/artisans/${a.id}" style="color:#2563EB;font-size:12px;">Voir la fiche</a>`);
+            .bindPopup(`<strong style="font-family:'Manrope'">${a.professional_name || (a.first_name + ' ' + a.last_name)}</strong><br><a href="/artisans/${a.id}" style="color:#2563EB;font-size:12px;">{{ __('app.map_view_profile') }}</a>`);
     });
 </script>
 

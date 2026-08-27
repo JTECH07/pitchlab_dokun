@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Réservez des expériences culturelles authentiques à Porto-Novo, Bénin. Ateliers artisanaux, visites guidées, immersion patrimoniale.">
+    <meta name="description" content="{{ __('app.exp_meta_description') }}">
     <title>{{ __('app.exp_title') }} · ƉƆKUN</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=dm-serif-display:400|manrope:400,500,600,700,800&display=swap" rel="stylesheet"/>
@@ -39,8 +39,8 @@
         <div class="grid md:grid-cols-2 gap-8 items-center">
             <div>
                 <span class="text-dokun-gold text-xs font-bold tracking-[.2em] uppercase mb-4 block">Porto-Novo, Bénin</span>
-                <h1 class="font-serif text-4xl md:text-5xl leading-tight mb-4">Des gestes à découvrir,<br>des histoires à vivre.</h1>
-                <p class="text-white/70 text-lg mb-6">Choisissez une expérience selon vos intérêts et votre budget. L'artisan vous attend dans son atelier.</p>
+                <h1 class="font-serif text-4xl md:text-5xl leading-tight mb-4">{{ __('app.exp_hero_title') }}</h1>
+                <p class="text-white/70 text-lg mb-6">{{ __('app.exp_hero_sub') }}</p>
 
                 {{-- Barre de recherche rapide --}}
                 <form action="{{ route('experiences.index') }}" method="GET" id="search-form" class="flex bg-white/10 backdrop-blur rounded-xl p-1.5 max-w-md border border-white/20">
@@ -53,15 +53,15 @@
                     @endforeach
                     <input name="q" value="{{ request('q') }}"
                         class="flex-1 bg-transparent border-0 focus:ring-0 text-white placeholder-white/50 px-3 text-sm"
-                        placeholder="Poterie, tissage, atelier…">
-                    <button class="bg-dokun-gold text-white px-5 py-3 rounded-lg font-bold text-sm">Chercher</button>
+                        placeholder="{{ __('app.exp_search_placeholder') }}">
+                    <button class="bg-dokun-gold text-white px-5 py-3 rounded-lg font-bold text-sm">{{ __('app.search') }}</button>
                 </form>
             </div>
 
             {{-- Sélecteur de devise --}}
             <div class="flex justify-end items-start">
                 <div class="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-5 w-full max-w-xs">
-                    <p class="text-white/60 text-xs font-bold uppercase tracking-wider mb-3">Votre devise</p>
+                    <p class="text-white/60 text-xs font-bold uppercase tracking-wider mb-3">{{ __('app.exp_your_currency') }}</p>
                     <form action="{{ route('experiences.index') }}" method="GET" id="currency-form">
                         @foreach(request()->except('currency', 'page') as $key => $val)
                             @if(is_array($val))
@@ -79,7 +79,7 @@
                             @endforeach
                         </select>
                     </form>
-                    <p class="text-white/40 text-xs mt-2">Prix affichés dans votre devise.</p>
+                    <p class="text-white/40 text-xs mt-2">{{ __('app.exp_currency_note') }}</p>
                 </div>
             </div>
         </div>
@@ -95,11 +95,11 @@
                 @if(request('q'))<input type="hidden" name="q" value="{{ request('q') }}">@endif
 
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-7 sticky top-28">
-                    <h2 class="font-serif text-xl text-dokun-green">Filtrer</h2>
+                    <h2 class="font-serif text-xl text-dokun-green">{{ __('app.exp_filter') }}</h2>
 
                     {{-- Savoir-faire / Intérêts --}}
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">Vos intérêts</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">{{ __('app.exp_interests') }}</h3>
                         <div class="flex flex-wrap gap-2">
                             @foreach($savoirFaires as $sf)
                             <label class="filter-chip">
@@ -116,13 +116,13 @@
 
                     {{-- Budget --}}
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3 flex items-center gap-1.5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Budget max</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3 flex items-center gap-1.5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> {{ __('app.exp_budget_max') }}</h3>
                         <div class="space-y-3">
                             <div class="flex items-center gap-2">
                                 <input type="number" name="budget_max"
                                     value="{{ request('budget_max') }}"
                                     min="0"
-                                    placeholder="Ex: 15000"
+                                    placeholder="{{ __('app.exp_budget_placeholder') }}"
                                     class="w-full px-3 py-2 bg-dokun-ivory border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-dokun-gold focus:outline-none">
                                 <span class="text-sm font-bold text-dokun-green flex-shrink-0">F CFA</span>
                             </div>
@@ -133,33 +133,33 @@
                     <div>
                         <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">⏱ {{ __('app.exp_duration') }} max</h3>
                         <select name="duration" class="w-full px-3 py-2 bg-dokun-ivory border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-dokun-gold focus:outline-none">
-                            <option value="">Toutes durées</option>
-                            <option value="60"  {{ request('duration') == 60  ? 'selected' : '' }}>< 1h</option>
-                            <option value="120" {{ request('duration') == 120 ? 'selected' : '' }}>< 2h</option>
-                            <option value="180" {{ request('duration') == 180 ? 'selected' : '' }}>< 3h</option>
-                            <option value="480" {{ request('duration') == 480 ? 'selected' : '' }}>Demi-journée</option>
+                            <option value="">{{ __('app.exp_all_durations') }}</option>
+                            <option value="60"  {{ request('duration') == 60  ? 'selected' : '' }}>< 1{{ __('app.exp_hr') }}</option>
+                            <option value="120" {{ request('duration') == 120 ? 'selected' : '' }}>< 2{{ __('app.exp_hr') }}</option>
+                            <option value="180" {{ request('duration') == 180 ? 'selected' : '' }}>< 3{{ __('app.exp_hr') }}</option>
+                            <option value="480" {{ request('duration') == 480 ? 'selected' : '' }}>{{ __('app.exp_half_day') }}</option>
                         </select>
                     </div>
 
                     {{-- Tri --}}
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">↕ Trier par</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3">↕ {{ __('app.exp_sort_by') }}</h3>
                         <select name="sort" class="w-full px-3 py-2 bg-dokun-ivory border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-dokun-gold focus:outline-none">
-                            <option value="price_asc"  {{ $sort === 'price_asc'  ? 'selected' : '' }}>{{ __('app.exp_price') }} croissant</option>
-                            <option value="price_desc" {{ $sort === 'price_desc' ? 'selected' : '' }}>{{ __('app.exp_price') }} décroissant</option>
+                            <option value="price_asc"  {{ $sort === 'price_asc'  ? 'selected' : '' }}>{{ __('app.exp_price') }} ↑</option>
+                            <option value="price_desc" {{ $sort === 'price_desc' ? 'selected' : '' }}>{{ __('app.exp_price') }} ↓</option>
                             <option value="duration"   {{ $sort === 'duration'   ? 'selected' : '' }}>{{ __('app.exp_duration') }}</option>
-                            <option value="newest"     {{ $sort === 'newest'     ? 'selected' : '' }}>Plus récentes</option>
+                            <option value="newest"     {{ $sort === 'newest'     ? 'selected' : '' }}>{{ __('app.exp_newest') }}</option>
                         </select>
                     </div>
 
                     <div class="flex flex-col gap-2">
                         <button type="submit" class="w-full py-3 bg-dokun-green text-white font-bold rounded-xl text-sm hover:bg-dokun-green/90 transition">
-                            Appliquer les filtres
+                            {{ __('app.exp_apply_filters') }}
                         </button>
                         @if(request()->hasAny(['savoir_faire', 'budget_max', 'budget_min', 'duration', 'type', 'q', 'sort']))
                         <a href="{{ route('experiences.index', []) }}"
                            class="w-full py-2 text-center text-sm text-gray-400 hover:text-red-500 font-semibold transition">
-                            ✕ Effacer les filtres
+                            ✕ {{ __('app.exp_clear_filters') }}
                         </a>
                         @endif
                     </div>
@@ -175,13 +175,13 @@
             <div class="mb-10">
                 <div class="flex items-center gap-3 mb-5">
                     <span class="text-2xl">✨</span>
-                    <h2 class="font-serif text-2xl text-dokun-green">Recommandé pour vous</h2>
+                    <h2 class="font-serif text-2xl text-dokun-green">{{ __('app.exp_recommended') }}</h2>
                 </div>
                 <div class="grid sm:grid-cols-3 gap-4">
                     @foreach($recommended as $rec)
                     <article class="bg-white rounded-2xl overflow-hidden border border-dokun-gold/20 shadow-md hover:shadow-xl transition-shadow group relative card-anim" style="animation-delay: {{ $loop->index * 0.1 }}s">
                         <div class="absolute top-3 left-3 z-10">
-                            <span class="bg-dokun-gold text-white text-[10px] font-black uppercase tracking-wider px-2 py-1 rounded-full">Recommandé</span>
+                            <span class="bg-dokun-gold text-white text-[10px] font-black uppercase tracking-wider px-2 py-1 rounded-full">{{ __('app.exp_recommended_badge') }}</span>
                         </div>
                         <div class="h-36 overflow-hidden">
                             <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -218,13 +218,13 @@
                 <div>
                     <h2 class="font-serif text-2xl text-dokun-green">
                         @if(request()->hasAny(['savoir_faire', 'budget_max', 'q']))
-                            Résultats de votre recherche
+                            {{ __('app.exp_results') }}
                         @else
-                            Toutes les expériences
+                            {{ __('app.exp_all_experiences') }}
                         @endif
                     </h2>
                     <p class="text-sm text-gray-400 mt-0.5">
-                        {{ $experiences->total() }} expérience(s) · Prix en {{ $currencyInfo['label'] }}{{ $currencyRate == 1 ? '' : ' (base F CFA)' }}
+                        {{ __('app.exp_count', ['count' => $experiences->total()]) }} · {{ __('app.exp_in_currency') }} {{ $currencyInfo['label'] }}{{ $currencyRate == 1 ? '' : ' (base F CFA)' }}
                     </p>
                 </div>
 
@@ -252,10 +252,10 @@
             <div class="bg-white rounded-2xl p-16 text-center border border-dokun-gold/20">
                 <div class="text-5xl mb-4">🔍</div>
                 <h3 class="font-serif text-2xl text-dokun-green mb-2">{{ __('app.exp_empty') }}</h3>
-                <p class="text-gray-500 text-sm mb-6">Essayez d'ajuster votre budget ou vos centres d'intérêt.</p>
+                <p class="text-gray-500 text-sm mb-6">{{ __('app.exp_empty_hint') }}</p>
                 <a href="{{ route('experiences.index', []) }}"
                    class="inline-block bg-dokun-green text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-dokun-green/90 transition">
-                    Voir toutes les expériences
+                    {{ __('app.exp_view_all') }}
                 </a>
             </div>
             @else
@@ -291,7 +291,7 @@
                             </span>
                             <span class="flex items-center gap-1">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                {{ $exp->capacity }} pers. max
+                                {{ $exp->capacity }} {{ __('app.exp_pers_max') }}
                             </span>
                             @if($exp->language)
                             <span>🌐 {{ $exp->language }}</span>
@@ -309,7 +309,7 @@
                                         {{ $currencyInfo['symbol'] }} {{ number_format($exp->price * $currencyRate, 2, '.', ' ') }}
                                     @endif
                                 </strong>
-                                <span class="text-xs text-gray-300">/ pers.</span>
+                                <span class="text-xs text-gray-300">/ {{ __('app.exp_person') }}.</span>
                             </div>
                             <a href="{{ route('artisans.show', $exp->artisan_id) }}/reserver"
                                class="bg-dokun-green text-white px-4 py-2.5 rounded-xl font-bold text-sm hover:bg-dokun-green/90 active:scale-95 transition">

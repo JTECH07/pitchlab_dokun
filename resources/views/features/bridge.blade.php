@@ -47,29 +47,28 @@
 <main class="pt-32 pb-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <nav class="mb-10 text-sm font-semibold text-dokun-charcoal/50 flex items-center gap-2 flex-wrap">
-        <a href="{{ route('home') }}" class="hover:text-dokun-gold transition-colors">Accueil</a>
+        <a href="{{ route('home') }}" class="hover:text-dokun-gold transition-colors">{{ __('app.nav_home') }}</a>
         <svg class="w-3.5 h-3.5 text-dokun-charcoal/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <a href="{{ route('artisans.index') }}" class="hover:text-dokun-gold transition-colors">Artisans</a>
+        <a href="{{ route('artisans.index') }}" class="hover:text-dokun-gold transition-colors">{{ __('app.nav_artisans') }}</a>
         <svg class="w-3.5 h-3.5 text-dokun-charcoal/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         <a href="{{ route('artisans.show', $artisan->id) }}" class="hover:text-dokun-gold transition-colors">{{ $artisan->first_name }}</a>
         <svg class="w-3.5 h-3.5 text-dokun-charcoal/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <span class="text-dokun-green">Bridge</span>
+        <span class="text-dokun-green">{{ __('app.feat_bridge_title') }}</span>
     </nav>
 
     <div class="mb-10 flex flex-col sm:flex-row sm:items-center gap-5">
         <div class="flex-1">
             <h1 class="text-3xl md:text-5xl font-serif text-dokun-green tracking-tight mb-4 leading-tight">
-                🌍 ƉƆKUN Bridge — {{ $artisan->first_name }}
+                🌍 {{ __('app.feat_bridge_title') }} — {{ $artisan->first_name }}
             </h1>
             <p class="text-dokun-charcoal/70 text-[15px] leading-relaxed max-w-2xl">
-                Discutez avec {{ $artisan->first_name }} dans sa langue maternelle (Fon/Gun).
-                Traduction instantanée par IA, fidèle à la voix de l'artisan.
+                {{ __('app.feature_bridge_intro', ['name' => $artisan->first_name]) }}
             </p>
         </div>
         <a href="{{ route('payment.confirm', $artisan->id) }}"
            class="inline-flex items-center gap-2 px-6 py-3 bg-dokun-gold text-white font-bold rounded-xl hover:bg-dokun-gold/90 active:scale-[.98] transition shadow-lg shadow-dokun-gold/20 text-sm whitespace-nowrap flex-shrink-0">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            Réserver
+            {{ __('app.feature_bridge_book') }}
         </a>
     </div>
 
@@ -78,14 +77,14 @@
         <div class="w-20 h-20 mx-auto mb-5 rounded-full bg-emerald-50 flex items-center justify-center">
             <svg class="w-10 h-10 text-dokun-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>
         </div>
-        <h3 class="font-serif text-2xl text-dokun-green mb-3">Discutez avec {{ $artisan->first_name }}</h3>
+        <h3 class="font-serif text-2xl text-dokun-green mb-3">{{ __('app.feature_bridge_guest_title', ['name' => $artisan->first_name]) }}</h3>
         <p class="text-dokun-charcoal/60 max-w-md mx-auto mb-6 leading-relaxed">
-            Connectez-vous pour échanger en temps réel via ƉƆKUN Bridge — traduction Fon/Gun automatique.
+            {{ __('app.feature_bridge_guest_sub') }}
         </p>
         <a href="{{ route('login') }}"
            class="inline-flex items-center gap-2 px-8 py-4 bg-dokun-green text-white font-bold rounded-xl hover:bg-dokun-green/90 active:scale-[.98] transition shadow-lg shadow-dokun-green/20 text-lg">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
-            Se connecter pour discuter
+            {{ __('app.feature_bridge_guest_login') }}
         </a>
     </div>
     @else
@@ -98,25 +97,25 @@
             </div>
             <div class="flex-1 min-w-0">
                 <h3 class="font-bold text-lg text-dokun-charcoal">{{ $artisan->first_name }}</h3>
-                <p class="text-xs text-dokun-charcoal/50">Fon/Gun · Traduction instantanée</p>
+                <p class="text-xs text-dokun-charcoal/50">Fon/Gun · {{ __('app.feature_bridge_instant') }}</p>
             </div>
             <div class="flex items-center gap-2 flex-shrink-0">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span class="text-xs text-emerald-600 font-semibold">En ligne</span>
+                <span class="text-xs text-emerald-600 font-semibold">{{ __('app.feature_bridge_online') }}</span>
             </div>
         </div>
 
         {{-- Toolbar: modes + langue --}}
         <div class="flex items-center gap-2 px-5 py-3 border-b border-slate-100 bg-slate-50/50 flex-wrap">
-            <span class="text-xs font-bold text-dokun-charcoal/40 uppercase tracking-wider mr-1">Mode :</span>
+            <span class="text-xs font-bold text-dokun-charcoal/40 uppercase tracking-wider mr-1">{{ __('app.feature_bridge_mode') }} :</span>
             <button onclick="bridgeSetMode('text')" id="mode-text" class="bridge-mode-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-dokun-green text-white transition">
-                ⌨️ Texte
+                ⌨️ {{ __('app.feature_bridge_text') }}
             </button>
             <button onclick="bridgeSetMode('voice_to_text')" id="mode-voice-to-text" class="bridge-mode-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-dokun-charcoal border border-slate-200 hover:border-dokun-green transition">
-                🎤 Voix → Texte
+                🎤 {{ __('app.feature_bridge_voice_to_text') }}
             </button>
             <button onclick="bridgeSetMode('text_to_voice')" id="mode-text-to-voice" class="bridge-mode-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white text-dokun-charcoal border border-slate-200 hover:border-dokun-green transition">
-                🔊 Texte → Voix
+                🔊 {{ __('app.feature_bridge_text_to_voice') }}
             </button>
             <div class="ml-auto flex items-center gap-1">
                 <button onclick="bridgeSetLang('fr')" id="lang-fr"
@@ -134,7 +133,7 @@
             <div id="load-older-wrap" class="hidden text-center py-2">
                 <button onclick="loadOlderMessages()" id="load-older-btn"
                     class="text-xs text-dokun-green font-semibold hover:underline">
-                    ↑ Charger les messages précédents
+                    ↑ {{ __('app.feature_bridge_load_older') }}
                 </button>
             </div>
 
@@ -145,7 +144,7 @@
                     <p class="text-xs text-dokun-charcoal/50 mb-1 font-semibold">{{ $artisan->first_name }} · Fon/Gun</p>
                     <div class="bg-white rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm border border-gray-100">
                         <p class="text-sm font-medium text-emerald-900">"Kouabo! Welcomez nan atelier mǐtɔn..."</p>
-                        <p class="text-xs text-dokun-charcoal/60 mt-1.5 italic">(Bienvenue dans mon atelier ! Je suis ravi(e) de vous accueillir.)</p>
+                        <p class="text-xs text-dokun-charcoal/60 mt-1.5 italic">({{ __('app.feature_bridge_welcome') }})</p>
                     </div>
                 </div>
             </div>
@@ -153,13 +152,13 @@
             {{-- Suggestion chips --}}
             <div id="suggestion-chips" class="flex flex-wrap gap-2 pl-11 slide-up">
                 <button onclick="bridgeSend('Parlez-moi de votre métier')" class="suggestion-chip px-3 py-1.5 bg-emerald-50 text-emerald-800 text-xs font-semibold rounded-full border border-emerald-200 hover:bg-emerald-100">
-                    🎨 Votre métier
+                    🎨 {{ __('app.feature_bridge_job') }}
                 </button>
                 <button onclick="bridgeSend('Comment avez-vous appris ?')" class="suggestion-chip px-3 py-1.5 bg-emerald-50 text-emerald-800 text-xs font-semibold rounded-full border border-emerald-200 hover:bg-emerald-100">
-                    📚 Votre apprentissage
+                    📚 {{ __('app.feature_bridge_learning') }}
                 </button>
                 <button onclick="bridgeSend('Quelles sont vos créations préférées ?')" class="suggestion-chip px-3 py-1.5 bg-emerald-50 text-emerald-800 text-xs font-semibold rounded-full border border-emerald-200 hover:bg-emerald-100">
-                    ✨ Créations préférées
+                    ✨ {{ __('app.feature_bridge_fav_creations') }}
                 </button>
             </div>
         </div>
@@ -167,17 +166,17 @@
         {{-- Satisfaction survey (hidden by default) --}}
         <div id="satisfaction-survey" class="hidden border-t border-slate-100 bg-gradient-to-r from-emerald-50 to-amber-50 p-4 slide-up">
             <div class="flex items-center gap-3">
-                <p class="text-sm font-semibold text-dokun-charcoal flex-1">⭐ Comment évaluez-vous cette conversation ?</p>
+                <p class="text-sm font-semibold text-dokun-charcoal flex-1">⭐ {{ __('app.feature_bridge_rate') }}</p>
                 <div class="flex gap-1" id="survey-stars">
-                    <button onclick="submitRating(1)" class="text-2xl hover:scale-125 transition">⭐</button>
-                    <button onclick="submitRating(2)" class="text-2xl hover:scale-125 transition">⭐</button>
-                    <button onclick="submitRating(3)" class="text-2xl hover:scale-125 transition">⭐</button>
-                    <button onclick="submitRating(4)" class="text-2xl hover:scale-125 transition">⭐</button>
-                    <button onclick="submitRating(5)" class="text-2xl hover:scale-125 transition">⭐</button>
+                    <button onclick="submitRating(1)" class="text-2xl hover:scale-125 transition" aria-label="1">⭐</button>
+                    <button onclick="submitRating(2)" class="text-2xl hover:scale-125 transition" aria-label="2">⭐</button>
+                    <button onclick="submitRating(3)" class="text-2xl hover:scale-125 transition" aria-label="3">⭐</button>
+                    <button onclick="submitRating(4)" class="text-2xl hover:scale-125 transition" aria-label="4">⭐</button>
+                    <button onclick="submitRating(5)" class="text-2xl hover:scale-125 transition" aria-label="5">⭐</button>
                 </div>
-                <button onclick="dismissSurvey()" class="text-xs text-dokun-charcoal/40 hover:text-dokun-charcoal/60 ml-2">✕</button>
+                <button onclick="dismissSurvey()" class="text-xs text-dokun-charcoal/40 hover:text-dokun-charcoal/60 ml-2" aria-label="Close">✕</button>
             </div>
-            <p id="survey-thanks" class="hidden text-sm text-dokun-green font-semibold mt-2">Merci pour votre retour ! 🙏</p>
+            <p id="survey-thanks" class="hidden text-sm text-dokun-green font-semibold mt-2">{{ __('app.feature_bridge_thanks') }} 🙏</p>
         </div>
 
         {{-- Input area --}}
@@ -189,10 +188,10 @@
                 </button>
                 <div class="flex-1">
                     <textarea id="bridge-input" rows="2"
-                        placeholder="Écrivez votre message..."
+                        placeholder="{{ __('app.feature_bridge_write') }}"
                         class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:border-dokun-green focus:ring-1 focus:ring-dokun-green outline-none transition resize-none"></textarea>
                 </div>
-                <button id="bridge-send-btn" onclick="bridgeSend()" title="Envoyer"
+                <button id="bridge-send-btn" onclick="bridgeSend()" title="{{ __('app.feature_bridge_send') }}"
                     class="w-11 h-11 bg-dokun-green text-white rounded-xl hover:bg-dokun-green/90 active:scale-95 transition flex items-center justify-center flex-shrink-0 shadow-lg shadow-dokun-green/20">
                     <svg class="w-5 h-5" id="bridge-send-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                     <svg class="w-5 h-5 hidden animate-spin" id="bridge-loading-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
@@ -211,6 +210,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const CSRF       = document.querySelector('meta[name="csrf-token"]').content;
     const ARTISAN_ID = {{ $artisan->id }};
     const IS_AUTH    = {{ Auth::check() ? 'true' : 'false' }};
+
+    const ui = {
+        loading: {{ json_encode(__('app.feature_bridge_loading')) }},
+        loadOlder: {{ json_encode(__('app.feature_bridge_load_older')) }},
+        you: {{ json_encode(__('app.feature_bridge_you')) }},
+        thinking: {{ json_encode(__('app.feature_bridge_thinking')) }},
+        connError: {{ json_encode(__('app.feature_bridge_conn_error')) }},
+        noVoice: {{ json_encode(__('app.feature_bridge_no_voice')) }},
+        listening: {{ json_encode(__('app.feature_bridge_listening')) }},
+        writeMsg: {{ json_encode(__('app.feature_bridge_write')) }},
+        speakMicro: {{ json_encode(__('app.feature_bridge_speak_micro')) }},
+    };
 
     if (!IS_AUTH) return;
 
@@ -274,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // ─── Load older messages ───────────────────────────
     window.loadOlderMessages = async function() {
         const btn = document.getElementById('load-older-btn');
-        btn.textContent = 'Chargement...';
+        btn.textContent = ui.loading;
         btn.disabled = true;
         try {
             const res = await fetch(@json(route('features.bridge.history', $artisan->id)) + `?limit=20&offset=${historyOffset}`, {
@@ -302,7 +313,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('load-older-wrap').classList.add('hidden');
             }
         } catch (e) { /* silent */ }
-        btn.textContent = '↑ Charger les messages précédents';
+        btn.textContent = '↑ ' + ui.loadOlder;
         btn.disabled = false;
     };
 
@@ -334,7 +345,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <p class="text-sm">${escHtml(localText)}</p>
                     </div>
                 </div>
-                <div class="w-8 h-8 rounded-full bg-slate-300 text-white flex items-center justify-center text-xs font-bold flex-shrink-0">Vous</div>
+                <div class="w-8 h-8 rounded-full bg-slate-300 text-white flex items-center justify-center text-xs font-bold flex-shrink-0">${ui.you}</div>
             </div>`;
         }
         return `<div class="flex gap-3 chat-bubble">
@@ -360,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="w-8 h-8 rounded-full bg-dokun-green text-white flex items-center justify-center text-xs font-bold flex-shrink-0 typing-pulse">${artisanInitial}</div>
                 <div class="bg-white rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm border border-gray-100 flex items-center gap-2">
                     <div class="flex gap-1"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>
-                    <span class="text-xs text-dokun-charcoal/40 ml-1">{{ $artisan->first_name }} réfléchit...</span>
+                    <span class="text-xs text-dokun-charcoal/40 ml-1">{{ $artisan->first_name }} {{ __('app.feature_bridge_thinking') }}...</span>
                 </div>
             </div>
         `);
@@ -444,7 +455,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         } catch (e) {
             removeTypingIndicator();
-            messagesDiv.insertAdjacentHTML('beforeend', `<p class="text-red-400 text-xs text-center py-2">Erreur de connexion. Réessayez.</p>`);
+            messagesDiv.insertAdjacentHTML('beforeend', `<p class="text-red-400 text-xs text-center py-2">${ui.connError}</p>`);
         }
 
         bridgeBusy = false;
@@ -461,7 +472,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // ─── Voice recognition ─────────────────────────────
     window.bridgeToggleMic = function() {
         if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-            alert('La reconnaissance vocale n\'est pas supportée par ce navigateur.');
+            alert(ui.noVoice);
             return;
         }
         if (bridgeIsRecording) {
@@ -477,7 +488,7 @@ document.addEventListener('DOMContentLoaded', function () {
         bridgeMicBtn.classList.add('bg-red-500', 'text-white', 'mic-recording');
         bridgeMicBtn.classList.remove('bg-slate-100', 'text-slate-500');
         bridgeIsRecording = true;
-        bridgeInput.placeholder = 'Écoute...';
+        bridgeInput.placeholder = ui.listening;
 
         bridgeRecognition.onresult = function(event) {
             let transcript = '';
@@ -495,14 +506,14 @@ document.addEventListener('DOMContentLoaded', function () {
             bridgeIsRecording = false;
             bridgeMicBtn.classList.remove('bg-red-500', 'text-white', 'mic-recording');
             bridgeMicBtn.classList.add('bg-slate-100', 'text-slate-500');
-            bridgeInput.placeholder = 'Écrivez votre message...';
+            bridgeInput.placeholder = ui.writeMsg;
         };
 
         bridgeRecognition.onend = function() {
             bridgeIsRecording = false;
             bridgeMicBtn.classList.remove('bg-red-500', 'text-white', 'mic-recording');
             bridgeMicBtn.classList.add('bg-slate-100', 'text-slate-500');
-            bridgeInput.placeholder = bridgeMode === 'text' ? 'Écrivez votre message...' : 'Appuyez sur le micro pour parler...';
+            bridgeInput.placeholder = bridgeMode === 'text' ? ui.writeMsg : ui.speakMicro;
         };
 
         bridgeRecognition.start();

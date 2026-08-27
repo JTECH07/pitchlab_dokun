@@ -49,7 +49,7 @@
                 <div class="flex items-start justify-between mb-4">
                     <span class="w-14 h-14 rounded-2xl flex items-center justify-center" style="background:{{ $course->accent }}15"><x-icon name="{{ $course->icon }}" class="w-7 h-7" style="color:{{ $course->accent }}"/></span>
                     @if($pct === 100)
-                        <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-bold uppercase tracking-wider rounded-full border border-emerald-200 inline-flex items-center gap-1"><x-icon name="check-circle" class="w-3.5 h-3.5"/> Terminé</span>
+                        <span class="px-3 py-1 bg-emerald-50 text-emerald-600 text-[10px] font-bold uppercase tracking-wider rounded-full border border-emerald-200 inline-flex items-center gap-1"><x-icon name="check-circle" class="w-3.5 h-3.5"/> {{ __('app.learn_completed') }}</span>
                     @elseif($pct > 0)
                         <span class="text-xs font-bold text-dokun-gold">{{ $pct }}%</span>
                     @endif
@@ -57,8 +57,8 @@
                 <h2 class="font-serif text-xl text-dokun-green mb-1.5">{{ $isEn ? $course->title_en : $course->title_fr }}</h2>
                 <p class="text-dokun-charcoal/55 text-sm leading-relaxed line-clamp-2 mb-4">{{ $isEn ? $course->desc_en : $course->desc_fr }}</p>
                 <div class="flex items-center justify-between text-xs font-bold text-dokun-charcoal/50">
-                    <span>{{ count($course->lessons) }} leçons · {{ $totalWords }} mots</span>
-                    <span style="color:{{ $course->accent }}">Commencer →</span>
+                    <span>{{ trans_choice('app.learn_lessons_mots', count($course->lessons), ['count' => count($course->lessons), 'words' => $totalWords]) }}</span>
+                    <span style="color:{{ $course->accent }}">{{ __('app.learn_start') }} →</span>
                 </div>
                 @if($pct > 0)
                 <div class="mt-3 h-1.5 bg-black/5 rounded-full overflow-hidden"><div class="h-full rounded-full transition-all" style="width:{{ $pct }}%;background:{{ $course->accent }}"></div></div>

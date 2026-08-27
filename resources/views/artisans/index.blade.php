@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Catalogue des Artisans — ƉƆKUN Porto-Novo</title>
+    <title>{{ __('app.nav_artisans') }} — ƉƆKUN Porto-Novo</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=dm-serif-display:400|manrope:400,600,700,800&display=swap" rel="stylesheet" />
@@ -49,13 +49,13 @@
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <span class="inline-block py-1 px-4 rounded-full bg-dokun-gold/20 text-dokun-gold font-bold text-xs uppercase tracking-[0.2em] mb-4 border border-dokun-gold/30">
-                Répertoire officiel
+                {{ __('app.artisan_official_registry') }}
             </span>
             <h1 class="text-5xl md:text-6xl font-serif tracking-tight mb-4 text-white">
-                Les Maîtres Artisans de <br/> <span class="text-dokun-gold">Porto-Novo</span>
+                {{ __('app.artisan_hero_title') }} <br/> <span class="text-dokun-gold">Porto-Novo</span>
             </h1>
             <p class="text-white/70 max-w-2xl mx-auto text-lg font-light mt-4">
-                Découvrez les gardiens des traditions et créateurs passionnés qui façonnent l'artisanat d'art béninois.
+                {{ __('app.artisan_hero_sub') }}
             </p>
         </div>
     </section>
@@ -65,11 +65,11 @@
         <form method="GET" action="{{ route('artisans.index') }}" class="bg-white rounded-2xl p-4 shadow-xl border border-gray-100 grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
             <div class="sm:col-span-6 relative">
                 <svg class="w-5 h-5 text-gray-400 absolute left-4 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Rechercher par nom, atelier..." class="w-full pl-12 pr-4 py-3 bg-dokun-ivory/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-dokun-gold outline-none text-sm font-semibold">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('app.artisan_search_placeholder') }}" class="w-full pl-12 pr-4 py-3 bg-dokun-ivory/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-dokun-gold outline-none text-sm font-semibold">
             </div>
             <div class="sm:col-span-4">
                 <select name="savoir_faire" class="w-full px-4 py-3 bg-dokun-ivory/50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-dokun-gold outline-none text-sm font-semibold text-dokun-charcoal">
-                    <option value="">Tous les savoir-faire</option>
+                    <option value="">{{ __('app.artisan_all_skills') }}</option>
                     @foreach($savoirFaires as $sf)
                     <option value="{{ $sf->id }}" {{ request('savoir_faire') == $sf->id ? 'selected' : '' }}>
                         {{ $sf->name }}
@@ -79,10 +79,10 @@
             </div>
             <div class="sm:col-span-2 flex gap-2">
                 <button type="submit" class="w-full py-3 bg-dokun-green hover:bg-dokun-green/90 text-white font-bold rounded-xl transition-colors shadow-lg text-sm">
-                    Rechercher
+                    {{ __('app.search') }}
                 </button>
                 @if(request('search') || request('savoir_faire'))
-                <a href="{{ route('artisans.index') }}" class="p-3 bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-xl transition-colors text-sm font-bold flex items-center justify-center" title="Réinitialiser">
+                <a href="{{ route('artisans.index') }}" class="p-3 bg-gray-100 text-gray-600 hover:bg-gray-200 rounded-xl transition-colors text-sm font-bold flex items-center justify-center" title="{{ __('app.artisan_reset') }}">
                     ✕
                 </a>
                 @endif
@@ -97,10 +97,10 @@
             <div class="w-20 h-20 bg-dokun-ivory text-dokun-gold rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
             </div>
-            <h3 class="text-2xl font-serif text-dokun-green mb-2">Aucun artisan trouvé</h3>
-            <p class="text-dokun-charcoal/60 max-w-md mx-auto mb-6">Essayez de modifier votre recherche ou vos filtres.</p>
+            <h3 class="text-2xl font-serif text-dokun-green mb-2">{{ __('app.artisan_empty') }}</h3>
+            <p class="text-dokun-charcoal/60 max-w-md mx-auto mb-6">{{ __('app.artisan_empty_hint') }}</p>
             <a href="{{ route('artisans.index') }}" class="inline-flex px-6 py-3 bg-dokun-gold text-white font-bold rounded-xl shadow-lg hover:bg-yellow-600 transition-colors">
-                Voir tous les artisans
+                {{ __('app.artisan_view_all') }}
             </a>
         </div>
         @else
@@ -141,7 +141,7 @@
                         </p>
 
                         <div class="mt-6 pt-6 border-t border-gray-100 font-bold text-dokun-green text-sm flex justify-between items-center">
-                            Découvrir le profil
+                            {{ __('app.artisan_discover_profile') }}
                             <svg class="w-5 h-5 text-dokun-gold group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </div>
                     </div>

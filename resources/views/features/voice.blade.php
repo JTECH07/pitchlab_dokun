@@ -72,15 +72,15 @@
                     </div>
                 </button>
                 <div class="flex-1">
-                    <p class="text-white/80 text-sm font-semibold" id="voice-record-label">Enregistrer une archive vocale</p>
-                    <p class="text-white/40 text-xs" id="voice-record-status">Cliquez pour commencer l'enregistrement</p>
+                    <p class="text-white/80 text-sm font-semibold" id="voice-record-label">{{ __('app.feature_voice_record_label') }}</p>
+                    <p class="text-white/40 text-xs" id="voice-record-status">{{ __('app.feature_voice_record_status') }}</p>
                 </div>
                 <div class="text-dokun-gold font-mono text-sm font-bold hidden" id="voice-record-timer">00:00</div>
             </div>
             <div class="mt-3 hidden" id="voice-upload-status">
                 <div class="flex items-center gap-2 text-dokun-gold text-xs">
                     <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
-                    Transcription et traduction en cours...
+                    {{ __('app.feature_voice_transcribing') }}
                 </div>
             </div>
         </div>
@@ -99,7 +99,7 @@
             <div id="voice-archives-list" class="space-y-2 min-h-[60px]">
                 <p class="text-white/40 text-sm text-center py-4" id="voice-loading">
                     <svg class="w-5 h-5 mx-auto animate-spin mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
-                    Chargement des archives...
+                    {{ __('app.feature_voice_loading') }}
                 </p>
             </div>
 
@@ -107,7 +107,7 @@
                 <audio id="voice-audio" controls class="w-full h-10 rounded-lg"></audio>
                 <div class="bg-white/5 rounded-xl p-4 border border-white/10 space-y-3">
                     <div>
-                        <p class="text-dokun-gold text-xs font-bold mb-1 uppercase tracking-wider">Transcription (Fon/Gun)</p>
+                        <p class="text-dokun-gold text-xs font-bold mb-1 uppercase tracking-wider">{{ __('app.feature_voice_transcription') }} (Fon/Gun)</p>
                         <p id="voice-transcription" class="text-white/90 text-sm italic leading-relaxed"></p>
                     </div>
                     <div class="h-px bg-white/10"></div>
@@ -135,6 +135,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const IS_AUTH    = {{ Auth::check() ? 'true' : 'false' }};
     const IS_OWNER   = {{ (Auth::check() && (Auth::id() === $artisan->user_id || Auth::user()->role === 'admin')) ? 'true' : 'false' }};
 
+    const ui = {
+        noArchives: {{ json_encode(app()->getLocale() === 'en' ? 'No voice archives available yet.' : 'Aucune archive vocale disponible pour le moment.') }},
+        loadError: {{ json_encode(app()->getLocale() === 'en' ? 'Unable to load archives.' : 'Impossible de charger les archives.') }},
+        noTrans: {{ json_encode(app()->getLocale() === 'en' ? '(transcription unavailable)' : '(transcription indisponible)') }},
+        noTranslFr: {{ json_encode('(traduction indisponible)') }},
+        noTranslEn: {{ json_encode('(translation unavailable)') }},
+        recording: {{ json_encode(app()->getLocale() === 'en' ? 'Recording...' : 'Enregistrement en cours...') }},
+        stopToFinish: {{ json_encode(app()->getLocale() === 'en' ? 'Press again to stop' : 'Appuyez à nouveau pour arrêter') }},
+        recordLabel: {{ json_encode(__('app.feature_voice_record_label')) }},
+        recordStatus: {{ json_encode(__('app.feature_voice_record_status')) }},
+        micDenied: {{ json_encode(app()->getLocale() === 'en' ? 'Microphone access denied.' : 'Accès au microphone refusé.') }},
+        uploadError: {{ json_encode(app()->getLocale() === 'en' ? 'Error during upload. Try again.' : 'Erreur lors de l\'envoi. Réessayez.') }},
+    };
+
     const archivesList   = document.getElementById('voice-archives-list');
     const voiceLoadingEl = document.getElementById('voice-loading');
     const voicePlayer    = document.getElementById('voice-player');
@@ -147,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             voiceLoadingEl && voiceLoadingEl.remove();
             if (!data.archives || data.archives.length === 0) {
-                archivesList.innerHTML = '<p class="text-white/40 text-sm text-center py-4">{{ app()->getLocale() === 'en' ? 'No voice archives available yet.' : 'Aucune archive vocale disponible pour le moment.' }}</p>';
+                archivesList.innerHTML = `<p class="text-white/40 text-sm text-center py-4">${ui.noArchives}</p>`;
                 return;
             }
             archivesList.innerHTML = '';
@@ -170,8 +184,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 btn.addEventListener('click', () => {
                     voiceAudio.src = arc.audio_url;
                     const isEn = {{ app()->getLocale() === 'en' ? 'true' : 'false' }};
-                    voiceTrans.textContent = arc.transcription || (isEn ? '(transcription unavailable)' : '(transcription indisponible)');
-                    const transl = isEn ? (arc.translation_en || arc.translation_fr || '(translation unavailable)') : (arc.translation_fr || '(traduction indisponible)');
+                    voiceTrans.textContent = arc.transcription || (isEn ? ui.noTrans : ui.noTrans);
+                    const transl = isEn ? (arc.translation_en || arc.translation_fr || ui.noTranslEn) : (arc.translation_fr || ui.noTranslFr);
                     voiceTransl.textContent = transl;
                     voicePlayer.classList.remove('hidden');
                     voiceAudio.play();
@@ -183,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(() => {
             if (voiceLoadingEl) voiceLoadingEl.remove();
-            archivesList.innerHTML = '<p class="text-white/40 text-sm text-center py-4">{{ app()->getLocale() === 'en' ? 'Unable to load archives.' : 'Impossible de charger les archives.' }}</p>';
+            archivesList.innerHTML = `<p class="text-white/40 text-sm text-center py-4">${ui.loadError}</p>`;
         });
 
     if (!IS_OWNER) return;
@@ -216,8 +230,8 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('voice-record-stop').classList.remove('hidden');
             document.getElementById('voice-record-stop').classList.add('flex');
             document.getElementById('voice-record-btn').classList.add('mic-recording');
-            document.getElementById('voice-record-label').textContent = 'Enregistrement en cours...';
-            document.getElementById('voice-record-status').textContent = 'Appuyez à nouveau pour arrêter';
+            document.getElementById('voice-record-label').textContent = ui.recording;
+            document.getElementById('voice-record-status').textContent = ui.stopToFinish;
             const timerEl = document.getElementById('voice-record-timer');
             timerEl.classList.remove('hidden');
             voiceTimer = setInterval(() => {
@@ -227,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 timerEl.textContent = m + ':' + s;
             }, 1000);
         }).catch(() => {
-            alert('Accès au microphone refusé.');
+            alert(ui.micDenied);
         });
     };
 
@@ -238,8 +252,8 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('voice-record-stop').classList.add('hidden');
         document.getElementById('voice-record-stop').classList.remove('flex');
         document.getElementById('voice-record-timer').classList.add('hidden');
-        document.getElementById('voice-record-label').textContent = 'Enregistrer une archive vocale';
-        document.getElementById('voice-record-status').textContent = 'Cliquez pour commencer l\'enregistrement';
+        document.getElementById('voice-record-label').textContent = ui.recordLabel;
+        document.getElementById('voice-record-status').textContent = ui.recordStatus;
 
         document.getElementById('voice-upload-status').classList.remove('hidden');
 
@@ -282,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(() => {
             document.getElementById('voice-upload-status').classList.add('hidden');
-            alert('Erreur lors de l\'envoi. Réessayez.');
+            alert(ui.uploadError);
         });
     }
 

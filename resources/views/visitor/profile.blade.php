@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mon voyage — ƉƆKUN</title>
+    <title>{{ __('app.trip_title') }}</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=dm-serif-display:400|manrope:400,600,700,800&display=swap" rel="stylesheet"/>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -28,9 +28,9 @@
         <img src="{{ url('images/dokun_bg3.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-15" alt="" loading="lazy">
         <div class="absolute inset-0 wax-pattern opacity-30"></div>
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14 relative z-10 fade-up">
-            <span class="inline-block px-4 py-1.5 bg-dokun-gold/15 text-dokun-gold border border-dokun-gold/30 rounded-full text-xs font-bold uppercase tracking-widest mb-4">Mon voyage</span>
-            <h1 class="font-serif text-3xl md:text-5xl text-white mb-2">Kwabɔ, {{ $upcoming->isEmpty() && $past->isEmpty() ? 'explorateur' : auth()->user()->name }} !</h1>
-            <p class="text-white/65">Tes réservations, tes artisans favoris et ta progression d'apprentissage — tout ton séjour à Porto-Novo au même endroit.</p>
+            <span class="inline-block px-4 py-1.5 bg-dokun-gold/15 text-dokun-gold border border-dokun-gold/30 rounded-full text-xs font-bold uppercase tracking-widest mb-4">{{ __('app.nav_my_trip') }}</span>
+            <h1 class="font-serif text-3xl md:text-5xl text-white mb-2">Kwabɔ, {{ $upcoming->isEmpty() && $past->isEmpty() ? __('app.trip_explorer') : auth()->user()->name }} !</h1>
+            <p class="text-white/65">{{ __('app.trip_hero_sub') }}</p>
         </div>
     </section>
 
@@ -40,10 +40,10 @@
         <section class="grid grid-cols-2 md:grid-cols-4 gap-4 fade-up">
             @php
                 $stats = [
-                    ['label' => 'À venir', 'value' => $upcoming->count(), 'icon' => 'calendar'],
-                    ['label' => 'Favoris', 'value' => $favorites->count(), 'icon' => 'heart'],
-                    ['label' => 'Leçons Learn', 'value' => $learnStats['lessons_done'], 'icon' => 'book-open'],
-                    ['label' => 'Avis donnés', 'value' => $reviewsCount, 'icon' => 'star'],
+                    ['label' => __('app.trip_stat_upcoming'), 'value' => $upcoming->count(), 'icon' => 'calendar'],
+                    ['label' => __('app.trip_stat_favorites'), 'value' => $favorites->count(), 'icon' => 'heart'],
+                    ['label' => __('app.trip_stat_lessons'), 'value' => $learnStats['lessons_done'], 'icon' => 'book-open'],
+                    ['label' => __('app.trip_stat_reviews'), 'value' => $reviewsCount, 'icon' => 'star'],
                 ];
             @endphp
             @foreach($stats as $s)
@@ -60,8 +60,8 @@
             <div class="bg-dokun-charcoal rounded-2xl relative overflow-hidden">
                 <div class="absolute inset-0 wax-pattern opacity-20"></div>
                 <div class="relative z-10 p-7">
-                    <h2 class="font-serif text-2xl text-white mb-1">Programme fidélité</h2>
-                    <p class="text-white/50 text-sm mb-6">Chaque action compte — gagne des points, monte de niveau, débloque des badges.</p>
+                    <h2 class="font-serif text-2xl text-white mb-1">{{ __('app.trip_loyalty_title') }}</h2>
+                    <p class="text-white/50 text-sm mb-6">{{ __('app.trip_loyalty_sub') }}</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-7">
                         {{-- Niveau + progression --}}
@@ -78,11 +78,11 @@
                             <div class="h-2 bg-white/10 rounded-full overflow-hidden">
                                 <div class="h-full bg-gradient-to-r from-dokun-gold to-yellow-400 rounded-full transition-all duration-700" style="width:{{ $pct }}%"></div>
                             </div>
-                            <p class="text-white/40 text-xs mt-2">{{ number_format($nextLevel['threshold'] - $totalPoints, 0, ',', ' ') }} pts pour devenir
+                            <p class="text-white/40 text-xs mt-2">{{ number_format($nextLevel['threshold'] - $totalPoints, 0, ',', ' ') }} {{ __('app.trip_points_to_become') }}
                                 <strong class="text-dokun-gold/90">{{ app()->getLocale()==='en' ? $nextLevel['en'] : $nextLevel['fr'] }}</strong>
                             </p>
                             @else
-                            <p class="text-dokun-gold/90 text-xs font-bold mt-1">Niveau maximum atteint — ayibobo !</p>
+                            <p class="text-dokun-gold/90 text-xs font-bold mt-1">{{ __('app.trip_max_level') }}</p>
                             @endif
                         </div>
 
@@ -90,13 +90,13 @@
                         <div class="bg-white/5 border border-white/10 rounded-xl p-5 flex flex-col items-center justify-center text-center">
                             <x-icon name="flame" class="w-8 h-8 {{ $summary->streak_days > 0 ? 'text-orange-500' : 'text-white/25' }}"/>
                             <p class="font-serif text-3xl text-white mt-2">{{ $summary->streak_days }}</p>
-                            <p class="text-[11px] font-bold uppercase tracking-wider text-white/40 mt-0.5">jour(s) de suite</p>
-                            <p class="text-[10px] text-white/30 mt-1">+5 pts par jour de visite</p>
+                            <p class="text-[11px] font-bold uppercase tracking-wider text-white/40 mt-0.5">{{ __('app.trip_streak_days') }}</p>
+                            <p class="text-[10px] text-white/30 mt-1">{{ __('app.trip_streak_note') }}</p>
                         </div>
                     </div>
 
                     {{-- Badges --}}
-                    <p class="text-white/60 text-xs font-bold uppercase tracking-wider mb-3">Badges</p>
+                    <p class="text-white/60 text-xs font-bold uppercase tracking-wider mb-3">{{ __('app.trip_badges') }}</p>
                     <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
                         @foreach($allBadges as $b)
                         @php $earned = isset($earnedBadgeIds[$b->id]); @endphp
@@ -114,7 +114,7 @@
         {{-- Réservations à venir --}}
         <section class="fade-up" style="animation-delay:.1s">
             <h2 class="font-serif text-2xl text-dokun-green mb-5 flex items-center gap-3">
-                <x-icon name="calendar" class="w-6 h-6 text-dokun-green"/> Réservations à venir
+                <x-icon name="calendar" class="w-6 h-6 text-dokun-green"/> {{ __('app.trip_upcoming_reservations') }}
                 <span class="text-sm font-sans font-bold text-dokun-charcoal/40">{{ $upcoming->count() }}</span>
             </h2>
             @forelse($upcoming as $r)
@@ -127,7 +127,7 @@
                     @endif
                 </div>
                 <div class="flex-1 min-w-0">
-                    <h3 class="font-bold text-dokun-charcoal truncate">{{ $r->experience?->name ?? ($r->artisan?->professional_name ?? 'Expérience') }}</h3>
+                    <h3 class="font-bold text-dokun-charcoal truncate">{{ $r->experience?->name ?? ($r->artisan?->professional_name ?? __('app.sf_experiences')) }}</h3>
                     <p class="text-sm text-dokun-charcoal/50 mt-0.5">
                         {{ $r->artisan?->first_name }} {{ $r->artisan?->last_name }}
                         · {{ \Carbon\Carbon::parse($r->requested_date)->locale(app()->getLocale())->isoFormat('ddd D MMM YYYY') }}
@@ -142,14 +142,14 @@
                     }; @endphp
                     <span class="px-3 py-1.5 rounded-full text-[11px] font-bold border {{ $badge[0] }}">{{ $badge[1] }}</span>
                     <a href="{{ route('reservations.receipt', $r->qr_code_token) }}" class="px-4 py-2 bg-dokun-green hover:bg-dokun-green/90 text-white text-xs font-bold rounded-lg transition">
-                        QR / Reçu
+                        QR / {{ __('app.trip_receipt') }}
                     </a>
                 </div>
             </div>
             @empty
             <div class="bg-white rounded-2xl border border-dashed border-black/10 p-10 text-center">
-                <p class="text-dokun-charcoal/40 text-sm mb-4">Aucune réservation à venir pour le moment.</p>
-                <a href="{{ route('experiences.index') }}" class="inline-flex px-6 py-3 bg-dokun-green text-white text-sm font-bold rounded-xl hover:bg-dokun-green/90 transition">Découvrir les expériences</a>
+                <p class="text-dokun-charcoal/40 text-sm mb-4">{{ __('app.trip_no_upcoming') }}</p>
+                <a href="{{ route('experiences.index') }}" class="inline-flex px-6 py-3 bg-dokun-green text-white text-sm font-bold rounded-xl hover:bg-dokun-green/90 transition">{{ __('app.trip_discover_exp') }}</a>
             </div>
             @endforelse
         </section>
@@ -158,13 +158,13 @@
         @if($past->isNotEmpty())
         <section class="fade-up" style="animation-delay:.15s">
             <h2 class="font-serif text-2xl text-dokun-green mb-5 flex items-center gap-3">
-                <x-icon name="history" class="w-6 h-6 text-dokun-green"/> Historique
+                <x-icon name="history" class="w-6 h-6 text-dokun-green"/> {{ __('app.trip_history') }}
                 <span class="text-sm font-sans font-bold text-dokun-charcoal/40">{{ $past->count() }}</span>
             </h2>
             @foreach($past as $r)
             <div class="bg-white rounded-2xl border border-black/5 p-5 mb-3 flex flex-col md:flex-row md:items-center gap-4 opacity-90">
                 <div class="flex-1 min-w-0">
-                    <h3 class="font-bold text-dokun-charcoal/80 truncate">{{ $r->experience?->name ?? 'Expérience' }}</h3>
+                    <h3 class="font-bold text-dokun-charcoal/80 truncate">{{ $r->experience?->name ?? __('app.sf_experiences') }}</h3>
                     <p class="text-xs text-dokun-charcoal/45 mt-0.5">
                         {{ \Carbon\Carbon::parse($r->requested_date)->locale(app()->getLocale())->isoFormat('D MMM YYYY') }}
                         · {{ number_format($r->total_amount) }} {{ $r->currency ?? 'XOF' }}
@@ -178,7 +178,7 @@
                     }; @endphp
                     <span class="px-3 py-1.5 rounded-full text-[11px] font-bold border {{ $b[0] }}">{{ $b[1] }}</span>
                     @if($r->status === 'completed')
-                        <a href="{{ route('reviews.create', $r->id) }}" class="px-4 py-2 bg-dokun-gold/10 hover:bg-dokun-gold/20 text-dokun-gold text-xs font-bold rounded-lg transition">Laisser un avis</a>
+                        <a href="{{ route('reviews.create', $r->id) }}" class="px-4 py-2 bg-dokun-gold/10 hover:bg-dokun-gold/20 text-dokun-gold text-xs font-bold rounded-lg transition">{{ __('app.trip_leave_review') }}</a>
                     @endif
                 </div>
             </div>
@@ -189,7 +189,7 @@
         {{-- Favoris --}}
         <section class="fade-up" style="animation-delay:.2s">
             <h2 class="font-serif text-2xl text-dokun-green mb-5 flex items-center gap-3">
-                <x-icon name="heart" class="w-6 h-6 text-dokun-green"/> Mes favoris
+                <x-icon name="heart" class="w-6 h-6 text-dokun-green"/> {{ __('app.trip_favorites') }}
                 <span class="text-sm font-sans font-bold text-dokun-charcoal/40">{{ $favorites->count() }}</span>
             </h2>
             @forelse($favorites as $a)
@@ -214,29 +214,29 @@
             </a>
             @empty
             <div class="bg-white rounded-2xl border border-dashed border-black/10 p-10 text-center">
-                <p class="text-dokun-charcoal/40 text-sm mb-4">Aucun favori pour le moment — ajoute des artisans depuis le catalogue.</p>
-                <a href="{{ route('artisans.index') }}" class="inline-flex px-6 py-3 bg-dokun-green text-white text-sm font-bold rounded-xl hover:bg-dokun-green/90 transition">Explorer les artisans</a>
+                <p class="text-dokun-charcoal/40 text-sm mb-4">{{ __('app.trip_no_favorites') }}</p>
+                <a href="{{ route('artisans.index') }}" class="inline-flex px-6 py-3 bg-dokun-green text-white text-sm font-bold rounded-xl hover:bg-dokun-green/90 transition">{{ __('app.trip_explore_artisans') }}</a>
             </div>
             @endforelse
         </section>
 
         {{-- Progression Learn --}}
         <section class="fade-up" style="animation-delay:.25s">
-            <h2 class="font-serif text-2xl text-dokun-green mb-5"><x-icon name="graduation" class="w-6 h-6 text-dokun-green inline-block align-middle mr-2"/> Ma progression Learn</h2>
+            <h2 class="font-serif text-2xl text-dokun-green mb-5"><x-icon name="graduation" class="w-6 h-6 text-dokun-green inline-block align-middle mr-2"/> {{ __('app.trip_learn_progress') }}</h2>
             <div class="bg-white rounded-2xl border border-black/5 p-7 relative overflow-hidden">
                 <div class="absolute inset-0 wax-pattern opacity-[0.05]"></div>
                 <div class="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
                     <div class="text-center">
                         <p class="font-serif text-4xl text-dokun-green">{{ $learnStats['lessons_done'] }}</p>
-                        <p class="text-[11px] font-bold uppercase tracking-wider text-dokun-charcoal/45 mt-1">Leçons terminées</p>
+                        <p class="text-[11px] font-bold uppercase tracking-wider text-dokun-charcoal/45 mt-1">{{ __('app.trip_lessons_done') }}</p>
                     </div>
                     <div class="text-center">
                         <p class="font-serif text-4xl text-dokun-gold">{{ $learnStats['avg_score'] }}<span class="text-lg">%</span></p>
-                        <p class="text-[11px] font-bold uppercase tracking-wider text-dokun-charcoal/45 mt-1">Score moyen</p>
+                        <p class="text-[11px] font-bold uppercase tracking-wider text-dokun-charcoal/45 mt-1">{{ __('app.trip_avg_score') }}</p>
                     </div>
                     <div class="text-center">
                         <p class="font-serif text-4xl text-dokun-charcoal">{{ $learnStats['best_score'] }}<span class="text-lg">%</span></p>
-                        <p class="text-[11px] font-bold uppercase tracking-wider text-dokun-charcoal/45 mt-1">Meilleur score</p>
+                        <p class="text-[11px] font-bold uppercase tracking-wider text-dokun-charcoal/45 mt-1">{{ __('app.trip_best_score') }}</p>
                     </div>
                 </div>
                 @if($learnStats['recent']->isNotEmpty())
@@ -252,7 +252,7 @@
                 </div>
                 @endif
                 <div class="relative z-10 mt-5 text-center">
-                    <a href="{{ route('learn.index') }}" class="inline-flex px-6 py-3 bg-dokun-gold text-white text-sm font-bold rounded-xl hover:bg-yellow-600 transition shadow-lg shadow-dokun-gold/20">Continuer à apprendre →</a>
+                    <a href="{{ route('learn.index') }}" class="inline-flex px-6 py-3 bg-dokun-gold text-white text-sm font-bold rounded-xl hover:bg-yellow-600 transition shadow-lg shadow-dokun-gold/20">{{ __('app.trip_continue_learning') }} →</a>
                 </div>
             </div>
         </section>

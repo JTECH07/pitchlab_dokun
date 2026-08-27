@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Savoir-Faire Traditionnels — ƉƆKUN Porto-Novo</title>
+    <title>{{ __('app.sf_index_title') }} — ƉƆKUN Porto-Novo</title>
     <link href="https://fonts.bunny.net/css?family=dm-serif-display:400|manrope:400,600,700,800&display=swap" rel="stylesheet"/>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config={theme:{extend:{colors:{dokun:{green:'#064E3B',gold:'#C99424',ivory:'#F8F6F0',charcoal:'#17201D'}},fontFamily:{sans:['Manrope','sans-serif'],serif:['"DM Serif Display"','serif']}}}}</script>
@@ -20,9 +20,9 @@
             <div class="absolute inset-0 bg-gradient-to-t from-[#064E3B] via-[#17201D]/80 to-transparent"></div>
         </div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span class="inline-block py-1.5 px-4 rounded-full bg-[#C99424]/20 text-[#C99424] font-bold text-xs tracking-[0.2em] uppercase mb-5 border border-[#C99424]/30">Patrimoine Immatériel</span>
-            <h1 class="serif text-5xl md:text-6xl mb-5">Les Savoir-Faire de <span class="text-[#C99424]">Porto-Novo</span></h1>
-            <p class="text-white/70 max-w-2xl mx-auto text-lg font-light">Explorez la richesse des techniques artisanales transmises de génération en génération.</p>
+            <span class="inline-block py-1.5 px-4 rounded-full bg-[#C99424]/20 text-[#C99424] font-bold text-xs tracking-[0.2em] uppercase mb-5 border border-[#C99424]/30">{{ __('app.sf_index_badge') }}</span>
+            <h1 class="serif text-5xl md:text-6xl mb-5">{{ __('app.sf_index_hero') }} <span class="text-[#C99424]">Porto-Novo</span></h1>
+            <p class="text-white/70 max-w-2xl mx-auto text-lg font-light">{{ __('app.sf_index_hero_sub') }}</p>
         </div>
     </section>
 
@@ -35,7 +35,7 @@
                     <p class="text-[#17201D]/60 mt-2 text-sm">{{ $cat->description }}</p>
                 </div>
                 <span class="shrink-0 px-3 py-1.5 bg-[#064E3B]/10 text-[#064E3B] text-xs font-bold rounded-full">
-                    {{ $cat->savoirFaires->count() }} métier(s)
+                    {{ trans_choice('app.sf_index_trade_count', $cat->savoirFaires->count(), ['count' => $cat->savoirFaires->count()]) }}
                 </span>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
@@ -53,8 +53,8 @@
                     <h3 class="serif text-xl text-[#17201D] group-hover:text-[#064E3B] transition-colors mb-3">{{ $sf->name }}</h3>
                     <p class="text-[#17201D]/60 text-sm line-clamp-2 leading-relaxed mb-5">{{ $sf->description }}</p>
                     <div class="flex items-center justify-between pt-4 border-t border-gray-100 text-xs font-bold">
-                        <span class="text-[#17201D]/50">{{ $sf->artisans->count() }} praticien(s)</span>
-                        <span class="text-[#C99424] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">Voir →</span>
+                        <span class="text-[#17201D]/50">{{ trans_choice('app.sf_index_practitioner_count', $sf->artisans->count(), ['count' => $sf->artisans->count()]) }}</span>
+                        <span class="text-[#C99424] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">{{ __('app.sf_index_view') }} →</span>
                     </div>
                 </a>
                 @endforeach

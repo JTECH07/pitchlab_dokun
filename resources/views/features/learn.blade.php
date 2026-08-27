@@ -35,22 +35,21 @@
 <main class="pt-32 pb-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <nav class="mb-10 text-sm font-semibold text-dokun-charcoal/50 flex items-center gap-2 flex-wrap">
-        <a href="{{ route('home') }}" class="hover:text-dokun-gold transition-colors">Accueil</a>
+        <a href="{{ route('home') }}" class="hover:text-dokun-gold transition-colors">{{ __('app.nav_home') }}</a>
         <svg class="w-3.5 h-3.5 text-dokun-charcoal/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <a href="{{ route('artisans.index') }}" class="hover:text-dokun-gold transition-colors">Artisans</a>
+        <a href="{{ route('artisans.index') }}" class="hover:text-dokun-gold transition-colors">{{ __('app.nav_artisans') }}</a>
         <svg class="w-3.5 h-3.5 text-dokun-charcoal/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         <a href="{{ route('artisans.show', $artisan->id) }}" class="hover:text-dokun-gold transition-colors">{{ $artisan->first_name }}</a>
         <svg class="w-3.5 h-3.5 text-dokun-charcoal/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <span class="text-dokun-green">Apprendre</span>
+        <span class="text-dokun-green">{{ __('app.feat_learn_title') }}</span>
     </nav>
 
     <div class="mb-10">
         <h1 class="text-3xl md:text-5xl font-serif text-dokun-green tracking-tight mb-4 leading-tight">
-            🗣️ ƉƆKUN Learn — Apprenez le Fon/Gun
+            🗣️ {{ __('app.feature_learn_title') }}
         </h1>
         <p class="text-dokun-charcoal/70 text-[15px] leading-relaxed max-w-2xl">
-            Découvrez le vocabulaire Fon/Gun à travers un jeu interactif. Chaque mot est associé à un contexte culturel :
-            salutations, commerce, artisanat. Retournez la carte pour découvrir la traduction et écoutez la prononciation.
+            {{ __('app.feature_learn_intro') }}
         </p>
     </div>
 
@@ -61,19 +60,19 @@
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                 </div>
                 <div>
-                    <h3 class="font-bold text-lg text-amber-900">Jeu de mots interactif</h3>
+                    <h3 class="font-bold text-lg text-amber-900">{{ __('app.feature_learn_word_game') }}</h3>
                     <p class="text-xs text-amber-900/60">Fon/Gun · {{ $artisan->first_name }}</p>
                 </div>
             </div>
             <div class="text-right">
-                <p class="text-xs text-amber-700 font-semibold uppercase tracking-wider">Score</p>
+                <p class="text-xs text-amber-700 font-semibold uppercase tracking-wider">{{ __('app.feature_learn_score') }}</p>
                 <p class="text-2xl font-bold text-dokun-green font-serif" id="game-score">0</p>
             </div>
         </div>
 
         <div id="game-loading" class="text-center py-8 text-amber-900/50">
             <svg class="w-8 h-8 mx-auto animate-spin mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
-            Chargement du vocabulaire...
+            {{ __('app.feature_learn_loading') }}
         </div>
 
         <div id="game-area" class="hidden space-y-4">
@@ -89,7 +88,7 @@
                     <div class="card-face bg-white border-2 border-amber-200 shadow-md">
                         <p class="text-xs text-amber-600 font-bold uppercase mb-2 tracking-wider">Fon / Gun</p>
                         <p class="text-3xl font-serif text-dokun-green text-center" id="card-local"></p>
-                        <p class="text-xs text-slate-400 mt-3">↺ Cliquez pour la traduction</p>
+                        <p class="text-xs text-slate-400 mt-3">↺ {{ __('app.feature_learn_click_flip') }}</p>
                     </div>
                     <div class="card-back bg-dokun-green text-white border-2 border-dokun-green shadow-md">
                         <p class="text-xs text-white/60 font-bold uppercase mb-2 tracking-wider">Français</p>
@@ -97,32 +96,32 @@
                         <p class="text-xs text-white/50 mt-1" id="card-context"></p>
                         <button id="card-speak-btn" class="mt-3 text-xs bg-white/20 hover:bg-white/30 px-4 py-1.5 rounded-full transition flex items-center gap-1.5">
                             <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
-                            Prononcer
+                            {{ __('app.feature_learn_pronounce') }}
                         </button>
                     </div>
                 </div>
             </div>
 
             <div id="quiz-area" class="space-y-2.5">
-                <p class="text-xs text-amber-800 font-semibold text-center uppercase tracking-wider">Que signifie ce mot en français ?</p>
+                <p class="text-xs text-amber-800 font-semibold text-center uppercase tracking-wider">{{ __('app.feature_learn_question') }}</p>
                 <div id="quiz-choices" class="grid grid-cols-2 gap-2.5"></div>
             </div>
 
             <div id="quiz-feedback" class="hidden text-center text-sm font-bold py-2.5 rounded-xl"></div>
 
             <button id="game-next-btn" onclick="gameNext()" class="hidden w-full py-3 bg-dokun-green text-white font-bold text-sm rounded-xl hover:bg-dokun-green/90 active:scale-[.98] transition shadow-lg shadow-dokun-green/20">
-                Mot suivant →
+                {{ __('app.learn_next') }} →
             </button>
         </div>
 
         <div id="game-end" class="hidden text-center space-y-4 py-4">
             <div class="text-4xl">🎉</div>
-            <p class="font-bold text-amber-900 text-lg">Partie terminée !</p>
+            <p class="font-bold text-amber-900 text-lg">{{ __('app.feature_learn_game_done') }}</p>
             <p class="text-sm text-amber-700">
-                Score final : <span id="end-score" class="font-bold text-dokun-green text-xl font-serif"></span>
+                {{ __('app.feature_learn_final_score') }} : <span id="end-score" class="font-bold text-dokun-green text-xl font-serif"></span>
             </p>
             <button onclick="gameRestart()" class="w-full py-3 bg-amber-600 text-white font-bold text-sm rounded-xl hover:bg-amber-700 active:scale-[.98] transition">
-                Rejouer 🔄
+                {{ __('app.feature_learn_replay') }} 🔄
             </button>
         </div>
     </div>
@@ -134,6 +133,13 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const ARTISAN_ID = {{ $artisan->id }};
+
+    const ui = {
+        noWords: {{ json_encode(__('app.feature_learn_no_words')) }},
+        loadError: {{ json_encode(__('app.feature_learn_load_error')) }},
+        correct: {{ json_encode(__('app.feature_learn_correct')) }},
+        wrong: {{ json_encode(__('app.feature_learn_wrong')) }},
+    };
 
     const gameLoading    = document.getElementById('game-loading');
     const gameArea       = document.getElementById('game-area');
@@ -164,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             gameLoading.classList.add('hidden');
             if (!data.words || data.words.length === 0) {
-                gameArea.innerHTML = '<p class="text-amber-900/50 text-sm text-center py-4">Aucun mot disponible.</p>';
+                gameArea.innerHTML = `<p class="text-amber-900/50 text-sm text-center py-4">${ui.noWords}</p>`;
                 gameArea.classList.remove('hidden');
                 return;
             }
@@ -173,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(() => {
             gameLoading.classList.add('hidden');
-            gameArea.innerHTML = '<p class="text-red-500 text-sm text-center py-4">Erreur de chargement du vocabulaire.</p>';
+            gameArea.innerHTML = `<p class="text-red-500 text-sm text-center py-4">${ui.loadError}</p>`;
             gameArea.classList.remove('hidden');
         });
 
@@ -231,14 +237,14 @@ document.addEventListener('DOMContentLoaded', function () {
             score++;
             gameScoreEl.textContent = score;
             btn.classList.add('border-dokun-green','bg-emerald-50','text-dokun-green');
-            quizFeedback.textContent = '✅ Excellent !';
+            quizFeedback.textContent = '✅ ' + ui.correct;
             quizFeedback.className = 'text-center text-sm font-bold py-2.5 rounded-xl bg-emerald-50 text-dokun-green';
         } else {
             btn.classList.add('border-red-400','bg-red-50','text-red-600');
             quizChoices.querySelectorAll('button').forEach(b => {
                 if (b.dataset.correct === '1') b.classList.add('border-dokun-green','bg-emerald-50','text-dokun-green');
             });
-            quizFeedback.textContent = `❌ La réponse était : "${currentWord.french_translation}"`;
+            quizFeedback.textContent = `❌ ${ui.wrong}"${currentWord.french_translation}"`;
             quizFeedback.className = 'text-center text-sm font-bold py-2.5 rounded-xl bg-red-50 text-red-600';
         }
         quizFeedback.classList.remove('hidden');
