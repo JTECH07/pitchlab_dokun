@@ -287,39 +287,9 @@ class PaymentController extends Controller
             $artisan = $reservation->artisan;
             if (!$artisan?->user?->email) return;
 
-            $isExperience = !empty($reservation->experience_id);
-            $typeLabel    = $isExperience
-                ? 'Expérience pratique : ' . $reservation->experience_type
-                : 'Visite d\'atelier libre';
-
-            $subject = 'Nouvelle réservation ƉƆKUN — ' . $reservation->reference;
-            $body = "Bonjour {$artisan->first_name},\n\n"
-                . "Vous avez reçu une nouvelle réservation ƉƆKUN.\n\n"
-                . "═══════════════════════════════\n"
-                . "RÉFÉRENCE   : {$reservation->reference}\n"
-                . "TYPE        : {$typeLabel}\n"
-                . "VISITEUR    : {$reservation->visitor_name}\n"
-                . "TÉLÉPHONE   : {$reservation->visitor_phone}\n"
-                . "DATE        : {$reservation->requested_date}\n"
-                . "PERSONNES   : {$reservation->guests_count}\n"
-                . "PAIEMENT    : " . ($reservation->payment_method === 'mobile_money' ? 'Mobile Money (payé)' : 'À régler à l\'atelier') . "\n"
-                . "MONTANT     : " . ($reservation->total_amount ? number_format($reservation->total_amount, 0, ',', ' ') . ' FCFA' : 'Visite libre') . "\n"
-                . "═══════════════════════════════\n\n";
-
-            if ($reservation->message) {
-                $body .= "Message du visiteur :\n\"{$reservation->message}\"\n\n";
-            }
-
-            $body .= "Connectez-vous sur ƉƆKUN pour confirmer ou refuser cette réservation.\n"
-                   . "URL : " . route('artisan-space.index') . "\n\n"
-                   . "— L'équipe ƉƆKUN";
-
-            Mail::raw($body, function ($message) use ($artisan, $subject) {
-                $message->to($artisan->user->email, $artisan->first_name)
-                        ->subject($subject)
-                        ->from(config('mail.from.address'), 'ƉƆKUN Réservations');
-            });
-
+            \Illuminate\Support\Facades\Mail::to($artisan->user->email)->queue(
+                new \App\Mail\ArtisanBookingNotification($reservation)
+            );
         } catch (\Exception $e) {
             Log::warning('Artisan notification failed', ['error' => $e->getMessage()]);
         }

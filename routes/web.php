@@ -108,17 +108,15 @@ Route::post('/contact', function (\Illuminate\Http\Request $request) {
         'message' => 'required|string|max:5000',
     ]);
     try {
-        \Illuminate\Support\Facades\Mail::raw(
-            "Message de {$data['name']} ({$data['email']})\nSujet: {$data['subject']}\n\n{$data['message']}",
-            function ($m) use ($data) {
-                $m->to('contact@dokun.bj')->subject('[ƉƆKUN Contact] ' . $data['subject']);
-            }
-        );
+        \Illuminate\Support\Facades\Mail::to('contact@dokun.bj')
+            ->queue(new \App\Mail\ContactFormMail(
+                $data['name'], $data['email'], $data['subject'], $data['message']
+            ));
     } catch (\Throwable $e) {
         // En local/dev : on n'interrompt pas l'utilisateur si le mail échoue
     }
     return back()->with('contact_success', true);
-})->name('contact.send');
+})->middleware('throttle:3,1')->name('contact.send');
 
 // ── Billet QR public (pas d'auth — le QR est le token)
 Route::get('/reservations/{token}', [ReservationController::class, 'showByToken'])->name('reservations.receipt');

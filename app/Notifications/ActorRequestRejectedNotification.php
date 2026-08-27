@@ -4,10 +4,11 @@ namespace App\Notifications;
 
 use App\Models\ActorRequest;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ActorRequestRejectedNotification extends Notification
+class ActorRequestRejectedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -22,7 +23,7 @@ class ActorRequestRejectedNotification extends Notification
 
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)
+        $mail = (new MailMessage)
             ->subject('Votre demande — ƉƆKUN')
             ->greeting("Bonjour {$this->actorRequest->name},")
             ->line("Nous avons examiné votre demande pour rejoindre ƉƆKUN.")

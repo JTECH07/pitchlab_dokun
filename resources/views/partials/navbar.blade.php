@@ -60,6 +60,23 @@
                     </div>
                 </div>
 
+                <!-- Sélecteur devise -->
+                <div class="relative" x-data="{ open: false }" @click.away="open = false">
+                    <button @click="open = !open" class="flex items-center gap-1 text-xs font-bold px-3 py-2 rounded-lg border border-current/20 hover:bg-black/5 transition">
+                        <span>{{ $currencyInfo['flag'] ?? '💰' }}</span>
+                        <span>{{ $currentCurrency ?? 'XOF' }}</span>
+                        <svg class="w-3 h-3 opacity-50" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div x-show="open" x-transition.opacity x-cloak
+                         class="absolute right-0 mt-1 w-44 bg-white rounded-xl shadow-xl border border-gray-100 z-50 overflow-hidden">
+                        @foreach($allCurrencies as $code => $info)
+                            <a href="{{ route('home', ['currency' => $code]) }}" class="flex items-center gap-2 px-4 py-2 text-sm text-dokun-charcoal hover:bg-dokun-ivory font-semibold {{ ($currentCurrency ?? 'XOF') === $code ? 'bg-dokun-ivory text-dokun-green' : '' }}">
+                                <span>{{ $info['flag'] }}</span><span>{{ $info['label'] }}</span>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+
                 @auth
                     <div class="relative" x-data="{ open: false }" @click.away="open = false">
                         <button @click="open = !open" class="flex items-center gap-2 px-5 py-2.5 bg-dokun-green text-white rounded-full hover:bg-dokun-green/90 transition shadow-lg text-sm">
@@ -140,6 +157,16 @@
                             🇬🇧 English
                         </button>
                     </form>
+                </div>
+                {{-- Mobile currency switcher --}}
+                <div class="px-4 pt-2">
+                    <div class="flex flex-wrap gap-2">
+                        @foreach($allCurrencies as $code => $info)
+                            <a href="{{ route('home', ['currency' => $code]) }}" class="flex-1 text-center py-2 text-xs font-bold rounded-lg border transition {{ ($currentCurrency ?? 'XOF') === $code ? 'bg-dokun-gold text-white border-dokun-gold' : 'bg-white text-dokun-charcoal border-gray-200' }}">
+                                {{ $info['flag'] }} {{ $code }}
+                            </a>
+                        @endforeach
+                    </div>
                 </div>
                 @auth
                     <a href="{{ route('dashboard') }}" class="flex items-center justify-center gap-2 w-full py-4 bg-dokun-green text-white font-bold rounded-t-xl border-b border-white/10">
