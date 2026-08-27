@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,6 +45,15 @@
         .sf-card:hover{transform:translateY(-8px);box-shadow:0 24px 48px -16px rgba(6,78,59,.18);}
         .sf-card::after{content:'';position:absolute;top:0;left:-80%;width:55%;height:100%;background:linear-gradient(105deg,transparent,rgba(201,148,36,.14),transparent);transform:skewX(-20deg);transition:left .8s ease;pointer-events:none;}
         .sf-card:hover::after{left:135%;}
+
+        /* Galerie terrain en défilement continu */
+        .marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
+        .marquee__track{display:flex;gap:1.25rem;width:max-content;min-width:100%;}
+        .marquee-left .marquee__track, .marquee-right .marquee__track{animation:marquee-scroll 42s linear infinite;}
+        .marquee-right .marquee__track{animation-name:marquee-scroll-rtl;}
+        .marquee:hover .marquee__track{animation-play-state:paused;}
+        @keyframes marquee-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+        @keyframes marquee-scroll-rtl{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 
         /* Home map card styles */
         #home-map .leaflet-control-zoom { border: none !important; box-shadow: 0 2px 10px rgba(0,0,0,0.15) !important; border-radius: 10px !important; overflow: hidden; }
@@ -325,29 +334,48 @@
         </div>
         @php
         $galleryTiles = [
-            ['img'=>'images/van2.jpeg',   'label'=>__('app.welcome_gal_1'), 'span'=>'md:col-span-2 md:row-span-2'],
-            ['img'=>'images/d1.jpeg',     'label'=>__('app.welcome_gal_2'),          'span'=>''],
-            ['img'=>'images/drum.jpg',    'label'=>__('app.welcome_gal_3'),        'span'=>''],
-            ['img'=>'images/d2.jpeg',     'label'=>__('app.welcome_gal_4'),       'span'=>''],
-            ['img'=>'images/van1.jpeg',   'label'=>__('app.welcome_gal_5'),       'span'=>''],
-            ['img'=>'images/dokun_terrain.jpeg','label'=>__('app.welcome_gal_6'), 'span'=>''],
-            ['img'=>'images/d3.jpeg',     'label'=>__('app.welcome_gal_7'),         'span'=>''],
-            ['img'=>'images/van3.jpeg',   'label'=>__('app.welcome_gal_8'),        'span'=>''],
-            ['img'=>'images/d4.jpeg',     'label'=>__('app.welcome_gal_9'),        'span'=>''],
+            ['img'=>'images/van2.jpeg',   'label'=>__('app.welcome_gal_1')],
+            ['img'=>'images/d1.jpeg',     'label'=>__('app.welcome_gal_2')],
+            ['img'=>'images/drum.jpg',    'label'=>__('app.welcome_gal_3')],
+            ['img'=>'images/d2.jpeg',     'label'=>__('app.welcome_gal_4')],
+            ['img'=>'images/van1.jpeg',   'label'=>__('app.welcome_gal_5')],
+            ['img'=>'images/dokun_terrain.jpeg','label'=>__('app.welcome_gal_6')],
+            ['img'=>'images/d3.jpeg',     'label'=>__('app.welcome_gal_7')],
+            ['img'=>'images/van3.jpeg',   'label'=>__('app.welcome_gal_8')],
+            ['img'=>'images/d4.jpeg',     'label'=>__('app.welcome_gal_9')],
         ];
+        $rowA = array_slice($galleryTiles, 0, 5);
+        $rowB = array_slice($galleryTiles, 5, 4);
         @endphp
-        <div class="grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[200px] gap-4">
-            @foreach($galleryTiles as $i => $tile)
-            <figure class="group relative rounded-2xl overflow-hidden {{ $tile['span'] }} reveal" style="transition-delay:{{ ($i % 4) * 90 }}ms">
-                <img src="{{ url($tile['img']) }}" alt="{{ $tile['label'] }}" loading="lazy"
-                     class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500"></div>
-                <figcaption class="absolute bottom-0 left-0 right-0 p-4 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                    <span class="text-white text-sm font-bold drop-shadow">{{ $tile['label'] }}</span>
-                </figcaption>
-                <span class="absolute top-3 left-3 w-8 h-0.5 bg-[#C99424] scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500"></span>
-            </figure>
-            @endforeach
+        <div class="space-y-5 relative z-10">
+            {{-- Range 1 : défilement droite → gauche --}}
+            <div class="marquee marquee-left">
+                <div class="marquee__track">
+                    @foreach(array_merge($rowA, $rowA) as $tile)
+                    <div class="marquee__item group relative w-72 h-52 shrink-0 rounded-2xl overflow-hidden">
+                        <img src="{{ url($tile['img']) }}" alt="{{ $tile['label'] }}" loading="lazy"
+                             class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500"></div>
+                        <span class="absolute bottom-4 left-4 text-white text-sm font-bold drop-shadow">{{ $tile['label'] }}</span>
+                        <span class="absolute top-3 left-3 w-8 h-0.5 bg-[#C99424]"></span>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            {{-- Range 2 : défilement gauche → droite --}}
+            <div class="marquee marquee-right">
+                <div class="marquee__track">
+                    @foreach(array_merge($rowB, $rowB) as $tile)
+                    <div class="marquee__item group relative w-72 h-52 shrink-0 rounded-2xl overflow-hidden">
+                        <img src="{{ url($tile['img']) }}" alt="{{ $tile['label'] }}" loading="lazy"
+                             class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500"></div>
+                        <span class="absolute bottom-4 left-4 text-white text-sm font-bold drop-shadow">{{ $tile['label'] }}</span>
+                        <span class="absolute top-3 left-3 w-8 h-0.5 bg-[#C99424]"></span>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
     </div>
 </section>

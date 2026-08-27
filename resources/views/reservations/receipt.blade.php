@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Confirmation de réservation · ƉƆKUN</title>
+    <title>{{ __('app.receipt_title') }} · ƉƆKUN</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=dm-serif-display:400|manrope:400,500,600,700,800&display=swap" rel="stylesheet"/>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -52,8 +52,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
             </div>
-            <h1 class="font-serif text-4xl text-white mb-2">Réservation confirmée !</h1>
-            <p class="text-white/60">Votre billet numérique ƉƆKUN est prêt.</p>
+            <h1 class="font-serif text-4xl text-white mb-2">{{ __('app.receipt_confirmed') }}</h1>
+            <p class="text-white/60">{{ __('app.receipt_ready') }}</p>
         </div>
 
         {{-- Carte billet --}}
@@ -62,11 +62,11 @@
             {{-- Header carte --}}
             <div class="bg-dokun-green px-8 py-6 flex items-center justify-between">
                 <div>
-                    <p class="text-dokun-gold font-bold text-xs uppercase tracking-widest mb-1">Billet ƉƆKUN</p>
+                    <p class="text-dokun-gold font-bold text-xs uppercase tracking-widest mb-1">{{ __('app.receipt_ticket') }}</p>
                     <h2 class="font-serif text-2xl text-white">{{ $reservation->experience_type }}</h2>
                 </div>
                 <div class="text-right">
-                    <p class="text-white/50 text-xs">Référence</p>
+                    <p class="text-white/50 text-xs">{{ __('app.receipt_reference') }}</p>
                     <p class="text-dokun-gold font-mono font-bold text-lg">{{ $reservation->reference }}</p>
                 </div>
             </div>
@@ -82,34 +82,34 @@
             <div class="px-8 py-7">
                 <div class="grid grid-cols-2 gap-y-5 gap-x-4 mb-7">
                     <div>
-                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">Visiteur</p>
+                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">{{ __('app.receipt_visitor') }}</p>
                         <p class="font-bold text-dokun-charcoal">{{ $reservation->visitor_name }}</p>
                     </div>
                     <div>
-                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">Date</p>
+                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">{{ __('app.receipt_date') }}</p>
                         <p class="font-bold text-dokun-charcoal">{{ \Carbon\Carbon::parse($reservation->requested_date)->isoFormat('D MMMM Y') }}</p>
                     </div>
                     <div>
-                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">Artisan</p>
+                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">{{ __('app.receipt_artisan') }}</p>
                         <p class="font-bold text-dokun-charcoal">{{ $reservation->artisan?->professional_name ?? ($reservation->artisan?->first_name . ' ' . $reservation->artisan?->last_name) }}</p>
                     </div>
                     <div>
-                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">Participants</p>
-                        <p class="font-bold text-dokun-charcoal">{{ $reservation->guests_count }} {{ Str::plural('personne', $reservation->guests_count) }}</p>
+                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">{{ __('app.receipt_participants') }}</p>
+                        <p class="font-bold text-dokun-charcoal">{{ $reservation->guests_count }} {{ trans_choice('app.receipt_person', $reservation->guests_count, ['count' => $reservation->guests_count]) }}</p>
                     </div>
                     <div>
-                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">Paiement</p>
+                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">{{ __('app.receipt_payment') }}</p>
                         @php
                             $pmLabel = match($reservation->payment_method) {
                                 'mobile_money' => '💳 Mobile Money (FedaPay)',
-                                'pay_on_site'  => '🏺 À l\'atelier',
+                                'pay_on_site'  => '🏺 ' . __('app.receipt_at_workshop'),
                                 default        => $reservation->payment_method,
                             };
                             $statusLabel = match($reservation->payment_status ?? 'not_required') {
-                                'paid'        => ['label' => 'Payé', 'class' => 'bg-green-100 text-green-700'],
-                                'pending'     => ['label' => 'En attente', 'class' => 'bg-amber-100 text-amber-700'],
-                                'not_required'=> ['label' => 'À régler', 'class' => 'bg-blue-100 text-blue-700'],
-                                'failed'      => ['label' => 'Échoué', 'class' => 'bg-red-100 text-red-700'],
+                                'paid'        => ['label' => __('app.receipt_paid'), 'class' => 'bg-green-100 text-green-700'],
+                                'pending'     => ['label' => __('app.receipt_pending'), 'class' => 'bg-amber-100 text-amber-700'],
+                                'not_required'=> ['label' => __('app.receipt_to_pay'), 'class' => 'bg-blue-100 text-blue-700'],
+                                'failed'      => ['label' => __('app.receipt_failed'), 'class' => 'bg-red-100 text-red-700'],
                                 default       => ['label' => 'N/A', 'class' => 'bg-gray-100 text-gray-600'],
                             };
                         @endphp
@@ -117,13 +117,13 @@
                         <span class="inline-block text-xs font-bold px-2 py-0.5 rounded-full {{ $statusLabel['class'] }}">{{ $statusLabel['label'] }}</span>
                     </div>
                     <div>
-                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">Statut réservation</p>
+                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">{{ __('app.receipt_res_status') }}</p>
                         @php
                             $stLabel = match($reservation->status) {
-                                'pending'   => ['label' => 'En attente de confirmation', 'class' => 'bg-amber-100 text-amber-700'],
-                                'accepted'  => ['label' => '✓ Confirmée', 'class' => 'bg-green-100 text-green-700'],
-                                'completed' => ['label' => '🎉 Complétée', 'class' => 'bg-dokun-green/10 text-dokun-green'],
-                                'rejected'  => ['label' => 'Annulée', 'class' => 'bg-red-100 text-red-700'],
+                                'pending'   => ['label' => __('app.receipt_pending_confirm'), 'class' => 'bg-amber-100 text-amber-700'],
+                                'accepted'  => ['label' => __('app.receipt_confirmed'), 'class' => 'bg-green-100 text-green-700'],
+                                'completed' => ['label' => __('app.receipt_completed'), 'class' => 'bg-dokun-green/10 text-dokun-green'],
+                                'rejected'  => ['label' => __('app.receipt_cancelled'), 'class' => 'bg-red-100 text-red-700'],
                                 default     => ['label' => $reservation->status, 'class' => 'bg-gray-100 text-gray-600'],
                             };
                         @endphp
@@ -134,7 +134,7 @@
                 {{-- Montant --}}
                 @if($reservation->total_amount)
                 <div class="bg-dokun-ivory rounded-xl px-5 py-3 flex justify-between items-center mb-7">
-                    <span class="text-sm font-semibold text-dokun-charcoal/70">Montant total</span>
+                    <span class="text-sm font-semibold text-dokun-charcoal/70">{{ __('app.receipt_total') }}</span>
                     <span class="font-serif text-2xl text-dokun-green">{{ number_format($reservation->total_amount, 0, ',', ' ') }} FCFA</span>
                 </div>
                 @endif
@@ -145,7 +145,7 @@
                         {!! $qrSvg !!}
                     </div>
                     <div class="text-center">
-                        <p class="text-xs text-gray-400 mb-1">Présentez ce QR code à l'artisan</p>
+                        <p class="text-xs text-gray-400 mb-1">{{ __('app.receipt_show_qr') }}</p>
                         <p class="font-mono text-xs text-gray-300 select-all">{{ $reservation->qr_code_token }}</p>
                     </div>
                 </div>
@@ -153,15 +153,15 @@
                 {{-- Info pay on site --}}
                 @if($reservation->payment_method === 'pay_on_site')
                 <div class="mt-5 bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800">
-                    <p class="font-bold mb-1">💡 Paiement à l'atelier</p>
-                    <p>Vous réglez directement lors de votre visite. Les <strong>frais de service de 1 000 FCFA</strong> ont été prélevés via FedaPay pour confirmer votre réservation. L'artisan vous contactera sous 48h pour confirmer.</p>
+                    <p class="font-bold mb-1">💡 {{ __('app.receipt_pay_on_site') }}</p>
+                    <p>{!! __('app.receipt_pay_on_site_body') !!}</p>
                 </div>
                 @endif
 
                 {{-- Message --}}
                 @if($reservation->message)
                 <div class="mt-4 bg-slate-50 rounded-xl p-4">
-                    <p class="text-xs text-gray-400 font-semibold mb-1">Votre message</p>
+                    <p class="text-xs text-gray-400 font-semibold mb-1">{{ __('app.receipt_your_message') }}</p>
                     <p class="text-sm text-dokun-charcoal/70 italic">{{ $reservation->message }}</p>
                 </div>
                 @endif
@@ -180,18 +180,18 @@
                     @endif
                     <a href="{{ route('artisans.show', $reservation->artisan_id) }}"
                        class="no-print flex items-center gap-2 border border-dokun-green text-dokun-green px-4 py-2 rounded-xl text-sm font-bold hover:bg-dokun-green hover:text-white transition">
-                        Voir l'artisan
+                        {{ __('app.receipt_view_artisan') }}
                     </a>
                     @if($reservation->status === 'completed')
                     <a href="{{ route('reviews.create', $reservation->id) }}"
                        class="no-print flex items-center gap-2 bg-dokun-gold text-dokun-charcoal px-4 py-2 rounded-xl text-sm font-bold hover:bg-yellow-500 transition shadow-md">
-                        ⭐ Laisser un avis
+                        ⭐ {{ __('app.receipt_leave_review') }}
                     </a>
                     @endif
                 </div>
                 <button onclick="window.print()" class="no-print flex items-center gap-2 text-gray-400 hover:text-dokun-charcoal text-sm font-semibold transition">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-                    Imprimer
+                    {{ __('app.receipt_print') }}
                 </button>
             </div>
         </div>
@@ -205,10 +205,10 @@
                     <button type="submit"
                         class="w-full py-4 bg-dokun-gold text-dokun-charcoal font-bold text-lg rounded-2xl hover:bg-dokun-gold/90 active:scale-[.98] transition shadow-xl flex items-center justify-center gap-3">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        Marquer comme complétée
+                        {{ __('app.receipt_mark_completed') }}
                     </button>
                 </form>
-                <p class="text-center text-white/40 text-xs mt-2">Réservez uniquement après avoir accueilli le visiteur</p>
+                <p class="text-center text-white/40 text-xs mt-2">{{ __('app.receipt_confirm_after') }}</p>
             </div>
             @endif
         @endauth
@@ -216,7 +216,7 @@
         {{-- Lien retour --}}
         <div class="text-center mt-8 no-print fade-up delay-4">
             <a href="{{ route('experiences.index') }}" class="text-white/60 hover:text-white text-sm font-semibold transition">
-                ← Découvrir d'autres expériences
+                ← {{ __('app.receipt_more_experiences') }}
             </a>
         </div>
 

@@ -10,7 +10,11 @@ class ActorRequest extends Model
     use Notifiable;
     protected $fillable = [
         'role', 'name', 'email', 'phone', 'organization',
-        'motivation', 'status', 'admin_notes', 'reviewed_by', 'reviewed_at',
+        'motivation', 'extra_data', 'status', 'admin_notes', 'reviewed_by', 'reviewed_at',
+    ];
+
+    protected $casts = [
+        'extra_data' => 'array',
     ];
 
     public function reviewer()

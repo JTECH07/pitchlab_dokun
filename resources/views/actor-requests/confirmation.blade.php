@@ -5,9 +5,9 @@
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
             </svg>
         </div>
-        <h1 class="font-serif text-3xl text-[#064E3B] mb-3">Demande envoyée !</h1>
-        <p class="text-[#17201D]/60 text-sm mb-2">Merci pour votre intérêt pour ƉƆKUN.</p>
-        <p class="text-[#17201D]/60 text-sm mb-8">Notre équipe examine votre demande et vous envoie un email avec la suite.</p>
-        <a href="/" class="inline-block text-sm font-bold text-[#C99424] hover:underline">Retour à l'accueil</a>
+        <h1 class="font-serif text-3xl text-[#064E3B] mb-3">{{ __('app.actor_conf_title') }}</h1>
+        <p class="text-[#17201D]/60 text-sm mb-2">{{ __('app.actor_conf_thanks') }}</p>
+        <p class="text-[#17201D]/60 text-sm mb-8">{{ __('app.actor_conf_body') }}</p>
+        <a href="/" class="inline-block text-sm font-bold text-[#C99424] hover:underline">{{ __('app.actor_conf_home') }}</a>
     </div>
 </x-guest-layout>

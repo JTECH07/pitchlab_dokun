@@ -76,20 +76,18 @@
                 <div class="relative z-10 text-center max-w-sm">
                     <img src="{{ url('images/dokun_logo.png') }}" alt="ƉƆKUN" class="w-36 h-36 mx-auto mb-6 drop-shadow-2xl">
                     <h1 class="font-serif text-5xl text-white mb-4 leading-tight">ƉƆKUN</h1>
-                    <p class="text-dokun-gold font-bold text-lg tracking-wide mb-3">Patrimoine Vivant</p>
+                    <p class="text-dokun-gold font-bold text-sm tracking-[0.18em] uppercase mb-3">{{ __('app.brand_tagline') }}</p>
                     <div class="w-16 h-0.5 bg-dokun-gold/60 mx-auto mb-6"></div>
                     <p class="text-white/60 text-sm leading-relaxed">
-                        Découvrez les savoir-faire ancestraux du Bénin,<br>
-                        réservez des expériences authentiques<br>
-                        avec nos artisans passionnés.
+                        {{ __('app.auth_illustration_desc') }}
                     </p>
                 </div>
 
                 {{-- 3 features flottantes en bas --}}
                 <div class="relative z-10 mt-16 flex gap-8 text-white/50 text-xs font-semibold">
-                    <div class="flex items-center gap-2"><div class="w-2 h-2 bg-dokun-gold rounded-full"></div>Savoir-faire</div>
-                    <div class="flex items-center gap-2"><div class="w-2 h-2 bg-dokun-gold rounded-full"></div>Réservation</div>
-                    <div class="flex items-center gap-2"><div class="w-2 h-2 bg-dokun-gold rounded-full"></div>Paiement</div>
+                    <div class="flex items-center gap-2"><div class="w-2 h-2 bg-dokun-gold rounded-full"></div>{{ __('app.nav_savoir') }}</div>
+                    <div class="flex items-center gap-2"><div class="w-2 h-2 bg-dokun-gold rounded-full"></div>{{ __('app.nav_experiences') }}</div>
+                    <div class="flex items-center gap-2"><div class="w-2 h-2 bg-dokun-gold rounded-full"></div>{{ __('app.res_payment_method') }}</div>
                 </div>
             </div>
 

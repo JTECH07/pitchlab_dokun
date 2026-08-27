@@ -40,8 +40,46 @@
 
                 <section class="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
                     <h3 class="font-serif text-lg text-dokun-green mb-2">Motivation</h3>
-                    <p class="text-sm text-dokun-charcoal/70">{{ $request->motivation }}</p>
+                    <p class="text-sm text-dokun-charcoal/70 whitespace-pre-line">{{ $request->motivation }}</p>
                 </section>
+
+                @php
+                    $extra = $request->extra_data ?: [];
+                    $extraLabels = [
+                        'guide_years' => "Années d'expérience", 'guide_languages' => 'Langues parlées',
+                        'guide_zone' => 'Zone couverte', 'guide_license' => 'Licence / carte pro',
+                        'inst_type' => 'Type de structure', 'inst_city' => 'Ville', 'inst_heritage' => 'Patrimoines représentés',
+                        'inst_partnership' => 'Collaboration recherchée',
+                        'res_domain' => 'Domaine de recherche', 'res_institution' => 'Institution', 'res_topic' => 'Travaux en cours',
+                        'res_publications' => 'Références / publications',
+                        'ptn_type' => "Type d'établissement", 'ptn_city' => 'Ville', 'ptn_services' => 'Prestations', 'ptn_website' => 'Site web',
+                    ];
+                    $selectLabels = [
+                        'inst_type' => ['musee'=>'Musée','association'=>'Association','collectivite'=>'Collectivité locale','centre'=>'Centre culturel','autre'=>'Autre'],
+                        'ptn_type' => ['hotel'=>'Hôtel / hébergement','agence'=>'Agence de voyage','restaurant'=>'Restauration','transport'=>'Transport','autre'=>'Autre'],
+                    ];
+                @endphp
+                @if($extra)
+                    <section class="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
+                        <h3 class="font-serif text-lg text-dokun-green mb-4">Informations spécifiques au rôle</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                            @foreach($extra as $ekey => $evalue)
+                                @if($evalue === '' || $evalue === null) @continue @endif
+                                @php
+                                    $label = $extraLabels[$ekey] ?? ucfirst(str_replace('_', ' ', $ekey));
+                                    $value = $evalue;
+                                    if (isset($selectLabels[$ekey]) && isset($selectLabels[$ekey][$evalue])) {
+                                        $value = $selectLabels[$ekey][$evalue];
+                                    }
+                                @endphp
+                                <div class="@if(is_string($value) && strlen($value) > 60) sm:col-span-2 @endif">
+                                    <span class="font-bold text-dokun-charcoal/50 block mb-0.5">{{ $label }} :</span>
+                                    <span class="text-dokun-charcoal whitespace-pre-line">{{ $value }}</span>
+                                </div>
+                            @endforeach
+                        </div>
+                    </section>
+                @endif
 
                 @if($request->admin_notes)
                     <section class="bg-white rounded-2xl border border-black/5 shadow-sm p-6">

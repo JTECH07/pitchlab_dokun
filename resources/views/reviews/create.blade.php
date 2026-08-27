@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="fr"><head>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Laisser un avis · ƉƆKUN</title>
+<title>{{ __('app.review_title') }} · ƉƆKUN</title>
 <link href="https://fonts.bunny.net/css?family=dm-serif-display:400|manrope:400,600,700&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>tailwind.config={theme:{extend:{colors:{dokun:{green:'#064E3B',gold:'#C99424',ivory:'#F8F6F0',charcoal:'#17201D'}},fontFamily:{sans:['Manrope'],serif:['"DM Serif Display"']}}}}</script>
@@ -13,8 +13,8 @@
 <main class="pt-32 pb-20 max-w-xl mx-auto px-4">
     <div class="text-center mb-8">
         <div class="text-5xl mb-3">⭐</div>
-        <h1 class="serif text-4xl text-dokun-green">Votre avis</h1>
-        <p class="text-gray-500 mt-2">Expérience avec <strong>{{ $reservation->artisan->first_name }}</strong> · {{ $reservation->experience_type }}</p>
+        <h1 class="serif text-4xl text-dokun-green">{{ __('app.review_heading') }}</h1>
+        <p class="text-gray-500 mt-2">{{ __('app.review_with', ['name' => $reservation->artisan->first_name]) }} · {{ $reservation->experience_type }}</p>
     </div>
 
     @if($errors->any())
@@ -30,7 +30,7 @@
 
             <!-- Note -->
             <div>
-                <label class="block text-sm font-bold mb-3">Votre note *</label>
+                <label class="block text-sm font-bold mb-3">{{ __('app.review_rating') }} *</label>
                 <div class="flex gap-3" id="star-group">
                     @for($i=1; $i<=5; $i++)
                     <label class="cursor-pointer">
@@ -41,20 +41,20 @@
                     </label>
                     @endfor
                 </div>
-                <p class="text-xs text-gray-400 mt-1" id="star-label">Cliquez pour noter</p>
+                <p class="text-xs text-gray-400 mt-1" id="star-label">{{ __('app.review_click_rate') }}</p>
             </div>
 
             <!-- Commentaire -->
             <div>
-                <label class="block text-sm font-bold mb-2">Votre commentaire *</label>
+                <label class="block text-sm font-bold mb-2">{{ __('app.review_comment') }} *</label>
                 <textarea name="comment" rows="5" required minlength="10" maxlength="2000"
                     class="w-full px-4 py-3 bg-dokun-ivory border border-gray-200 rounded-xl focus:ring-2 focus:ring-dokun-gold outline-none resize-none"
-                    placeholder="Décrivez votre expérience, ce que vous avez appris, ce qui vous a marqué...">{{ old('comment') }}</textarea>
-                <p class="text-xs text-gray-400 mt-1">Minimum 10 caractères. Votre avis sera publié après modération.</p>
+                    placeholder="{{ __('app.review_comment_placeholder') }}">{{ old('comment') }}</textarea>
+                <p class="text-xs text-gray-400 mt-1">{{ __('app.review_comment_hint') }}</p>
             </div>
 
             <button type="submit" class="w-full py-4 bg-dokun-green text-white font-bold text-lg rounded-xl hover:bg-dokun-green/90 transition">
-                Envoyer mon avis
+                {{ __('app.review_submit') }}
             </button>
         </form>
     </div>
@@ -62,11 +62,18 @@
 
 @include('partials.footer')
 <script>
-const labels = ['','Très décevant','Décevant','Correct','Bien','Excellent !'];
+const LABELS = @json([
+    '1' => '',
+    '2' => __('app.review_l2'),
+    '3' => __('app.review_l3'),
+    '4' => __('app.review_l4'),
+    '5' => __('app.review_l5'),
+    '6' => __('app.review_l6'),
+]);
 document.querySelectorAll('input[name="rating"]').forEach(r => {
     r.addEventListener('change', () => {
         const val = parseInt(r.value);
-        document.getElementById('star-label').textContent = labels[val] || '';
+        document.getElementById('star-label').textContent = LABELS[val] || '';
         document.querySelectorAll('.star-icon').forEach((s,i) => {
             s.setAttribute('fill', i < val ? '#C99424' : 'none');
         });

@@ -19,10 +19,12 @@ class ActorRequestTest extends TestCase
     public function test_guest_can_submit_request(): void
     {
         $this->post(route('actor-requests.submit'), [
-            'role'         => 'guide',
-            'name'         => 'Jean Test',
-            'email'        => 'jean@test.com',
-            'motivation'   => 'Je souhaite guider des visiteurs.',
+            'role'            => 'guide',
+            'name'            => 'Jean Test',
+            'email'           => 'jean@test.com',
+            'motivation'      => 'Je souhaite guider des visiteurs.',
+            'guide_years'     => '5',
+            'guide_languages' => 'Français, anglais, fon',
         ])->assertRedirect(route('actor-requests.confirmation'));
 
         $this->assertDatabaseHas('actor_requests', [
@@ -30,6 +32,15 @@ class ActorRequestTest extends TestCase
             'role'   => 'guide',
             'status' => 'pending',
         ]);
+        $this->assertSame(
+            [
+                'guide_years'     => '5',
+                'guide_languages' => 'Français, anglais, fon',
+                'guide_zone'      => '',
+                'guide_license'   => '',
+            ],
+            ActorRequest::where('email', 'jean@test.com')->first()->extra_data
+        );
     }
 
     public function test_admin_can_approve_and_creates_user(): void
