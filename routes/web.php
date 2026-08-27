@@ -72,6 +72,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/learn/{lesson}/complete', [LearnController::class, 'complete'])->name('learn.complete');
 });
 
+// ─── ƉƆKUN Play (mini-jeu) ────────────────────────────────────
+Route::get('/jouer', [\App\Http\Controllers\PlayController::class, 'index'])->name('play.index');
+Route::post('/jouer/guess', [\App\Http\Controllers\PlayController::class, 'guess'])->name('play.guess');
+
 // ── Candidature artisan (auth + vérifié) ─────────────────────
 Route::middleware(['auth', 'verified'])->prefix('devenir-artisan')->name('artisan.')->group(function () {
     Route::get('/', [ArtisanApplicationController::class, 'showForm'])->name('apply');

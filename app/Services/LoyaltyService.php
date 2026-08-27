@@ -33,6 +33,7 @@ class LoyaltyService
         'review_published' => 30,
         'favorite_added'   => 5,
         'bridge_chat'      => 5,
+        'play_win'         => 15,
     ];
 
     public const LEVELS = [
