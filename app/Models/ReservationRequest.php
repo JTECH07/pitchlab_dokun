@@ -12,7 +12,7 @@ class ReservationRequest extends Model
         'artisan_id', 'experience_id', 'user_id', 'visitor_name', 'visitor_phone', 'visitor_email',
         'requested_date', 'guests_count', 'experience_type', 'message', 'status', 'total_amount',
         'service_fee', 'currency', 'payment_method', 'payment_status', 'reference',
-        'fedapay_transaction_id', 'kkiapay_transaction_id', 'qr_code_token',
+        'fedapay_transaction_id', 'qr_code_token',
     ];
 
     protected static function booted()

@@ -102,9 +102,11 @@ class PitchlabFeaturesController extends Controller
         $description  = \Illuminate\Support\Str::limit(trim($artisan->description ?? ''), 400);
         $historyText  = \Illuminate\Support\Str::limit(trim($artisan->history ?? ''), 300);
 
-        $artisanContext = Cache::remember("bridge_context_{$artisan->id}", 3600, fn() => compact(
-            'artisanName', 'craftName', 'sfDetails', 'description', 'historyText', 'expBlock', 'address'
-        ));
+        $artisanContext = Cache::remember("bridge_context_{$artisan->id}", 3600, function () use ($artisanName, $craftName, $sfDetails, $description, $historyText, $expBlock, $address) {
+            return compact(
+                'artisanName', 'craftName', 'sfDetails', 'description', 'historyText', 'expBlock', 'address'
+            );
+        });
 
         $systemContext = "Tu es {$artisanContext['artisanName']}, artisan(e) béninois(e) sur la plateforme ƉƆKUN à {$artisanContext['address']}.
 Métier: {$artisanContext['craftName']}. Savoir-faires: {$artisanContext['sfDetails']}. {$artisan->experience_years} ans d'expérience.

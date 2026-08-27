@@ -39,3 +39,33 @@ Les pages utilisent Tailwind via CDN pour rester légères et fonctionner imméd
 npm install --ignore-scripts
 npm run build
 ```
+
+## Files d'attente (queues)
+
+Les emails (vérification, mots de passe temporaires, notifications artisan/acteur, formulaire de contact) sont **asynchrones** et passent par la file `database`. En production, un worker doit tourner en permanence, sinon **aucun email ne part** :
+
+```bash
+php artisan queue:work
+```
+
+Il est recommandé de configurer [Supervisor](https://supervisord.org/) (ou systemd) pour maintenir ce process actif :
+
+```ini
+[program:php-queue-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /chemin/vers/dokun/artisan queue:work --sleep=3 --tries=3 --max-time=3600
+autostart=true
+autorestart=true
+numprocs=2
+```
+
+> **Attention** : les emails restent bloqués dans la table `jobs` tant qu'un worker n'est pas lancé.
+
+## Variables d'environnement clés (.env)
+
+| Variable | Rôle |
+|----------|------|
+| `QUEUE_CONNECTION=database` | File d'attente des emails |
+| `MAIL_*` (Brevo SMTP) | Envoi des emails |
+| `FEDAPAY_*` | Paiement mobile money (primary gateway) |
+| `GEMINI_API_KEY` | Bridge vocabulaire / traduction IA (les réponses de secours sont utilisées si vide) |
