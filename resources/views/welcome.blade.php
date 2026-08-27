@@ -278,7 +278,7 @@
     <img src="{{ url('images/poterie_en_action.png') }}" class="w-full h-full object-cover" alt="{{ __('app.welcome_craft_action_alt') }}" onerror="this.src='{{ url('images/hero/tourisme_porto_novo.png') }}'">
     <div class="absolute inset-0 bg-[#064E3B]/75 flex items-center justify-center">
         <div class="text-center text-white px-4">
-            <p class="serif text-3xl md:text-5xl mb-4">{{ __('app.welcome_quote') }}</p>
+            <p class="serif text-3xl md:text-5xl mb-4">{!! __('app.welcome_quote') !!}</p>
             <span class="text-[#C99424] font-bold text-sm uppercase tracking-widest">{{ __('app.welcome_quote_label') }}</span>
         </div>
     </div>

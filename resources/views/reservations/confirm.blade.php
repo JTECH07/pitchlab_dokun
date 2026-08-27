@@ -9,7 +9,7 @@
     <style>body{font-family:Manrope,sans-serif}h1,h2,h3,.serif{font-family:'DM Serif Display',serif}</style>
 </head>
 <body class="bg-dokun-ivory text-dokun-charcoal min-h-screen">
-@include('partials.navbar',['active'=>''])
+@include('partials.navbar',['active'=>'','showCurrency'=>true])
 
 @if(session('error'))
 <div class="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-red-600 text-white px-8 py-4 rounded-xl shadow-2xl font-bold max-w-xl w-full mx-4 text-center">{{ session('error') }}</div>

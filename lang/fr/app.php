@@ -88,6 +88,7 @@ return array (
   'exp_per_person' => '/ personne',
   'exp_meta_description' => 'Réservez des expériences culturelles authentiques à Porto-Novo, Bénin. Ateliers artisanaux, visites guidées, immersion patrimoniale.',
   'exp_hero_title' => 'Des gestes à découvrir,<br>des histoires à vivre.',
+  'exp_hero_badge' => 'Bénin',
   'exp_hero_sub' => 'Choisissez une expérience selon vos intérêts et votre budget. L\'artisan vous attend dans son atelier.',
   'exp_search_placeholder' => 'Poterie, tissage, atelier…',
   'exp_your_currency' => 'Votre devise',

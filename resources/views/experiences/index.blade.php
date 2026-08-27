@@ -29,7 +29,7 @@
 </head>
 <body class="bg-dokun-ivory text-dokun-charcoal">
 
-@include('partials.navbar', ['active' => 'experiences'])
+@include('partials.navbar', ['active' => 'experiences', 'showCurrency' => true])
 
 {{-- ══════════════════════════════════════════════════
      HERO SECTION
@@ -38,8 +38,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16">
         <div class="grid md:grid-cols-2 gap-8 items-center">
             <div>
-                <span class="text-dokun-gold text-xs font-bold tracking-[.2em] uppercase mb-4 block">Porto-Novo, Bénin</span>
-                <h1 class="font-serif text-4xl md:text-5xl leading-tight mb-4">{{ __('app.exp_hero_title') }}</h1>
+                <span class="text-dokun-gold text-xs font-bold tracking-[.2em] uppercase mb-4 block">{{ __('app.exp_hero_badge') }}</span>
+                <h1 class="font-serif text-4xl md:text-5xl leading-tight mb-4">{!! __('app.exp_hero_title') !!}</h1>
                 <p class="text-white/70 text-lg mb-6">{{ __('app.exp_hero_sub') }}</p>
 
                 {{-- Barre de recherche rapide --}}

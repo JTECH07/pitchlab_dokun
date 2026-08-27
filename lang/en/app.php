@@ -88,6 +88,7 @@ return array (
   'exp_per_person' => '/ person',
   'exp_meta_description' => 'Book authentic cultural experiences in Porto-Novo, Benin. Artisan workshops, guided tours, heritage immersion.',
   'exp_hero_title' => 'Gestures to discover,<br>stories to live.',
+  'exp_hero_badge' => 'Benin',
   'exp_hero_sub' => 'Choose an experience based on your interests and budget. The artisan is waiting for you in their workshop.',
   'exp_search_placeholder' => 'Pottery, weaving, workshop...',
   'exp_your_currency' => 'Your currency',

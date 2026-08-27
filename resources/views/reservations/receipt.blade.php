@@ -26,7 +26,7 @@
 </head>
 <body class="min-h-screen bg-gradient-to-br from-dokun-green via-dokun-green/90 to-emerald-900 flex flex-col">
 
-@include('partials.navbar', ['active' => ''])
+@include('partials.navbar', ['active' => '', 'showCurrency' => true])
 
 @if(session('success'))
 <div id="flash-msg" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-dokun-gold text-dokun-charcoal px-8 py-4 rounded-xl shadow-2xl font-bold text-center max-w-xl w-full mx-4">
