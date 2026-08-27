@@ -16,16 +16,16 @@
     </style>
 </head>
 <body class="antialiased bg-dokun-ivory text-dokun-charcoal">
-@include('partials.navbar', ['active' => ''])
+@include('partials.navbar', ['active' => 'contact'])
 
-<main class="pt-28">
+<main>
 
     {{-- ══════════ HERO ══════════ --}}
     <section class="relative overflow-hidden">
-        <img src="{{ url('images/dokun_bg2.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-10" alt="" loading="lazy">
+        <img src="{{ url('images/dokun_bg2.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-15" alt="" loading="lazy">
         <div class="absolute inset-0 wax-pattern opacity-50"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-dokun-ivory"></div>
-        <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 text-center">
+        <div class="absolute inset-0 bg-gradient-to-b from-dokun-charcoal/30 via-transparent to-dokun-ivory"></div>
+        <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 md:pt-36 pb-16 md:pb-20 text-center">
             <span class="fade-up inline-block mb-5 px-5 py-2 rounded-full border border-dokun-gold/40 bg-dokun-gold/10 text-dokun-gold text-xs font-bold uppercase tracking-[0.2em]">{{ __('app.contact_hero_badge') }}</span>
             <h1 class="fade-up text-4xl md:text-5xl text-dokun-green" style="animation-delay:.15s">{{ __('app.contact_hero_title') }}</h1>
             <p class="fade-up mt-4 text-gray-600 text-lg max-w-xl mx-auto" style="animation-delay:.3s">

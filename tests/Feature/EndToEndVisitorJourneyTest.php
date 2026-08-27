@@ -77,8 +77,7 @@ class EndToEndVisitorJourneyTest extends TestCase
             'user_id' => auth()->id(),
         ]);
 
-        // ── 4. Réservation (paiement sur place → direct) ────────
-        // pay_on_site crée la réservation sans FedaPay
+        // ── 4. Réservation (paiement en ligne unique via FedaPay) ──
         $reservationId = null;
         $this->post(route('payment.initiate', $artisan), [
             'visitor_name' => 'Aminata Kolo',
@@ -87,7 +86,7 @@ class EndToEndVisitorJourneyTest extends TestCase
             'requested_date' => now()->addWeek()->toDateString(),
             'guests_count' => 2,
             'experience_id' => $experience->id,
-            'payment_method' => 'pay_on_site',
+            'payment_method' => 'mobile_money',
         ])->assertRedirect();
 
         $reservation = ReservationRequest::where('visitor_email', 'aminata@example.test')->first();

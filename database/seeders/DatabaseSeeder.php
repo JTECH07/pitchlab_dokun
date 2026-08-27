@@ -271,7 +271,7 @@ class DatabaseSeeder extends Seeder
                 'longitude' => 2.6300,
                 'status' => 'published',
                 'savoir_faire' => $sfKanvo,
-                'image_path' => 'images/artisans/gnonhawa_patience.png',
+                'image_path' => 'images/artisans/gnonhawa_patience.jpg',
                 'image_title' => 'Gnonhawa PATIENCE plongeant un tissu dans la cuve d\'indigo',
             ],
             [
@@ -289,7 +289,7 @@ class DatabaseSeeder extends Seeder
                 'longitude' => 2.6180,
                 'status' => 'published',
                 'savoir_faire' => $sfSculpture,
-                'image_path' => 'images/artisans/benedicte_hounsa.png',
+                'image_path' => 'images/artisans/benedicte_hounsa.jpg',
                 'image_title' => 'Bénédicte HOUNSA sculptant une statuette féminine',
             ],
             [
@@ -307,7 +307,7 @@ class DatabaseSeeder extends Seeder
                 'longitude' => 2.6340,
                 'status' => 'published',
                 'savoir_faire' => $sfVannerie,
-                'image_path' => 'images/artisans/damien_sossa.png',
+                'image_path' => 'images/artisans/damien_sossa.jpg',
                 'image_title' => 'Damien SOSSA tressant une lampe décorative en raphia',
             ],
         ];
@@ -362,7 +362,7 @@ class DatabaseSeeder extends Seeder
                 'duration_minutes' => 120,
                 'capacity' => 8,
                 'price' => 5000,
-                'image_path' => 'images/experiences/initiation_poterie.png',
+                'image_path' => 'images/poterie_en_action.png',
             ],
             [
                 'artisan_email' => 'artisan3@dokun.bj',
@@ -371,7 +371,7 @@ class DatabaseSeeder extends Seeder
                 'duration_minutes' => 90,
                 'capacity' => 6,
                 'price' => 7500,
-                'image_path' => 'images/experiences/atelier_masques.png',
+                'image_path' => 'images/reel_marche_arts.png',
             ],
             [
                 'artisan_email' => 'artisan4@dokun.bj',
@@ -380,7 +380,7 @@ class DatabaseSeeder extends Seeder
                 'duration_minutes' => 180,
                 'capacity' => 4,
                 'price' => 10000,
-                'image_path' => 'images/experiences/tissage_kanvo.png',
+                'image_path' => 'images/tisserand.jpg',
             ],
             [
                 'artisan_email' => 'artisan2@dokun.bj',
@@ -389,7 +389,7 @@ class DatabaseSeeder extends Seeder
                 'duration_minutes' => 90,
                 'capacity' => 10,
                 'price' => 3000,
-                'image_path' => 'images/experiences/vannerie_raphia.png',
+                'image_path' => 'images/vannerie.jpg',
             ],
             [
                 'artisan_email' => 'artisan6@dokun.bj',
@@ -398,7 +398,7 @@ class DatabaseSeeder extends Seeder
                 'duration_minutes' => 150,
                 'capacity' => 6,
                 'price' => 8000,
-                'image_path' => 'images/experiences/teinture_indigo.png',
+                'image_path' => 'images/d2.jpeg',
             ],
             [
                 'artisan_email' => 'artisan5@dokun.bj',
@@ -407,7 +407,7 @@ class DatabaseSeeder extends Seeder
                 'duration_minutes' => 120,
                 'capacity' => 8,
                 'price' => 6000,
-                'image_path' => 'images/experiences/poterie_moderne.png',
+                'image_path' => 'images/d3.jpeg',
             ],
         ];
 

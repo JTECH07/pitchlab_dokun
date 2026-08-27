@@ -16,12 +16,15 @@ use FedaPay\Transaction;
 class PaymentController extends Controller
 {
     /**
-     * Calcule les frais de service ƉƆKUN (5% du montant, minimum 500 XOF).
+     * Commission ƉƆKUN sur une réservation : 10% du montant de l'expérience
+     * (minimum 500 XOF), configurable via config/dokun.php.
      */
     private static function calculateServiceFee(float $experienceTotal): int
     {
-        $fee = (int) ceil($experienceTotal * 0.05);
-        return max($fee, 500); // minimum 500 XOF
+        $rate = (float) config('dokun.commission_reservation_rate', 0.10);
+        $min  = (int) config('dokun.min_service_fee', 500);
+        $fee  = (int) ceil($experienceTotal * $rate);
+        return max($fee, $min);
     }
 
     /**
@@ -55,7 +58,7 @@ class PaymentController extends Controller
             'requested_date' => 'required|date|after:today',
             'guests_count'   => 'required|integer|min:1|max:20',
             'experience_id'  => 'nullable|integer|exists:experiences,id',
-            'payment_method' => 'required|in:pay_on_site,mobile_money',
+            'payment_method' => 'required|in:mobile_money',
             'message'        => 'nullable|string|max:1000',
         ]);
 
@@ -69,19 +72,14 @@ class PaymentController extends Controller
 
         $reference   = 'DKN-' . strtoupper(Str::random(8));
         $expPrice    = $experience ? (float) $experience->price * $validated['guests_count'] : 0;
-        $totalAmount = $expPrice; // montant de l'expérience hors frais de service
+        $totalAmount = $expPrice; // montant de l'expérience hors commission
         $serviceFee  = self::calculateServiceFee($expPrice);
 
-        // ── Calcul du montant FedaPay selon la méthode ─────────────────
-        // pay_on_site  → FedaPay prélève UNIQUEMENT les frais de service (5%)
-        // mobile_money → FedaPay prélève l'intégralité (expérience + frais 5%)
-        $fedaAmount = ($validated['payment_method'] === 'mobile_money')
-            ? ($expPrice + $serviceFee)
-            : $serviceFee;
+        // ── Paiement 100% sur la plateforme ───────────────────────────
+        // Mode unique : FedaPay prélève l'intégralité (expérience + commission 10%).
+        $fedaAmount = $expPrice + $serviceFee;
 
-        $fedaDesc = $validated['payment_method'] === 'mobile_money'
-            ? 'Réservation ƉƆKUN : ' . ($experience?->title ?? 'Visite libre') . ' — ' . $reference
-            : 'Frais de réservation ƉƆKUN — ' . $reference;
+        $fedaDesc = 'Réservation ƉƆKUN : ' . ($experience?->title ?? 'Visite libre') . ' — ' . $reference;
 
         // ── Données de réservation à conserver ─────────────────────────
         $reservationData = [

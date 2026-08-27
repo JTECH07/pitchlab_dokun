@@ -89,6 +89,7 @@ Route::prefix('rejoindre')->name('actor-requests.')->group(function () {
 // ─── Espace visiteur / touriste ──────────────────────────────
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/mon-voyage', [VisitorController::class, 'profile'])->name('visitor.profile');
+    Route::get('/mon-voyage/passeport', [VisitorController::class, 'passport'])->name('visitor.passport');
     Route::post('/favoris/{artisan}', [VisitorController::class, 'toggleFavorite'])->name('visitor.favorites.toggle');
 });
 

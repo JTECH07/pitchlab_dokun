@@ -16,16 +16,16 @@
     </style>
 </head>
 <body class="antialiased bg-dokun-ivory text-dokun-charcoal">
-@include('partials.navbar', ['active' => ''])
+@include('partials.navbar', ['active' => 'about'])
 
-<main class="pt-28">
+<main>
 
     {{-- ══════════ HERO ══════════ --}}
     <section class="relative bg-dokun-charcoal text-white overflow-hidden">
-        <img src="{{ url('images/dokun_bg1.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-15" alt="" loading="lazy">
+        <img src="{{ url('images/dokun_bg1.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-20" alt="" loading="lazy">
         <div class="absolute inset-0 wax-pattern opacity-40"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-dokun-charcoal/70 via-transparent to-dokun-charcoal/80"></div>
-        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 text-center">
+        <div class="absolute inset-0 bg-gradient-to-b from-dokun-charcoal/60 via-transparent to-dokun-charcoal/80"></div>
+        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 md:pt-36 pb-24 md:pb-32 text-center">
             <span class="fade-up inline-block mb-6 px-5 py-2 rounded-full border border-dokun-gold/50 bg-dokun-gold/10 text-dokun-gold text-xs font-bold uppercase tracking-[0.2em]">{{ __('app.about_history_badge') }}</span>
             <h1 class="fade-up text-4xl md:text-6xl leading-tight" style="animation-delay:.15s">{{ __('app.about_hero_title') }}</h1>
             <p class="fade-up mt-6 text-white/75 text-lg leading-relaxed max-w-2xl mx-auto" style="animation-delay:.3s">

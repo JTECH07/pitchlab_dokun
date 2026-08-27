@@ -29,7 +29,7 @@ class ReservationFlowTest extends TestCase
             'requested_date' => now()->addWeek()->toDateString(),
             'guests_count' => 2,
             'experience_id' => $experience->id,
-            'payment_method' => 'pay_on_site',
+            'payment_method' => 'mobile_money',
         ]);
 
         // FedaPay SDK is unavailable in tests, so it redirects back with error

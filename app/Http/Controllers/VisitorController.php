@@ -62,6 +62,63 @@ class VisitorController extends Controller
         ));
     }
 
+    /**
+     * ƉƆKUN Passport — progression culturelle personnelle.
+     * Trace les savoir-faire découverts, mots appris, points, niveau,
+     * badges et série. Alimente la gamification et la fidélisation.
+     */
+    public function passport(Request $request)
+    {
+        $user = $request->user() ?? auth()->user();
+        abort_unless($user, 401);
+
+        $loyalty  = app(LoyaltyService::class);
+        $loyalty->touchDailyVisit($user);
+        $summary     = $loyalty->ensureSummary($user);
+        $totalPoints = $loyalty->total($user);
+        [$level, $nextLevel] = array_values(LoyaltyService::levelFor($totalPoints));
+        $allBadges    = \App\Models\Badge::orderBy('id')->get();
+        $earnedBadgeIds = $user->badges()->pluck('badge_id')->flip();
+
+        // ─── Savoir-faire découverts (réservations + favoris) ─────
+        $favoriteSF = \App\Models\SavoirFaire::whereHas('artisans', fn ($q) =>
+            $q->whereIn('id', \App\Models\ArtisanFavorite::where('user_id', $user->id)->pluck('artisan_id')))
+            ->with('category')->get();
+
+        $reservedSF = \App\Models\SavoirFaire::whereHas('artisans.experiences.reservations', fn ($q) =>
+            $q->where('user_id', $user->id))->with('category')->get();
+
+        $discovered = $favoriteSF->merge($reservedSF)->unique('id')->values();
+
+        // ─── Mots appris (vitrine) ────────────────────────────────
+        $progress = LearnProgress::with('lesson.course')->where('user_id', $user->id)->get();
+        $learnStats = [
+            'lessons_done' => $progress->whereNotNull('completed_at')->count(),
+            'best_score'   => (int) ($progress->max('best_score') ?? 0),
+        ];
+
+        $events = \App\Models\LoyaltyEvent::where('user_id', $user->id)
+            ->orderByDesc('created_at')->take(12)->get();
+
+        $labels = app()->getLocale() === 'fr' ? [
+            'daily_visit' => 'Visite quotidienne', 'lesson_completed' => 'Leçon terminée',
+            'perfect_quiz' => 'Quiz parfait', 'reservation_made' => 'Réservation confirmée',
+            'review_published' => 'Témoignage publié', 'favorite_added' => 'Artisan favori',
+            'bridge_chat' => 'Discussion Bridge',
+        ] : [
+            'daily_visit' => 'Daily visit', 'lesson_completed' => 'Lesson completed',
+            'perfect_quiz' => 'Perfect quiz', 'reservation_made' => 'Reservation confirmed',
+            'review_published' => 'Review published', 'favorite_added' => 'Artisan added to favorites',
+            'bridge_chat' => 'Bridge chat',
+        ];
+        $eventLabel = fn (string $code) => $labels[$code] ?? ucfirst(str_replace('_', ' ', $code));
+
+        return view('visitor.passport', compact(
+            'summary', 'totalPoints', 'level', 'nextLevel',
+            'allBadges', 'earnedBadgeIds', 'discovered', 'learnStats', 'events', 'eventLabel'
+        ));
+    }
+
     public function toggleFavorite(Request $request, Artisan $artisan)
     {
         $fav = ArtisanFavorite::where('user_id', $request->user()->id)

@@ -61,7 +61,7 @@
 
             <!-- Right actions -->
             <div class="hidden lg:flex items-center gap-2">
-                <a href="{{ route('contact') }}" class="nav-link px-3 py-2 text-sm rounded-lg {{ $active==='contact' ? 'is-active' : '' }}">{{ __('app.nav_contact') }}</a>
+                <a href="{{ route('contact') }}" class="nav-link px-3 py-2 font-bold  text-sm rounded-lg {{ $active==='contact' ? 'is-active' : '' }}">{{ __('app.nav_contact') }}</a>
 
                 @if(isset($showCurrency) ? $showCurrency : false)
                 <!-- Devise (restreinte aux pages expériences/réservation) -->
@@ -117,6 +117,10 @@
                             <a href="{{ route('visitor.profile') }}" class="flex items-center gap-2 px-4 py-3 text-sm text-dokun-charcoal hover:bg-dokun-ivory hover:text-dokun-green font-semibold">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                                 {{ __('app.nav_my_trip') }}
+                            </a>
+                            <a href="{{ route('visitor.passport') }}" class="flex items-center gap-2 px-4 py-3 text-sm text-[#C99424] hover:bg-[#C99424]/5 font-semibold">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l9-3 9 3v12l-9 3-9-3V6zm9 3v11M6 8v.01M12 8v.01M18 8v.01M6 11v.01M18 11v.01M6 14v.01M18 14v.01"/></svg>
+                                {{ __('app.pp_title') }}
                             </a>
                             @if(Auth::user()->role === 'tourist')
                                 <a href="{{ route('artisan.apply') }}" class="flex items-center gap-2 px-4 py-3 text-sm text-[#C99424] hover:bg-[#C99424]/5 font-semibold">
@@ -205,6 +209,9 @@
                 <a href="{{ route('visitor.profile') }}" class="flex items-center gap-2 py-3.5 px-3 bg-dokun-ivory rounded-xl font-semibold text-sm mb-2">
                     <span class="w-6 h-6 bg-dokun-green text-white rounded-full flex items-center justify-center text-xs font-bold">{{ substr(Auth::user()->name,0,1) }}</span>
                     {{ Auth::user()->name }}
+                </a>
+                <a href="{{ route('visitor.passport') }}" class="flex items-center gap-2 py-3 px-3 rounded-xl font-semibold text-sm mb-2 text-dokun-gold">
+                    🎫 {{ __('app.pp_title') }}
                 </a>
                 <a href="{{ route('dashboard') }}" class="flex items-center justify-center gap-2 w-full py-3.5 bg-dokun-green text-white font-bold rounded-xl mb-2">
                     {{ __('app.admin_dashboard') }}

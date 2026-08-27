@@ -122,26 +122,23 @@
             </div>
         </div>
 
-        <!-- ③ Mode de paiement -->
+        <!-- ③ Mode de paiement (unique : en ligne sur la plateforme) -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-7">
             <h2 class="serif text-2xl text-dokun-green mb-2">③ {{ __('app.res_payment_method') }}</h2>
             <p class="text-xs text-gray-400 mb-5">{{ __('app.res_redirect_note') }}</p>
 
-            <div class="grid sm:grid-cols-2 gap-4 mb-4">
-                <label class="cursor-pointer border-2 border-gray-200 rounded-xl p-5 hover:border-dokun-green transition has-[:checked]:border-dokun-green has-[:checked]:bg-emerald-50">
-                    <input type="radio" name="payment_method" value="pay_on_site" @checked(old('payment_method','pay_on_site')==='pay_on_site') class="sr-only">
-                    <b class="block mb-1">🏺 {{ __('app.res_pay_on_site') }}</b>
-                    <span class="text-xs text-gray-500">{{ __('app.res_pay_on_site_desc') }}</span>
-                </label>
-                <label class="cursor-pointer border-2 border-gray-200 rounded-xl p-5 hover:border-dokun-green transition has-[:checked]:border-dokun-green has-[:checked]:bg-emerald-50">
-                    <input type="radio" name="payment_method" value="mobile_money" @checked(old('payment_method')==='mobile_money') class="sr-only">
-                    <b class="block mb-1">💳 {{ __('app.res_pay_all') }}</b>
-                    <span class="text-xs text-gray-500">{{ __('app.res_pay_all_desc') }}</span>
-                </label>
+            <div class="flex items-start gap-4 border-2 border-dokun-green/20 rounded-xl p-5 bg-emerald-50/50">
+                <span class="text-3xl leading-none">💳</span>
+                <div>
+                    <b class="block mb-1 text-dokun-green">{{ __('app.res_pay_online_title') }}</b>
+                    <span class="text-xs text-gray-500">{{ __('app.res_pay_online_desc') }}</span>
+                </div>
             </div>
 
+            <input type="hidden" name="payment_method" value="mobile_money">
+
             @if(config('services.fedapay.environment', 'sandbox') === 'sandbox')
-            <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800 flex items-start gap-3">
+            <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800 flex items-start gap-3 mt-4">
                 <span class="text-base leading-none">💡</span>
                 <div>
                     <strong class="block mb-0.5">{{ __('app.res_sandbox_title') }}</strong>
@@ -161,7 +158,7 @@
                 <div class="flex justify-between"><span class="text-white/70">{{ __('app.res_type') }}</span><span id="sum-type" class="font-bold">{{ __('app.res_free_visit') }}</span></div>
                 <div class="flex justify-between"><span class="text-white/70">{{ __('app.res_persons') }}</span><span id="sum-guests" class="font-bold">1</span></div>
                 <div class="flex justify-between"><span class="text-white/70">{{ __('app.res_exp_price') }}</span><span id="sum-exp" class="font-bold">{{ __('app.res_free') }}</span></div>
-                <div class="flex justify-between"><span class="text-white/70">{{ __('app.res_service_fee') }} (5%)</span><span id="sum-fee" class="font-bold text-dokun-gold">500 FCFA</span></div>
+                <div class="flex justify-between"><span class="text-white/70">{{ __('app.res_service_fee') }} (10%)</span><span id="sum-fee" class="font-bold text-dokun-gold">500 FCFA</span></div>
                 <div class="h-px bg-white/20 my-2"></div>
                 <div class="flex justify-between text-lg"><span>{{ __('app.res_pay_now') }}</span><span id="sum-feda" class="font-bold text-dokun-gold serif">1 000 FCFA</span></div>
                 <p id="sum-rest" class="text-white/50 text-xs text-right hidden">{{ __('app.res_pay_atelier_rest') }}</p>
@@ -195,7 +192,7 @@ const L = {
 };
 
 function calculateServiceFee(experienceTotal) {
-    return Math.max(Math.ceil(experienceTotal * 0.05), 500);
+    return Math.max(Math.ceil(experienceTotal * 0.10), 500);
 }
 
 function fmt(xof) {
@@ -207,36 +204,23 @@ function fmt(xof) {
 function update() {
     const radio   = document.querySelector('.exp-radio:checked');
     const guests  = parseInt(document.getElementById('guests-count').value) || 1;
-    const method  = document.querySelector('input[name="payment_method"]:checked')?.value ?? 'pay_on_site';
 
     const price   = parseFloat(radio?.dataset.price || 0);
     const label   = radio?.dataset.label || L.freeVisit;
     const expTotal= price * guests;
     const fee     = calculateServiceFee(expTotal);
+    const fedaAmt = expTotal + fee;
 
     document.getElementById('sum-type').textContent   = label;
     document.getElementById('sum-guests').textContent = guests + ' ' + L.persons;
     document.getElementById('sum-exp').textContent    = price > 0 ? fmt(expTotal) : L.free;
     document.getElementById('sum-fee').textContent    = fmt(fee);
-
-    let fedaAmt, submitText;
-    if (method === 'mobile_money') {
-        fedaAmt = expTotal + fee;
-        submitText = L.payFeda + ' ' + fmt(fedaAmt) + ' ' + L.payEnd;
-        document.getElementById('sum-rest').classList.add('hidden');
-    } else {
-        fedaAmt = fee;
-        submitText = L.payFeda + ' ' + fmt(fee) + ' ' + '(' + L.fee + ') ' + L.payEnd;
-        if (price > 0) document.getElementById('sum-rest').classList.remove('hidden');
-        else document.getElementById('sum-rest').classList.add('hidden');
-    }
-
-    document.getElementById('sum-feda').textContent  = fmt(fedaAmt);
-    document.getElementById('submit-label').textContent = submitText;
+    document.getElementById('sum-feda').textContent   = fmt(fedaAmt);
+    document.getElementById('sum-rest').classList.add('hidden');
+    document.getElementById('submit-label').textContent = L.payFeda + ' ' + fmt(fedaAmt) + ' ' + L.payEnd;
 }
 
 document.querySelectorAll('.exp-radio').forEach(r => r.addEventListener('change', update));
-document.querySelectorAll('input[name="payment_method"]').forEach(r => r.addEventListener('change', update));
 document.getElementById('guests-count').addEventListener('input', update);
 document.getElementById('res-form').addEventListener('submit', e => {
     document.getElementById('submit-btn').disabled = true;
