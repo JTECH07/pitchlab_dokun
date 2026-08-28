@@ -187,6 +187,10 @@
                        class="no-print flex items-center gap-2 bg-dokun-gold text-dokun-charcoal px-4 py-2 rounded-xl text-sm font-bold hover:bg-yellow-500 transition shadow-md">
                         ⭐ {{ __('app.receipt_leave_review') }}
                     </a>
+                    <a href="{{ route('moments.create', $reservation->qr_code_token) }}"
+                       class="no-print flex items-center gap-2 bg-dokun-green text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-emerald-700 transition shadow-md">
+                        🎬 {{ __('app.moments_publish') }}
+                    </a>
                     @endif
                 </div>
                 <button onclick="window.print()" class="no-print flex items-center gap-2 text-gray-400 hover:text-dokun-charcoal text-sm font-semibold transition">

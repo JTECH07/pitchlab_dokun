@@ -23,6 +23,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\MomentController;
 use App\Http\Controllers\SavoirFairePublicController;
 use App\Http\Controllers\Api\PitchlabFeaturesController;
 use App\Http\Controllers\ArtisanApplicationController;
@@ -64,6 +65,8 @@ Route::get('/artisans/{id}', [ArtisanPublicController::class, 'show'])->name('ar
 Route::get('/savoir-faire',        [SavoirFairePublicController::class, 'index'])->name('savoir-faire.index');
 Route::get('/savoir-faire/{slug}', [SavoirFairePublicController::class, 'show'])->name('savoir-faire.show');
 Route::get('/experiences',         [ExperienceController::class, 'index'])->name('experiences.index');
+Route::get('/moments',         [MomentController::class, 'index'])->name('moments.index');
+Route::get('/moments/{share_token}', [MomentController::class, 'show'])->name('moments.show');
 Route::get('/carte',               [MapController::class, 'index'])->name('carte');
 
 // ─── ƉƆKUN Learn ─────────────────────────────────────────────
@@ -163,6 +166,10 @@ Route::middleware('auth')->group(function () {
     // Avis
     Route::get('/reservations/{reservation_id}/avis', [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('/avis', [ReviewController::class, 'store'])->name('reviews.store');
+
+    // ƉƆKUN Moments (shorts post-expérience)
+    Route::get('/reservations/{reservation_id}/moment', [MomentController::class, 'create'])->name('moments.create');
+    Route::post('/moments', [MomentController::class, 'store'])->name('moments.store');
 });
 
 /*
@@ -209,6 +216,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/carte', [MapController::class, 'adminMap'])->name('map');
     Route::get('/avis', [ReviewController::class, 'adminIndex'])->name('reviews.index');
     Route::patch('/avis/{review}/moderate', [ReviewController::class, 'adminModerate'])->name('reviews.moderate');
+
+    // ƉƆKUN Moments — modération
+    Route::get('/moments', [MomentController::class, 'adminIndex'])->name('moments.index');
+    Route::patch('/moments/{moment}/moderate', [MomentController::class, 'adminModerate'])->name('moments.moderate');
 
     // Médias
     Route::get('/media', [MediaAdminController::class, 'index'])->name('media.index');

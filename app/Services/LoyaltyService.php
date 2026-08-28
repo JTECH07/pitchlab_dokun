@@ -34,6 +34,7 @@ class LoyaltyService
         'favorite_added'   => 5,
         'bridge_chat'      => 5,
         'play_win'         => 15,
+        'moment_shared'    => 30,
     ];
 
     public const LEVELS = [
@@ -96,6 +97,9 @@ class LoyaltyService
             'lesson_completed'=> !LoyaltyEvent::where('user_id', $user->id)
                                   ->where('code', $code)
                                   ->whereJsonContains('meta->lesson_id', $meta['lesson_id'] ?? 0)->exists(),
+            'moment_shared'   => !LoyaltyEvent::where('user_id', $user->id)
+                                  ->where('code', $code)
+                                  ->whereJsonContains('meta->moment_id', $meta['moment_id'] ?? 0)->exists(),
             default           => true,
         };
     }
