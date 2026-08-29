@@ -33,6 +33,11 @@ use App\Http\Controllers\Admin\AdminActorRequestController;
 use App\Http\Controllers\FeatureController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | Routes Publiques (lecture seule)
@@ -218,7 +223,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::patch('/avis/{review}/moderate', [ReviewController::class, 'adminModerate'])->name('reviews.moderate');
 
     // ƉƆKUN Moments — modération
-    Route::get('/moments', [MomentController::class, 'adminIndex'])->name('moments.index');
+    Route::get('/moments', [MomentController::class, 'adminIndex'])->name('admin.moments.index');
     Route::patch('/moments/{moment}/moderate', [MomentController::class, 'adminModerate'])->name('moments.moderate');
 
     // Médias

@@ -14,7 +14,9 @@ class ReviewController extends Controller
     public function create(Request $request, $reservation_id)
     {
         $reservation = ReservationRequest::with('artisan', 'experience')
-            ->where('qr_code_token', $reservation_id)
+            ->where(function($q) use($reservation_id) {
+                $q->where('id', $reservation_id)->orWhere('qr_code_token', $reservation_id);
+            })
             ->where('user_id', $request->user()->id)
             ->where('status', 'completed')
             ->firstOrFail();

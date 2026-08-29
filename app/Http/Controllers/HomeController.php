@@ -28,7 +28,9 @@ class HomeController extends Controller
             ->get()
             ->each(fn ($a) => $a->append('image_url'));
         $quartiers = \App\Http\Controllers\MapController::quartiersWithArtisans();
+        
+        $visitorCount = \App\Models\User::count();
 
-        return view('welcome', compact('categories', 'artisans', 'mapArtisans', 'quartiers', 'artisansCount', 'categoriesCount', 'artisanCounts'));
+        return view('welcome', compact('categories', 'artisans', 'mapArtisans', 'quartiers', 'artisansCount', 'categoriesCount', 'artisanCounts', 'visitorCount'));
     }
 }
