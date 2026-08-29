@@ -574,6 +574,7 @@ return array (
  'nav_savoir' => 'Crafts',
  'nav_carte' => 'Map',
  'nav_experiences' => 'Experiences',
+ 'nav_explore' => 'Explore',
  'nav_join' => 'Join us',
  'nav_get_started' => 'Get started',
 

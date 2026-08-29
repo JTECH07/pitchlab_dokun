@@ -43,7 +43,7 @@ Route::get('/', function () {
 | Routes Publiques (lecture seule)
 |--------------------------------------------------------------------------
 */
-Route::post('/locale/{locale}', function (string $locale) {
+Route::match(['get', 'post'], '/locale/{locale}', function (string $locale) {
     if (!in_array($locale, ['fr', 'en'])) {
         abort(400);
     }
