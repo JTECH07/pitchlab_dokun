@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Artisan;
 use App\Models\Experience;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ExperienceAdminController extends Controller
 {
@@ -32,11 +33,17 @@ class ExperienceAdminController extends Controller
             'price'             => 'required|numeric|min:0',
             'currency'          => 'nullable|string|max:5',
             'language'          => 'nullable|string|max:50',
-            'image_path'        => 'nullable|string|max:500',
+            'image'             => 'nullable|image|max:2048',
             'is_published'      => 'boolean',
         ]);
 
         $validated['is_published'] = $request->boolean('is_published');
+        unset($validated['image']);
+
+        if ($request->hasFile('image')) {
+            $validated['image_path'] = $request->file('image')->store('experiences', 'public');
+        }
+
         Experience::create($validated);
 
         return redirect()->route('admin.experiences.index')->with('success', 'Expérience créée avec succès.');
@@ -59,11 +66,20 @@ class ExperienceAdminController extends Controller
             'price'             => 'required|numeric|min:0',
             'currency'          => 'nullable|string|max:5',
             'language'          => 'nullable|string|max:50',
-            'image_path'        => 'nullable|string|max:500',
+            'image'             => 'nullable|image|max:2048',
             'is_published'      => 'boolean',
         ]);
 
         $validated['is_published'] = $request->boolean('is_published');
+        unset($validated['image']);
+
+        if ($request->hasFile('image')) {
+            if ($experience->image_path) {
+                Storage::disk('public')->delete($experience->image_path);
+            }
+            $validated['image_path'] = $request->file('image')->store('experiences', 'public');
+        }
+
         $experience->update($validated);
 
         return redirect()->route('admin.experiences.index')->with('success', 'Expérience mise à jour.');
@@ -71,6 +87,9 @@ class ExperienceAdminController extends Controller
 
     public function destroy(Experience $experience)
     {
+        if ($experience->image_path) {
+            Storage::disk('public')->delete($experience->image_path);
+        }
         $experience->delete();
         return back()->with('success', 'Expérience supprimée.');
     }

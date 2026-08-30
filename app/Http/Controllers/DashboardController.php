@@ -16,6 +16,7 @@ class DashboardController extends Controller
             $reservations = \App\Models\ReservationRequest::where('user_id', $request->user()->id)->latest()->get();
             return view('dashboard', ['mode' => 'visitor', 'reservations' => $reservations]);
         }
+
         $stats = [
             'artisans_count' => \App\Models\Artisan::count(),
             'categories_count' => \App\Models\Category::count(),
@@ -23,6 +24,6 @@ class DashboardController extends Controller
             'pending_reservations' => \App\Models\ReservationRequest::where('status', 'pending')->count(),
         ];
 
-        return view('dashboard', compact('stats'))->with('mode', 'admin');
+        return view('admin.dashboard', compact('stats'));
     }
 }

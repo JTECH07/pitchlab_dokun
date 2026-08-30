@@ -19,6 +19,7 @@ class ArtisanApplicationController extends Controller
             'categories'   => Category::orderBy('name')->get(),
             'savoirFaires' => SavoirFaire::orderBy('name')->get(),
             'existing'     => $existing,
+            'user'         => Auth::user(),
         ]);
     }
 
@@ -43,6 +44,7 @@ class ArtisanApplicationController extends Controller
             'experience_years' => 'required|integer|min:0|max:80',
             'address'          => 'required|string|max:500',
             'category_id'      => 'required|exists:categories,id',
+            'trade'            => 'nullable|string|max:255',
         ]);
 
         $application = ArtisanApplication::updateOrCreate(

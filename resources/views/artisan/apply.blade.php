@@ -26,24 +26,24 @@
  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
  <div>
  <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Prénom</label>
- <input type="text" name="first_name" value="{{ old('first_name', $existing?->first_name) }}" required
- class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green text-sm">
+ <input type="text" name="first_name" value="{{ old('first_name', $existing?->first_name ?? $user->name) }}" required
+ class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green py-3 px-4 text-sm">
  <x-input-error :messages="$errors->get('first_name')" class="mt-1.5"/>
  </div>
  <div>
  <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Nom</label>
- <input type="text" name="last_name" value="{{ old('last_name', $existing?->last_name) }}" required
- class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green text-sm">
+ <input type="text" name="last_name" value="{{ old('last_name', $existing?->last_name ?? $user->name) }}" required
+ class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green py-3 px-4 text-sm">
  <x-input-error :messages="$errors->get('last_name')" class="mt-1.5"/>
  </div>
  <div>
  <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Nom professionnel <span class="text-dokun-charcoal/30 normal-case">(optionnel)</span></label>
  <input type="text" name="professional_name" value="{{ old('professional_name', $existing?->professional_name) }}"
- class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green text-sm">
+ class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green py-3 px-4 text-sm">
  </div>
  <div>
  <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Catégorie</label>
- <select name="category_id" required class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green text-sm">
+ <select name="category_id" required class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green py-3 px-4 text-sm">
  <option value="">Choisir…</option>
  @foreach($categories as $cat)
  <option value="{{ $cat->id }}" {{ old('category_id', $existing?->category_id) == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
@@ -63,18 +63,18 @@
  <div>
  <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Téléphone</label>
  <input type="text" name="phone" value="{{ old('phone', $existing?->phone) }}" required placeholder="+229 01 97 00 00 00"
- class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green text-sm">
+ class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green py-3 px-4 text-sm">
  <x-input-error :messages="$errors->get('phone')" class="mt-1.5"/>
  </div>
  <div>
  <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">WhatsApp <span class="text-dokun-charcoal/30 normal-case">(optionnel)</span></label>
  <input type="text" name="whatsapp" value="{{ old('whatsapp', $existing?->whatsapp) }}" placeholder="+229 97 00 00 00"
- class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green text-sm">
+ class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green py-3 px-4 text-sm">
  </div>
  <div class="sm:col-span-2">
  <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Adresse / Atelier</label>
  <input type="text" name="address" value="{{ old('address', $existing?->address) }}" required
- class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green text-sm">
+ class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green py-3 px-4 text-sm">
  <x-input-error :messages="$errors->get('address')" class="mt-1.5"/>
  </div>
  </div>
@@ -87,21 +87,41 @@
 
  <div class="space-y-4">
  <div>
+ <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Métier / Profession</label>
+ @php
+ $trades = ['Tisserand', 'Potière', 'Costumière', 'Forgeron', 'Menuisier', 'Sculpteur', 'Bijoutier', 'Cuisinière', 'Danseuse', 'Griot', 'Autre'];
+ $currentTrade = old('trade', $existing?->trade);
+ $isAutre = $currentTrade && !in_array($currentTrade, $trades);
+ @endphp
+ <input type="hidden" name="trade" id="trade_hidden" value="{{ $currentTrade }}">
+ <select id="trade_select" class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green py-3 px-4 text-sm">
+ <option value="">Choisir votre métier…</option>
+ @foreach($trades as $t)
+ @if($t !== 'Autre')
+ <option value="{{ $t }}" {{ $currentTrade === $t ? 'selected' : '' }}>{{ $t }}</option>
+ @endif
+ @endforeach
+ <option value="__autre__" {{ $isAutre ? 'selected' : '' }}>Autre</option>
+ </select>
+ <input type="text" id="trade_custom" value="{{ $isAutre ? $currentTrade : '' }}" placeholder="Précisez votre métier…"
+ class="mt-2 w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green py-3 px-4 text-sm {{ $isAutre ? '' : 'hidden' }}">
+ </div>
+ <div>
  <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Années d'expérience</label>
  <input type="number" name="experience_years" value="{{ old('experience_years', $existing?->experience_years ?? 0) }}" min="0" max="80" required
- class="w-28 rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green text-sm">
+ class="w-32 rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green py-3 px-4 text-sm">
  <x-input-error :messages="$errors->get('experience_years')" class="mt-1.5"/>
  </div>
  <div>
  <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Description <span class="text-dokun-charcoal/30 normal-case">(1-2 phrases)</span></label>
- <textarea name="description" rows="2" required maxlength="2000" placeholder="Décrivez brièvement votre activité…"
- class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green text-sm">{{ old('description', $existing?->description) }}</textarea>
+ <textarea name="description" rows="3" required maxlength="2000" placeholder="Décrivez brièvement votre activité…"
+ class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green py-3 px-4 text-sm">{{ old('description', $existing?->description) }}</textarea>
  <x-input-error :messages="$errors->get('description')" class="mt-1.5"/>
  </div>
  <div>
  <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Histoire <span class="text-dokun-charcoal/30 normal-case">(optionnel)</span></label>
  <textarea name="history" rows="3" maxlength="3000" placeholder="Votre parcours, la transmission…"
- class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green text-sm">{{ old('history', $existing?->history) }}</textarea>
+ class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green py-3 px-4 text-sm">{{ old('history', $existing?->history) }}</textarea>
  </div>
  </div>
  </section>
@@ -110,6 +130,36 @@
  Soumettre ma candidature
  </button>
  </form>
+
+ @push('scripts')
+ <script>
+ document.addEventListener('DOMContentLoaded', function () {
+     const select = document.getElementById('trade_select');
+     const custom = document.getElementById('trade_custom');
+     const hidden = document.getElementById('trade_hidden');
+
+     function syncTrade() {
+         if (select.value === '__autre__') {
+             custom.classList.remove('hidden');
+             hidden.value = custom.value;
+             custom.focus();
+         } else {
+             custom.classList.add('hidden');
+             hidden.value = select.value;
+         }
+     }
+
+     select.addEventListener('change', syncTrade);
+     custom.addEventListener('input', function () {
+         if (select.value === '__autre__') {
+             hidden.value = custom.value;
+         }
+     });
+
+     syncTrade();
+ });
+ </script>
+ @endpush
  @endif
  </div>
 </x-app-layout>

@@ -130,7 +130,7 @@ $wordsJson = $words->map(fn($w) => [
  'fr' => $w->french_translation,
  'en' => $w->english_translation,
  'audio' => $w->audio_path ? asset('storage/' . $w->audio_path) : null,
-])->values()->toJson();
+])->values();
 @endphp
 const WORDS = @json($wordsJson);
 const IS_EN = {{ $isEn ? 'true' : 'false' }};

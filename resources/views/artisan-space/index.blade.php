@@ -390,11 +390,7 @@
  activeTab: 'reservations',
  resFilter: 'all',
  reservations: allReservations,
- stats: {
- pending: allReservations.filter(r => r.status === 'pending').length,
- accepted: allReservations.filter(r => r.status === 'accepted').length,
- completed: allReservations.filter(r => r.status === 'completed').length,
- },
+ stats: @json($stats),
  dragOver: false,
  uploading: false,
  galleryPhotos: @js($artisan ? $artisan->media()->where('type', 'image')->latest()->get()->map(fn($m) => ['id' => $m->id, 'url' => $m->url]) : []),

@@ -1,22 +1,26 @@
-<x-app-layout>
- <x-slot name="header">
- <div class="flex items-center justify-between">
- <h1 class="font-serif text-3xl text-dokun-green">Expériences</h1>
- <a href="{{ route('admin.experiences.create') }}" class="bg-dokun-green hover:bg-dokun-green/90 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition shadow-lg shadow-dokun-green/20">+ Nouvelle</a>
- </div>
- </x-slot>
+@extends('admin.layouts.admin')
 
- <div class="py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+@section('title', 'Expériences')
+@section('page-title', 'Expériences')
+
+@section('content')
+<div class="max-w-7xl mx-auto">
  @if(session('success'))<div class="mb-5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 px-5 py-3.5 font-semibold text-sm">{{ session('success') }}</div>@endif
 
+ <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+ <p class="text-dokun-charcoal/60 text-sm">{{ $experiences->total() }} expérience(s) au total</p>
+ <a href="{{ route('admin.experiences.create') }}" class="bg-dokun-green hover:bg-dokun-green/90 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition shadow-lg shadow-dokun-green/20">+ Nouvelle</a>
+ </div>
+
  <div class="bg-white rounded-2xl border border-black/5 shadow-sm overflow-hidden">
+ <div class="overflow-x-auto">
  <table class="min-w-full divide-y divide-gray-100 text-sm">
  <thead class="bg-[#F8F6F0]">
  <tr>
  <th class="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50">Expérience</th>
- <th class="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50">Artisan</th>
- <th class="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50">Prix</th>
- <th class="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50">Durée</th>
+ <th class="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 hidden sm:table-cell">Artisan</th>
+ <th class="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 hidden md:table-cell">Prix</th>
+ <th class="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 hidden md:table-cell">Durée</th>
  <th class="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50">Statut</th>
  <th class="px-5 py-3"></th>
  </tr>
@@ -24,10 +28,24 @@
  <tbody class="divide-y divide-gray-50">
  @forelse($experiences as $exp)
  <tr class="hover:bg-[#F8F6F0]/50 transition">
- <td class="px-5 py-4 font-bold text-dokun-charcoal">{{ $exp->title }}</td>
- <td class="px-5 py-4 text-dokun-charcoal/70">{{ $exp->artisan->first_name }} {{ $exp->artisan->last_name }}</td>
- <td class="px-5 py-4 text-dokun-charcoal/70">{{ number_format($exp->price, 0, ',', ' ') }} {{ $exp->currency ?? 'XOF' }}</td>
- <td class="px-5 py-4 text-dokun-charcoal/70">{{ $exp->duration_minutes }} min</td>
+ <td class="px-5 py-4">
+ <div class="flex items-center gap-3">
+ @if($exp->image_path)
+ <img src="{{ asset('storage/' . $exp->image_path) }}" alt="{{ $exp->title }}" class="w-10 h-10 rounded-lg object-cover flex-shrink-0">
+ @else
+ <div class="w-10 h-10 rounded-lg bg-dokun-ivory flex items-center justify-center text-dokun-charcoal/30 flex-shrink-0">
+ <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+ </div>
+ @endif
+ <div>
+ <p class="font-bold text-dokun-charcoal">{{ $exp->title }}</p>
+ <p class="text-xs text-dokun-charcoal/50 sm:hidden">{{ $exp->artisan->first_name }} {{ $exp->artisan->last_name }}</p>
+ </div>
+ </div>
+ </td>
+ <td class="px-5 py-4 text-dokun-charcoal/70 hidden sm:table-cell">{{ $exp->artisan->first_name }} {{ $exp->artisan->last_name }}</td>
+ <td class="px-5 py-4 text-dokun-charcoal/70 hidden md:table-cell">{{ number_format($exp->price, 0, ',', ' ') }} {{ $exp->currency ?? 'XOF' }}</td>
+ <td class="px-5 py-4 text-dokun-charcoal/70 hidden md:table-cell">{{ $exp->duration_minutes }} min</td>
  <td class="px-5 py-4">
  @if($exp->is_published)
  <span class="inline-block px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">Publiée</span>
@@ -35,7 +53,8 @@
  <span class="inline-block px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-500 text-xs font-bold">Brouillon</span>
  @endif
  </td>
- <td class="px-5 py-4 text-right space-x-3">
+ <td class="px-5 py-4 text-right">
+ <div class="flex items-center justify-end gap-3">
  <form method="POST" action="{{ route('admin.experiences.toggle', $exp) }}" class="inline">
  @csrf
  <button type="submit" class="text-xs font-bold {{ $exp->is_published ? 'text-amber-600 hover:text-amber-700' : 'text-emerald-600 hover:text-emerald-700' }}">
@@ -47,6 +66,7 @@
  @csrf @method('DELETE')
  <button type="submit" class="text-red-500 font-bold text-xs hover:underline">Supprimer</button>
  </form>
+ </div>
  </td>
  </tr>
  @empty
@@ -55,6 +75,7 @@
  </tbody>
  </table>
  </div>
- <div class="mt-6">{{ $experiences->links() }}</div>
  </div>
-</x-app-layout>
+ <div class="mt-6">{{ $experiences->links() }}</div>
+</div>
+@endsection

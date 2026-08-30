@@ -55,9 +55,19 @@
  <input type="text" name="language" value="{{ old('language', $exp->language ?? 'Français') }}" class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green text-sm">
  </div>
 
- <div>
- <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Image (URL ou chemin)</label>
- <input type="text" name="image_path" value="{{ old('image_path', $exp->image_path ?? '') }}" class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green text-sm">
+ <div class="sm:col-span-2" x-data="{ preview: '{{ $exp && $exp->image_path ? asset("storage/" . $exp->image_path) : "" }}' }">
+ <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Image</label>
+ <div class="flex items-start gap-4">
+ <div class="flex-1">
+ <input type="file" name="image" accept="image/*" onchange="if(this.files[0]){const r=new FileReader();r.onload=e=>{preview=e.target.result};r.readAsDataURL(this.files[0])}" class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-bold file:bg-dokun-green file:text-white hover:file:bg-dokun-green/90 file:cursor-pointer">
+ <p class="text-xs text-dokun-charcoal/40 mt-1">JPG, PNG ou WebP. Max 2 Mo.</p>
+ <x-input-error :messages="$errors->get('image')" class="mt-1.5"/>
+ </div>
+ <div x-show="preview" x-cloak class="flex-shrink-0">
+ <img :src="preview" class="w-20 h-20 rounded-xl object-cover border border-black/5 shadow-sm">
+ <button type="button" @click="preview=''; $el.closest('[x-data]').querySelector('input[type=file]').value=''" class="text-red-400 text-xs font-bold mt-1 hover:text-red-600">Retirer</button>
+ </div>
+ </div>
  </div>
 
  <div class="sm:col-span-2">

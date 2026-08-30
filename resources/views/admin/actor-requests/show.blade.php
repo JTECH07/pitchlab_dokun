@@ -1,12 +1,15 @@
-<x-app-layout>
- <x-slot name="header">
- <div class="flex items-center gap-3">
- <a href="{{ route('admin.actor-requests.index') }}" class="text-dokun-green hover:underline text-sm font-bold">← Demandes</a>
- <h1 class="font-serif text-3xl text-dokun-green">Détail demande</h1>
- </div>
- </x-slot>
+@extends('admin.layouts.admin')
 
- <div class="py-8 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+@section('title', 'Détail demande')
+@section('page-title', 'Détail demande')
+
+@section('content')
+<div class="max-w-4xl mx-auto">
+ <a href="{{ route('admin.actor-requests.index') }}" class="inline-flex items-center gap-2 text-dokun-green hover:underline text-sm font-bold mb-6">
+ <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+ Retour aux demandes
+ </a>
+
  @if(session('success'))<div class="mb-5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 px-5 py-3.5 font-semibold text-sm">{{ session('success') }}</div>@endif
 
  @php
@@ -122,5 +125,5 @@
  </div>
  </div>
  </div>
- </div>
-</x-app-layout>
+</div>
+@endsection

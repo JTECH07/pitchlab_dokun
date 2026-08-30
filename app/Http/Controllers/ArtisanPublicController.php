@@ -47,7 +47,7 @@ class ArtisanPublicController extends Controller
             'savoirFaires',
             'media' => fn ($query) => $query->where('status', 'published'),
             'experiences' => fn ($query) => $query->where('is_published', true),
-            'reviews' => fn ($query) => $query->where('status', 'approved'),
+            'reviews' => fn ($query) => $query->where('status', 'published'),
             'reviews.user',
             'reservations' => fn ($query) => $query->where('user_id', auth()->id())->where('status', 'completed'),
         ])->findOrFail($id);

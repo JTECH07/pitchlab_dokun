@@ -1,16 +1,22 @@
-<x-app-layout>
- <x-slot name="header">
- <div class="flex items-center gap-3">
- <a href="{{ route('admin.experiences.index') }}" class="text-dokun-green hover:underline text-sm font-bold">← Expériences</a>
- <h1 class="font-serif text-3xl text-dokun-green">Nouvelle expérience</h1>
- </div>
- </x-slot>
+@extends('admin.layouts.admin')
 
- <div class="py-8 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
- <form method="POST" action="{{ route('admin.experiences.store') }}" class="bg-white rounded-2xl border border-black/5 shadow-sm p-6 space-y-5">
+@section('title', 'Nouvelle expérience')
+@section('page-title', 'Nouvelle expérience')
+
+@section('content')
+<div class="max-w-3xl mx-auto">
+ <a href="{{ route('admin.experiences.index') }}" class="inline-flex items-center gap-2 text-dokun-green hover:underline text-sm font-bold mb-6">
+ <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+ Retour aux expériences
+ </a>
+
+ <form method="POST" action="{{ route('admin.experiences.store') }}" enctype="multipart/form-data" class="bg-white rounded-2xl border border-black/5 shadow-sm p-6 space-y-5">
  @csrf
  @include('admin.experiences._form')
- <button type="submit" class="w-full py-3 bg-dokun-green text-white font-bold rounded-xl hover:bg-dokun-green/90 transition text-sm">Créer l'expérience</button>
- </form>
+ <div class="flex flex-col sm:flex-row gap-3 pt-2">
+ <button type="submit" class="flex-1 py-3 bg-dokun-green text-white font-bold rounded-xl hover:bg-dokun-green/90 transition text-sm">Créer l'expérience</button>
+ <a href="{{ route('admin.experiences.index') }}" class="py-3 px-6 text-center border-2 border-gray-200 text-dokun-charcoal/60 font-bold rounded-xl hover:bg-gray-50 transition text-sm">Annuler</a>
  </div>
-</x-app-layout>
+ </form>
+</div>
+@endsection

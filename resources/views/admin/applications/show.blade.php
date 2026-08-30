@@ -1,16 +1,18 @@
-<x-app-layout>
- <x-slot name="header">
- <div class="flex items-center gap-3">
- <a href="{{ route('admin.applications.index') }}" class="text-dokun-green hover:underline text-sm font-bold">← Candidatures</a>
- <h1 class="font-serif text-3xl text-dokun-green">Détail candidature</h1>
- </div>
- </x-slot>
+@extends('admin.layouts.admin')
 
- <div class="py-8 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+@section('title', 'Détail candidature')
+@section('page-title', 'Détail candidature')
+
+@section('content')
+<div class="max-w-4xl mx-auto">
+ <a href="{{ route('admin.applications.index') }}" class="inline-flex items-center gap-2 text-dokun-green hover:underline text-sm font-bold mb-6">
+ <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+ Retour aux candidatures
+ </a>
+
  @if(session('success'))<div class="mb-5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 px-5 py-3.5 font-semibold text-sm">{{ session('success') }}</div>@endif
 
  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
- {{-- Colonne infos --}}
  <div class="lg:col-span-2 space-y-6">
  <section class="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
  <div class="flex items-start justify-between mb-4">
@@ -55,7 +57,6 @@
  @endif
  </div>
 
- {{-- Colonne actions --}}
  <div class="space-y-5">
  <div class="bg-white rounded-2xl border border-black/5 shadow-sm p-6">
  <h3 class="font-serif text-lg text-dokun-green mb-1">{{ $application->category->name ?? 'Sans catégorie' }}</h3>
@@ -91,5 +92,5 @@
  <a href="{{ route('admin.users.index') }}" class="block text-center text-xs text-dokun-charcoal/50 hover:text-dokun-green transition">Voir les utilisateurs →</a>
  </div>
  </div>
- </div>
-</x-app-layout>
+</div>
+@endsection

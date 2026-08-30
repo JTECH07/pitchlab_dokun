@@ -1,10 +1,7 @@
 @php
  $reservation = $reservation;
  $artisan = $reservation->artisan;
- $isExperience = !empty($reservation->experience_id);
- $typeLabel = $isExperience
- ? 'Expérience pratique : ' . $reservation->experience_type
- : 'Visite d\'atelier libre';
+ $artisanName = $artisan->professional_name ?? ($artisan->first_name . ' ' . $artisan->last_name);
 @endphp
 <!DOCTYPE html>
 <html lang="fr">
@@ -29,33 +26,29 @@
      <!-- Body -->
      <tr>
       <td style="padding:40px;">
-       <p style="margin:0 0 24px;font-size:16px;color:#17201D;line-height:1.6;">Bonjour {{ $artisan->first_name }},</p>
+       <p style="margin:0 0 24px;font-size:16px;color:#17201D;line-height:1.6;">Bonjour {{ $reservation->visitor_name }},</p>
 
        <p style="margin:0 0 32px;font-size:16px;color:#17201D;line-height:1.6;">
-        Une nouvelle réservation vient de passer sur votre atelier. Un visiteur souhaite découvrir votre univers.
+        Nous avons le plaisir de vous annoncer que votre réservation <strong style="color:#064E3B;">ƉƆKUN</strong> a été acceptée par l'artisan. Une nouvelle rencontre avec le savoir-faire vous attend.
        </p>
 
        <!-- Détails -->
        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F8F6F0;border-radius:8px;border-left:4px solid #C99424;margin-bottom:32px;">
         <tr>
          <td style="padding:24px 28px;">
-          <p style="margin:0 0 4px;font-size:11px;color:#C99424;text-transform:uppercase;letter-spacing:2px;font-weight:700;">Nouvelle réservation</p>
+          <p style="margin:0 0 4px;font-size:11px;color:#C99424;text-transform:uppercase;letter-spacing:2px;font-weight:700;">Détails de votre réservation</p>
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
            <tr>
             <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#6b7280;">Référence</td>
             <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#17201D;font-weight:600;text-align:right;">{{ $reservation->reference }}</td>
            </tr>
            <tr>
-            <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#6b7280;">Type</td>
-            <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#17201D;font-weight:600;text-align:right;">{{ $typeLabel }}</td>
+            <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#6b7280;">Artisan</td>
+            <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#17201D;font-weight:600;text-align:right;">{{ $artisanName }}</td>
            </tr>
            <tr>
-            <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#6b7280;">Visiteur</td>
-            <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#17201D;font-weight:600;text-align:right;">{{ $reservation->visitor_name }}</td>
-           </tr>
-           <tr>
-            <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#6b7280;">Téléphone</td>
-            <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#17201D;font-weight:600;text-align:right;">{{ $reservation->visitor_phone }}</td>
+            <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#6b7280;">Expérience</td>
+            <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#17201D;font-weight:600;text-align:right;">{{ $reservation->experience_type }}</td>
            </tr>
            <tr>
             <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#6b7280;">Date</td>
@@ -66,10 +59,6 @@
             <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#17201D;font-weight:600;text-align:right;">{{ $reservation->guests_count }}</td>
            </tr>
            <tr>
-            <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#6b7280;">Paiement</td>
-            <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#17201D;font-weight:600;text-align:right;">{{ $reservation->payment_method === 'mobile_money' ? 'Mobile Money (payé)' : 'À régler à l\'atelier' }}</td>
-           </tr>
-           <tr>
             <td style="padding:10px 0;font-size:14px;color:#6b7280;">Montant</td>
             <td style="padding:10px 0;font-size:14px;color:#064E3B;font-weight:700;text-align:right;">{{ $reservation->total_amount ? number_format($reservation->total_amount, 0, ',', ' ') . ' FCFA' : 'Visite libre' }}</td>
            </tr>
@@ -78,28 +67,21 @@
         </tr>
        </table>
 
-       @if($reservation->message)
-       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;">
-        <tr>
-         <td style="padding:20px 24px;background-color:#F8F6F0;border-radius:8px;">
-          <p style="margin:0 0 8px;font-size:11px;color:#C99424;text-transform:uppercase;letter-spacing:2px;font-weight:700;">Message du visiteur</p>
-          <p style="margin:0;font-size:14px;color:#17201D;line-height:1.6;font-style:italic;">« {{ $reservation->message }} »</p>
-         </td>
-        </tr>
-       </table>
-       @endif
+       @unless($reservation->total_amount)
+       <p style="margin:0 0 24px;font-size:14px;color:#6b7280;line-height:1.6;font-style:italic;">Le paiement sera à régler directement lors de votre visite à l'atelier.</p>
+       @endunless
 
        <!-- CTA -->
        <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto 32px;">
         <tr>
          <td style="background-color:#064E3B;border-radius:8px;">
-          <a href="{{ route('artisan-space.index') }}" style="display:inline-block;padding:14px 32px;color:#ffffff;font-size:14px;font-weight:700;text-decoration:none;letter-spacing:0.5px;">Gérer cette réservation</a>
+          <a href="{{ route('reservations.receipt', $reservation->qr_code_token) }}" style="display:inline-block;padding:14px 32px;color:#ffffff;font-size:14px;font-weight:700;text-decoration:none;letter-spacing:0.5px;">Consulter mon billet QR</a>
          </td>
         </tr>
        </table>
 
        <p style="margin:0;font-size:14px;color:#6b7280;line-height:1.6;">
-        Merci pour votre confiance,<br>
+        À bientôt dans l'atelier,<br>
         <strong style="color:#064E3B;">L'équipe ƉƆKUN</strong>
        </p>
       </td>

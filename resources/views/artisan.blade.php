@@ -320,7 +320,7 @@
  9. AVIS
  ═══════════════════════════════════════════ --}}
  @php
- $publishedReviews = $artisan->reviews->where('status', 'approved');
+ $publishedReviews = $artisan->reviews->where('status', 'published');
  @endphp
  @if($publishedReviews->count() > 0)
  <section class="mb-20">

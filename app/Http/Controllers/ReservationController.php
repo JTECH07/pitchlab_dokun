@@ -61,19 +61,66 @@ class ReservationController extends Controller
 
     public function scan(Request $request, $token)
     {
-        $reservation = ReservationRequest::with('artisan')->where('qr_code_token', $token)->firstOrFail();
+        $reservation = ReservationRequest::with('artisan.user')->where('qr_code_token', $token)->firstOrFail();
         $user = $request->user();
 
-        // Si l'utilisateur connecté est l'artisan concerné ou un administrateur
-        if ($user && ($user->id === $reservation->artisan?->user_id || $user->role === 'admin')) {
-            $reservation->update(['status' => 'completed']);
-
+        if (! $user || ($user->id !== $reservation->artisan?->user_id && $user->role !== 'admin')) {
             return redirect()->route('reservations.receipt', $token)
-                ->with('success', '🎉 Validation réussie ! La visite de ' . $reservation->visitor_name . ' (' . $reservation->reference . ') a été marquée comme complétée.');
+                ->with('info', 'Ce billet QR est valide pour la réservation ' . $reservation->reference . '. Seul l\'artisan propriétaire peut gérer cette réservation.');
         }
 
-        // Si c't un autre utilisateur (visiteur/touriste)
+        $action = $request->input('action', 'accept');
+        $oldStatus = $reservation->status;
+
+        $statusMap = [
+            'accept'   => 'accepted',
+            'reject'   => 'rejected',
+            'complete' => 'completed',
+        ];
+
+        $newStatus = $statusMap[$action] ?? 'accepted';
+        $reservation->update(['status' => $newStatus]);
+
+        if ($newStatus === 'accepted' && $oldStatus !== 'accepted') {
+            $this->notifyVisitorAccepted($reservation);
+        }
+
+        $messages = [
+            'accepted'  => "Réservation acceptée ! {$reservation->visitor_name} ({$reservation->reference}) a été notifié(e).",
+            'rejected'  => "Réservation refusée pour {$reservation->visitor_name} ({$reservation->reference}).",
+            'completed' => "Visite de {$reservation->visitor_name} ({$reservation->reference}) marquée comme complétée.",
+        ];
+
         return redirect()->route('reservations.receipt', $token)
-            ->with('info', 'Ce billet QR est valide pour la réservation ' . $reservation->reference . '. Seul l\'artisan propriétaire peut marquer la visite comme complétée.');
+            ->with('success', $messages[$newStatus] ?? 'Statut mis à jour.');
+    }
+
+    private function notifyVisitorAccepted(ReservationRequest $reservation): void
+    {
+        if (! empty($reservation->visitor_email)) {
+            try {
+                \Mail::to($reservation->visitor_email)->send(
+                    new \App\Mail\VisitorBookingAccepted($reservation)
+                );
+            } catch (\Throwable $e) {
+                \Log::warning('Failed to send acceptance email to visitor: ' . $e->getMessage());
+            }
+        }
+
+        if (! empty($reservation->visitor_phone)) {
+            try {
+                $phone = preg_replace('/\D/', '', $reservation->visitor_phone);
+                $artisanName = $reservation->artisan?->professional_name
+                    ?? ($reservation->artisan?->first_name . ' ' . $reservation->artisan?->last_name);
+                $message = "Votre réservation {$reservation->reference} chez {$artisanName} a été acceptée ! "
+                    . "Date : {$reservation->requested_date}. "
+                    . "Montant : " . ($reservation->total_amount ? number_format($reservation->total_amount, 0, ',', ' ') . ' FCFA' : 'Visite libre') . ". "
+                    . route('reservations.receipt', $reservation->qr_code_token);
+
+                \App\Services\WhatsAppService::send($phone, $message);
+            } catch (\Throwable $e) {
+                \Log::warning('Failed to send WhatsApp to visitor: ' . $e->getMessage());
+            }
+        }
     }
 }

@@ -67,16 +67,16 @@ class ArtisanSpaceController extends Controller
             return view('artisan-space.index', compact('artisan'))->with('notice', 'Votre profil est en cours de création.');
         }
 
-        $stats = [
-            'pending' => ReservationRequest::where('artisan_id', $artisan->id)->where('status', 'pending')->count(),
-            'accepted' => ReservationRequest::where('artisan_id', $artisan->id)->where('status', 'accepted')->count(),
-            'completed' => ReservationRequest::where('artisan_id', $artisan->id)->where('status', 'completed')->count(),
-        ];
-
         $reservations = ReservationRequest::with('experience')
             ->where('artisan_id', $artisan->id)
             ->latest()
             ->get();
+
+        $stats = [
+            'pending'   => $reservations->where('status', 'pending')->count(),
+            'accepted'  => $reservations->where('status', 'accepted')->count(),
+            'completed' => $reservations->where('status', 'completed')->count(),
+        ];
 
         return view('artisan-space.index', compact('artisan', 'stats', 'reservations'));
     }
@@ -84,8 +84,13 @@ class ArtisanSpaceController extends Controller
     public function updateReservation(Request $request, ReservationRequest $reservation)
     {
         abort_unless($reservation->artisan?->user_id === $request->user()->id, 403);
+        $oldStatus = $reservation->status;
         $data = $request->validate(['status' => 'required|in:accepted,rejected,completed']);
         $reservation->update($data);
+
+        if (($data['status'] ?? null) === 'accepted' && $oldStatus !== 'accepted') {
+            $this->notifyVisitorAccepted($reservation);
+        }
 
         return back()->with('success', 'La réservation a été mise à jour.');
     }
@@ -93,10 +98,44 @@ class ArtisanSpaceController extends Controller
     public function updateReservationStatus(Request $request, ReservationRequest $reservation)
     {
         abort_unless($reservation->artisan?->user_id === $request->user()->id, 403);
+        $oldStatus = $reservation->status;
         $data = $request->validate(['status' => 'required|in:accepted,rejected,completed']);
         $reservation->update($data);
 
+        if (($data['status'] ?? null) === 'accepted' && $oldStatus !== 'accepted') {
+            $this->notifyVisitorAccepted($reservation);
+        }
+
         return response()->json(['status' => 'success', 'reservation' => $reservation->fresh()]);
+    }
+
+    private function notifyVisitorAccepted(ReservationRequest $reservation): void
+    {
+        if (! empty($reservation->visitor_email)) {
+            try {
+                \Mail::to($reservation->visitor_email)->send(
+                    new \App\Mail\VisitorBookingAccepted($reservation)
+                );
+            } catch (\Throwable $e) {
+                \Log::warning('Failed to send acceptance email to visitor: ' . $e->getMessage());
+            }
+        }
+
+        if (! empty($reservation->visitor_phone)) {
+            try {
+                $phone = preg_replace('/\D/', '', $reservation->visitor_phone);
+                $artisanName = $reservation->artisan?->professional_name
+                    ?? ($reservation->artisan?->first_name . ' ' . $reservation->artisan?->last_name);
+                $message = "Votre réservation {$reservation->reference} chez {$artisanName} a été acceptée ! "
+                    . "Date : {$reservation->requested_date}. "
+                    . "Montant : " . ($reservation->total_amount ? number_format($reservation->total_amount, 0, ',', ' ') . ' FCFA' : 'Visite libre') . ". "
+                    . route('reservations.receipt', $reservation->qr_code_token);
+
+                \App\Services\WhatsAppService::send($phone, $message);
+            } catch (\Throwable $e) {
+                \Log::warning('Failed to send WhatsApp to visitor: ' . $e->getMessage());
+            }
+        }
     }
 
     public function uploadPhoto(Request $request)

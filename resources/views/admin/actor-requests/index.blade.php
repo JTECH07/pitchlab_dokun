@@ -1,9 +1,10 @@
-<x-app-layout>
- <x-slot name="header">
- <h1 class="font-serif text-3xl text-dokun-green">Demandes d'acteurs</h1>
- </x-slot>
+@extends('admin.layouts.admin')
 
- <div class="py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+@section('title', 'Demandes d\'acteurs')
+@section('page-title', 'Demandes d\'acteurs')
+
+@section('content')
+<div class="max-w-7xl mx-auto">
  @if(session('success'))<div class="mb-5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 px-5 py-3.5 font-semibold text-sm">{{ session('success') }}</div>@endif
 
  @php
@@ -27,13 +28,14 @@
  </div>
 
  <div class="bg-white rounded-2xl border border-black/5 shadow-sm overflow-hidden">
+ <div class="overflow-x-auto">
  <table class="min-w-full divide-y divide-gray-100 text-sm">
  <thead class="bg-[#F8F6F0]">
  <tr>
  <th class="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50">Demandeur</th>
- <th class="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50">Rôle demandé</th>
+ <th class="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 hidden sm:table-cell">Rôle demandé</th>
  <th class="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50">Statut</th>
- <th class="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50">Date</th>
+ <th class="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 hidden md:table-cell">Date</th>
  <th class="px-5 py-3"></th>
  </tr>
  </thead>
@@ -44,7 +46,7 @@
  <p class="font-bold text-dokun-charcoal">{{ $req->name }}</p>
  <p class="text-xs text-dokun-charcoal/50">{{ $req->email }}</p>
  </td>
- <td class="px-5 py-4">
+ <td class="px-5 py-4 hidden sm:table-cell">
  @php
  $roleLabels = ['guide'=>'Guide','institution'=>'Institution','researcher'=>'Chercheur','partner'=>'Partenaire'];
  @endphp
@@ -59,7 +61,7 @@
  <span class="inline-block px-2.5 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-bold">Rejetée</span>
  @endif
  </td>
- <td class="px-5 py-4 text-xs text-dokun-charcoal/50">{{ $req->created_at->format('d/m/Y') }}</td>
+ <td class="px-5 py-4 text-xs text-dokun-charcoal/50 hidden md:table-cell">{{ $req->created_at->format('d/m/Y') }}</td>
  <td class="px-5 py-4 text-right">
  <a href="{{ route('admin.actor-requests.show', $req) }}" class="text-dokun-green font-bold text-xs hover:underline">Détail →</a>
  </td>
@@ -70,7 +72,8 @@
  </tbody>
  </table>
  </div>
+ </div>
 
  <div class="mt-6">{{ $requests->links() }}</div>
- </div>
-</x-app-layout>
+</div>
+@endsection

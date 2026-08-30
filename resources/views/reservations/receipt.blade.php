@@ -135,18 +135,40 @@
  </div>
  </div>
 
- {{-- Scan artisan --}}
+ {{-- Actions Artisan (accepter / refuser / compléter) --}}
  @auth
- @if(auth()->user()->id === $reservation->artisan?->user_id && $reservation->status !== 'completed')
+ @if(auth()->user()->id === $reservation->artisan?->user_id || auth()->user()->role === 'admin')
+ @if($reservation->status === 'pending')
+ <div class="mt-4 fade-up delay-2 flex gap-3">
+ <form action="{{ route('reservations.scan', $reservation->qr_code_token) }}" method="POST" class="flex-1">
+ @csrf
+ <input type="hidden" name="action" value="accept">
+ <button type="submit" class="no-print w-full py-3.5 bg-emerald-500 text-white font-bold rounded-xl hover:bg-emerald-600 active:scale-[.98] transition shadow-lg flex items-center justify-center gap-2 text-sm">
+ <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+ Accepter
+ </button>
+ </form>
+ <form action="{{ route('reservations.scan', $reservation->qr_code_token) }}" method="POST" class="flex-1">
+ @csrf
+ <input type="hidden" name="action" value="reject">
+ <button type="submit" class="no-print w-full py-3.5 bg-red-500 text-white font-bold rounded-xl hover:bg-red-600 active:scale-[.98] transition shadow-lg flex items-center justify-center gap-2 text-sm">
+ <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+ Refuser
+ </button>
+ </form>
+ </div>
+ @elseif($reservation->status === 'accepted')
  <div class="mt-4 fade-up delay-2">
  <form action="{{ route('reservations.scan', $reservation->qr_code_token) }}" method="POST">
  @csrf
+ <input type="hidden" name="action" value="complete">
  <button type="submit" class="no-print w-full py-3.5 bg-dokun-gold text-dokun-charcoal font-bold rounded-xl hover:bg-dokun-gold/90 active:scale-[.98] transition shadow-lg flex items-center justify-center gap-2 text-sm">
  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
  {{ __('app.receipt_mark_completed') }}
  </button>
  </form>
  </div>
+ @endif
  @endif
  @endauth
 

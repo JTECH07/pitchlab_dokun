@@ -21,6 +21,7 @@ class ArtisanApplication extends Model
         'experience_years',
         'address',
         'category_id',
+        'trade',
         'status',
         'admin_notes',
         'reviewed_by',
