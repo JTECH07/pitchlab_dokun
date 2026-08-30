@@ -82,9 +82,9 @@
  </button>
  </form>
  @elseif($application->status === 'approved')
- <p class="text-sm text-emerald-700 font-bold">Approuvée le {{ $application->reviewed_at?->format('d/m/Y') }}</p>
+ <p class="text-sm text-emerald-700 font-bold">Approuvée le {{ \Carbon\Carbon::parse($application->reviewed_at)->format('d/m/Y') }}</p>
  @else
- <p class="text-sm text-red-600 font-bold">Rejetée le {{ $application->reviewed_at?->format('d/m/Y') }}</p>
+ <p class="text-sm text-red-600 font-bold">Rejetée le {{ \Carbon\Carbon::parse($application->reviewed_at)->format('d/m/Y') }}</p>
  @endif
  </div>
 

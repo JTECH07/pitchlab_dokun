@@ -62,14 +62,14 @@
 
 @include('partials.footer')
 <script>
-const LABELS = @json([
+const LABELS = {!! json_encode([
  '1' => '',
  '2' => __('app.review_l2'),
  '3' => __('app.review_l3'),
  '4' => __('app.review_l4'),
  '5' => __('app.review_l5'),
  '6' => __('app.review_l6'),
-]);
+ ]) !!};
 document.querySelectorAll('input[name="rating"]').forEach(r => {
  r.addEventListener('change', () => {
  const val = parseInt(r.value);

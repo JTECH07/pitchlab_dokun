@@ -1,0 +1,275 @@
+PITCHLAB 2026
+Le numérique au service du tourisme, de la culture et des arts béninois
+ƉƆKUN
+Transmettre  •  Valoriser  •  Connecter
+CAHIER DES CHARGES
+Plateforme numérique de valorisation des savoir-faire traditionnels — cas pilote : Porto-Novo
+Équipe projet
+Joseph ALAYE   •   Harmonie HOUNMENOU   •   Grâce ANGO SAIZONOU   •   Primaël SEMASSA
+Août 2026
+Sommaire
+1. Identification du projet
+Champ
+Détail
+Nom du projet
+ƉƆKUN
+Signature
+Transmettre • Valoriser • Connecter
+Territoire pilote
+Porto-Novo
+Thématique du concours
+Le numérique au service du tourisme, de la culture et des arts béninois
+Programme
+PitchLab 2026
+Équipe
+Joseph ALAYE, Harmonie HOUNMENOU, Grâce ANGO SAIZONOU, Primaël SEMASSA
+1.1 Vision du produit
+ƉƆKUN ne se limite pas à « un site pour trouver des artisans ». Le projet se définit comme une passerelle numérique entre les détenteurs du patrimoine vivant, les visiteurs, les jeunes et les acteurs du tourisme, mobilisant le numérique, l'intelligence artificielle, la traduction, la gamification et la réalité augmentée pour rendre le patrimoine plus accessible, compréhensible, transmissible et économiquement valorisable.
+Le parcours utilisateur que la plateforme cherche à créer peut se résumer ainsi :
+Découvrir → Comprendre → Communiquer → Apprendre → Expérimenter → Partager → Revenir
+2. Problématique
+Le constat qui fonde ƉƆKUN réunit plusieurs difficultés observées chez les différentes parties prenantes de l'écosystème touristique et culturel de Porto-Novo.
+2.1 Pour les artisans
+Faible visibilité et présence numérique limitée
+Difficulté à toucher les touristes et à valoriser leur histoire
+Barrière de communication avec les visiteurs étrangers
+Accès restreint aux outils de commercialisation
+Savoir-faire peu documentés et transmission intergénérationnelle fragile
+2.2 Pour les visiteurs
+Informations dispersées et difficulté à identifier les artisans
+Incertitude sur l'authenticité de l'offre culturelle
+Barrière linguistique et absence d'expériences personnalisées
+Difficulté à réserver et patrimoine présenté de façon trop statique
+2.3 Pour les acteurs touristiques (guides, hôtels, agences, musées)
+Absence de catalogue structuré et fiable d'artisans
+Informations non actualisées
+Difficulté à construire des expériences culturelles packagées
+2.4 Pour les jeunes
+Patrimoine perçu comme ancien ou éloigné de leur quotidien
+Peu d'outils interactifs ou d'apprentissage ludique
+Faible documentation numérique de certains savoir-faire
+3. La solution : un écosystème numérique culturel et touristique
+ƉƆKUN se structure autour de trois piliers — Patrimoine, Tourisme et Technologie — qui convergent vers des expériences concrètes, elles-mêmes génératrices d'impact économique pour les communautés locales.
+Pilier
+Composantes
+Patrimoine
+Artisans, savoir-faire, histoires, langues, traditions
+Tourisme
+Visiteurs, guides, hôtels, agences, musées
+Technologie
+Intelligence artificielle, traduction, réalité augmentée, jeux, QR codes
+Ces trois piliers alimentent des communautés locales dont l'activité génère un impact économique mesurable — c'est le fil conducteur de l'ensemble du cahier des charges.
+4. Utilisateurs et personas
+La plateforme s'adresse à huit catégories d'utilisateurs, chacune disposant de parcours et de droits spécifiques.
+Persona
+Peut notamment...
+Visiteur / touriste
+Rechercher, filtrer, consulter la carte, réserver, payer, discuter via ƉƆKUN Bridge, apprendre des mots locaux, jouer, gagner des badges, scanner des QR codes, partager ses expériences
+Artisan
+Créer son profil, raconter son histoire (texte ou voix), publier photos/vidéos, gérer ses disponibilités, recevoir réservations et paiements, consulter ses statistiques
+Guide touristique
+Créer un profil professionnel, construire des parcours intégrant des artisans, réserver pour ses clients, suivre ses revenus
+Hôtel
+Recommander des expériences ƉƆKUN, réserver pour ses clients, générer des QR codes, suivre les réservations apportées
+Agence de voyage
+Composer des packages, réserver plusieurs prestations, gérer ses clients et ses commissions
+Musée / institution culturelle
+Publier des contenus et événements, référencer des patrimoines, utiliser les fonctionnalités AR
+Administrateur ƉƆKUN
+Superviser utilisateurs, contenus, réservations, paiements, avis, langues, badges et statistiques
+5. Module Patrimoine
+C'est le cœur de ƉƆKUN : chaque savoir-faire dispose d'une fiche structurée regroupant nom, description, origine, histoire, communauté, technique, matières, artisans associés, médias (photos, vidéos, audio), langues, produits, localisation et expériences associées.
+5.1 Exemple de profil artisan
+Afi — Potière · 📍 Porto-Novo · 25 ans d'expérience « J'ai appris ce métier auprès de ma mère... » Mon savoir-faire · Mes créations · Mes expériences 🎙️ Écouter mon histoire   🌍 Traduire   📅 Réserver   💬 Discuter
+6. Fonctionnalités signatures
+Huit fonctionnalités distinguent ƉƆKUN d'un simple annuaire d'artisans. Elles constituent la proposition de valeur différenciante du produit.
+🌍  ƉƆKUN Bridge  —  Communiquer malgré la barrière linguistique
+Le visiteur écrit ou parle dans sa langue ; le système comprend le contexte, traduit et restitue le message dans la langue de l'artisan, puis effectue le trajet inverse. Quatre modes sont prévus : texte → texte, voix → texte, voix → voix, texte → voix.
+🎙️  ƉƆKUN Voice  —  Préserver la voix et les récits des détenteurs
+L'artisan raconte son histoire à l'oral plutôt qu'à l'écrit. Le système produit successivement l'audio, la transcription, la traduction, les sous-titres, un résumé, puis une fiche patrimoine — toujours avec l'autorisation explicite de l'artisan, ce qui permet aussi de préserver la voix originale du détenteur du savoir.
+🗣️  ƉƆKUN Learn  —  Apprendre la langue locale par le patrimoine
+Le visiteur apprend quelques mots essentiels (Bonjour, Merci, Combien ?, Je voudrais...) sous forme de mission liée à une rencontre réelle avec un artisan, avec prononciation, audio, exemple et mini-jeu pour chaque mot.
+🎬  ƉƆKUN Moments (Shorts)  —  Transformer les expériences en souvenirs partageables
+Après une expérience, le visiteur peut publier un souvenir vidéo court (10 à 60 secondes) et le partager sur WhatsApp, Facebook, Instagram, TikTok ou via un lien copiable — amorçant une boucle virale d'acquisition.
+🎮  ƉƆKUN Play  —  Apprendre en jouant
+Des mini-jeux (deviner le savoir-faire, retrouver l'objet, remettre les étapes dans l'ordre, quiz historique) renforcent la mémorisation et rendent le patrimoine accessible aux jeunes publics.
+📖  ƉƆKUN Stories  —  Transmettre par la bande dessinée interactive
+Chaque épisode combine BD, audio, vocabulaire local, mini-jeu et met en scène un artisan réel et un savoir-faire réel, avec un appel à l'action final vers une rencontre réelle avec l'artisane ou l'artisan.
+🥽  ƉƆKUN AR  —  Voir le patrimoine autrement
+À terme, le visiteur pointe son téléphone vers un objet ou un monument et obtient une couche immersive : nom, histoire, origine, écoute audio, langue locale, lien vers l'artisan — voire une reconstitution historique du lieu.
+🎫  ƉƆKUN Passport  —  Créer une progression culturelle personnelle
+Chaque utilisateur possède un passeport culturel qui trace les savoir-faire découverts et les mots appris, support de la gamification et de la fidélisation.
+7. Intelligence artificielle : ƉƆKUN AI
+L'intelligence artificielle est conçue comme un assistant culturel et non comme un gadget conversationnel. L'utilisateur peut par exemple demander « Que puis-je faire à Porto-Novo aujourd'hui ? » ou « Je suis intéressé par la poterie et j'ai 20 000 FCFA, je reste deux jours » ; l'IA propose alors un parcours personnalisé.
+7.1 Architecture recommandée
+La clé API du modèle ne doit jamais être exposée côté navigateur. Le flux recommandé est : Utilisateur → Laravel → AI Service → Gemini API → Laravel → Utilisateur. Google documente actuellement, pour l'API Gemini, le function calling, les sorties structurées et les outils de connexion à des services externes.
+7.2 Function calling
+Plutôt que de laisser le modèle « parler » librement, on lui donne des outils métier : searchExperiences(), checkAvailability(), recommendExperience(), createReservation(). Toute opération sensible (écriture en base, paiement) reste contrôlée côté Laravel — l'IA n'a jamais un accès illimité à la base de données.
+7.3 Base de connaissances
+Le modèle doit pouvoir rechercher dans les histoires validées, les fiches artisans, le glossaire, les événements et les parcours. Google propose actuellement un mécanisme de recherche sémantique avec citations (File Search) ainsi qu'un modèle d'embedding multimodal pour indexer également les images, ce qui permet de réduire les réponses inventées.
+7.4 Règle de fiabilité
+Le modèle ne doit jamais inventer une tradition, une histoire, une origine, un prix, un artisan ou un événement. En l'absence d'information vérifiée dans les sources validées, la réponse standard est : « Je ne dispose pas d'une information vérifiée sur ce point. »
+7.5 Traduction contextuelle et glossaire culturel
+La traduction ne doit pas être générique : le moteur doit comprendre le contexte artisanal, touristique, culturel et de transmission d'un terme. Un glossaire culturel ƉƆKUN (terme local → signification → prononciation → contexte → traduction) est prévu pour devenir, à terme, une base linguistique propriétaire.
+8. Carte, parcours culturels et réservation
+8.1 Carte interactive
+La carte permet de localiser artisans, ateliers, musées, monuments, restaurants, hôtels, événements et expériences, avec des filtres par catégorie (artisanat, patrimoine, culture, gastronomie, événement).
+8.2 Parcours culturels
+Des parcours prêts à l'emploi (ex. « Porto-Novo en une journée ») enchaînent patrimoine, atelier, restauration locale et expérience culturelle sur une journée type ; l'IA peut personnaliser ce parcours selon le budget, la durée du séjour et les centres d'intérêt du visiteur.
+8.3 Flux de réservation
+Le parcours de réservation suit les étapes suivantes : choix de l'expérience → date → nombre de personnes → prix → paiement → confirmation → génération d'un QR code.
+8.4 Billetterie QR
+Après confirmation, un QR code unique est généré ; il contient un identifiant signé plutôt que des données personnelles directement. Il est scanné par l'artisan ou le guide à l'arrivée pour valider l'expérience, puis réutilisé après l'expérience pour orienter le visiteur vers son souvenir ƉƆKUN Moments, un espace de témoignage et le partage sur les réseaux sociaux.
+9. Paiements et marketplace
+9.1 Prestataires recommandés
+Pour le contexte béninois, FedaPay et KKiaPay sont les deux candidats à tester en priorité plutôt que de développer soi-même les connexions opérateur. FedaPay documente actuellement les paiements MTN et Moov au Bénin, les transactions, les webhooks et les payouts en environnement sandbox. KKiaPay documente le Mobile Money, les cartes et plusieurs moyens de paiement régionaux, ainsi que des API de répartition adaptées aux places de marché.
+9.2 Architecture du paiement
+Le statut d'une commande doit toujours être confirmé côté serveur par le prestataire de paiement, jamais par le seul navigateur. Flux : Visiteur → Commande → ƉƆKUN Payment Service → FedaPay / KKiaPay → Webhook → Laravel → Commande marquée « payée ».
+9.3 Marketplace et répartition des revenus
+La marketplace gère commande, vendeur, montant, commission, statut, remboursement et reversement. Le pourcentage de commission doit rester configurable depuis l'administration. Une abstraction PaymentGateway (avec FedaPay et KKiaPay comme implémentations) évite de lier le code métier à un seul fournisseur.
+10. Gamification et fidélisation
+10.1 Points d'expérience (XP)
+Action
+XP
+Découvrir un artisan
++10 XP
+Réserver une expérience
++30 XP
+Participer à un atelier
++50 XP
+Apprendre un mot
++5 XP
+Terminer un mini-jeu
++10 XP
+Partager une expérience
++15 XP
+Donner un témoignage
++20 XP
+10.2 Badges (exemples)
+🏺 Premier pas — première expérience artisanale
+🗣️ Polyglotte culturel — 10 mots locaux appris
+🧭 Explorateur — 5 lieux visités
+🎭 Ambassadeur — 3 expériences partagées
+🧵 Connaisseur — 5 savoir-faire découverts
+10.3 Missions et principe de fidélisation
+Une mission hebdomadaire (ex. « Découvrez deux savoir-faire de Porto-Novo ») récompense la participation par des XP ou un badge spécial. Principe directeur : on récompense la participation, jamais artificiellement la note ou l'avis positif, afin de préserver la fiabilité des témoignages.
+11. Tableaux de bord et pilotage
+11.1 Tableau de bord artisan
+Vue synthétique : vues du profil, demandes reçues, réservations, ventes, note moyenne, calendrier, commandes, messages et statistiques de revenus.
+11.2 Tableau de bord partenaire (hôtels, guides, agences)
+Suivi des clients orientés, réservations générées, commissions, expériences proposées et taux de conversion.
+11.3 Tableau de bord institutionnel (V3, offre B2G/B2B)
+Vue agrégée : visiteurs, expériences réalisées, zones visitées, savoir-faire consultés, évolution dans le temps et retombées économiques estimées.
+11.4 Analytics produit
+Le suivi couvre quatre axes : acquisition (visiteurs, sources, QR codes, réseaux sociaux), engagement (pages vues, expériences, temps passé, jeux), conversion (du profil à la réservation payée) et impact (artisans actifs, revenus générés, langues apprises, savoir-faire documentés).
+12. Architecture technique
+12.1 Vue d'ensemble
+L'application se compose d'un front web (Laravel/Blade avec Livewire ou Vue) et, en V3, d'une application mobile Flutter, tous deux consommant une API REST Laravel commune. Cette API orchestre la base de données PostgreSQL, le cache/queue Redis, le stockage objet, le service ƉƆKUN AI (Gemini), les prestataires de paiement (FedaPay, KKiaPay), la cartographie, la génération de QR codes et les notifications.
+12.2 Stack technique retenue
+Composant
+Choix technique
+Backend
+Laravel (PHP)
+Base de données
+PostgreSQL
+Frontend MVP
+Blade + Tailwind CSS + Livewire
+Mobile (V3)
+Flutter
+Intelligence artificielle
+Gemini API (function calling + recherche sémantique)
+Cache / files d'attente
+Redis
+Cartographie
+OpenStreetMap + Leaflet
+Stockage
+Service de stockage objet compatible S3
+Paiement
+FedaPay / KKiaPay via une abstraction PaymentGateway
+QR codes
+Génération côté backend
+12.3 API interne (extrait)
+/api/v1/artisans
+/api/v1/skills
+/api/v1/experiences
+/api/v1/reservations
+/api/v1/payments
+/api/v1/reviews
+/api/v1/languages
+/api/v1/bridge/translate
+/api/v1/ai/chat
+/api/v1/shorts
+/api/v1/gamification
+12.4 Vision du modèle de données
+Sans qu'il soit nécessaire de créer toutes ces tables dès le MVP, la vision cible inclut notamment : users, roles, artisans, skills, products, media, stories, languages, translations, glossary_terms, experiences, reservations, tickets, payments, orders, payouts, guides, hotels, agencies, events, reviews, badges, missions, user_xp, cultural_passports, qr_codes, shorts, ai_conversations, notifications, audit_logs. Cette cartographie évite de construire un système qui bloquerait l'évolution du produit vers V2 et V3.
+13. Sécurité et données personnelles
+13.1 Exigences de sécurité
+HTTPS systématique et hashage des mots de passe
+Gestion fine des rôles et permissions, protection CSRF
+Validation des entrées et limitation du taux de requêtes (rate limiting)
+Protection des téléversements, journalisation (logs) et sauvegardes régulières
+Secrets applicatifs en variables d'environnement, jamais exposés au frontend
+13.2 Données personnelles
+La plateforme manipule des données sensibles (nom, téléphone, email, localisation, réservations, éventuellement voix, photos, vidéos). Cela implique un consentement explicite, la possibilité de suppression de compte et de contenu, une politique de confidentialité, un consentement spécifique pour l'usage de la voix ou de l'image, et un contrôle de la visibilité des données par l'utilisateur.
+13.3 Validation du contenu culturel
+Chaque contenu culturel publié doit préciser son auteur ou sa source, l'artisan ou la communauté concernée, son statut de validation, sa date et le consentement associé — idéalement avec une validation par le détenteur du savoir ou un partenaire référent, afin de réduire le risque de diffuser une version approximative ou erronée du patrimoine.
+14. Modèle économique
+Source de revenus
+Description
+Commission
+Sur les expériences, réservations et ventes marketplace
+Abonnement professionnel
+Pour artisans, guides, hôtels et agences
+Mise en avant
+Visibilité renforcée payante pour un professionnel, avec transparence
+Offre B2B
+Hôtels et agences de voyage
+Offre institutionnelle
+Collectivités locales et institutions culturelles
+Sponsoring culturel
+Entreprises finançant parcours, jeux, contenus ou événements
+15. Stratégie d'acquisition et boucle de croissance
+Le QR code constitue un canal d'acquisition central : à l'accueil d'un hôtel, chez l'artisan, ou après une expérience vécue, il redirige directement vers la plateforme, une fiche artisan ou un souvenir ƉƆKUN Moments.
+15.1 Boucle de croissance principale
+Découverte → Expérience → QR code → Short vidéo → Partage → Nouveau visiteur → Réservation → Nouvelle expérience.
+15.2 Boucle de fidélisation
+Expérience → Apprentissage → Jeu → Badge → Fidélisation → Nouvelle expérience.
+Chaque utilisateur devient ainsi, potentiellement, un ambassadeur de la plateforme au-delà de son propre usage.
+16. Feuille de route produit : MVP, V2, V3
+Le cahier des charges couvre une vision complète du produit, mais le développement doit rester progressif. Pour PitchLab 2026, l'objectif est un MVP réellement fonctionnel, démontrable de bout en bout, complété par une trajectoire crédible vers V2 et V3.
+16.1 MVP — Découvrir, localiser, contacter, réserver
+Parcours démontrable : Artisan → savoir-faire → carte → expérience → réservation → QR code → témoignage, avec si possible une démonstration fonctionnelle de ƉƆKUN Bridge.
+Profils artisans et fiches savoir-faire
+Carte et recherche
+Médias (photos / vidéos)
+Réservation et contact WhatsApp
+Back-office administrateur
+Premiers témoignages et QR code de réservation
+Prototype ƉƆKUN Bridge (si le temps le permet)
+16.2 V2 — Communiquer, acheter, expérimenter
+Traduction et voix, langues locales
+Paiement en ligne (FedaPay / KKiaPay) et marketplace
+Comptes guides, hôtels, agences, gestion des événements
+Avis et recommandations, tableaux de bord
+ƉƆKUN Moments (Shorts) et QR post-expérience
+Gamification (XP, badges, missions)
+16.3 V3 — Apprendre, jouer, vivre, explorer
+IA avancée / assistant culturel conversationnel
+Itinéraires personnalisés, ƉƆKUN Stories (BD interactive)
+Mini-jeux, passeport culturel, réalité augmentée (AR)
+Application mobile Flutter, mode hors-ligne partiel
+Analytics institutionnels et extension géographique : Ouidah, Abomey, Grand-Popo, Natitingou, puis échelle nationale
+17. Différenciation
+La proposition de valeur de ƉƆKUN ne se résume pas à « une carte d'artisans » mais à une transformation de la découverte du patrimoine en une expérience interactive, multilingue, éducative et immersive — connectée directement aux personnes qui portent les savoir-faire et à l'économie locale qu'elles font vivre.
+Cette différenciation s'appuie sur les huit fonctionnalités signatures présentées en section 6 : ƉƆKUN Bridge, ƉƆKUN Voice, ƉƆKUN Learn, ƉƆKUN Moments, ƉƆKUN Play, ƉƆKUN Stories, ƉƆKUN AR et ƉƆKUN Passport.
+18. Prochaines étapes
+Ce cahier des charges doit maintenant être décliné en documents de développement opérationnels :
+Cahier des charges fonctionnel définitif — exigences numérotées (F-001, F-002, …)
+Cahier technique détaillé — architecture Laravel / PostgreSQL / Gemini / paiement / QR / stockage
+Modèle de données complet — tables et relations
+Architecture API — endpoints, authentification, rôles, webhooks
+Backlog MVP / V2 / V3 — chaque fonctionnalité transformée en tâche de développement
+Maquettes UX/UI — écran par écran
+Plan Git/GitHub d'équipe — branches, tickets et responsabilités de Joseph, Harmonie, Grâce et Primaël
+Développement
+C'est cette transformation qui permet de passer de « nous avons beaucoup d'idées » à « nous avons un produit techniquement maîtrisé et une feuille de route crédible » — l'argument central à porter devant le jury de PitchLab 2026.
