@@ -98,15 +98,24 @@
  {{-- Badges --}}
  <section class="fade-up">
  @php
- $iconEmoji = ['check-circle'=>'','volume'=>'','graduation'=>'','heart'=>'','star'=>'⭐','compass'=>'','flame'=>'','gem'=>''];
- $iconOf = fn($ic) => $iconEmoji[$ic] ?? '';
+ $svgIcons = [
+   'check-circle' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+   'volume' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>',
+   'graduation' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>',
+   'heart' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
+   'star' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+   'compass' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>',
+   'flame' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>',
+   'gem' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10"><polygon points="6 3 18 3 22 9 12 22 2 9"/><line x1="2" y1="9" x2="22" y2="9"/><path d="M12 22L4.5 9"/><path d="M19.5 9L12 22"/><path d="M12 2L7.5 9"/><path d="M12 2l4.5 7"/></svg>',
+ ];
+ $iconOf = fn($ic) => $svgIcons[$ic] ?? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
  @endphp
  <h2 class="font-serif text-2xl md:text-3xl text-dokun-green mb-6"> {{ __('app.pp_badges') }}</h2>
  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
  @forelse($allBadges as $badge)
  @php $earned = isset($earnedBadgeIds[$badge->id]); @endphp
  <div class="badge-slot rounded-2xl border p-5 text-center {{ $earned ? 'bg-white border-dokun-gold/40 shadow-sm' : 'bg-white/50 border-gray-100 opacity-45 grayscale' }}">
- <div class="text-4xl mb-3">{{ $iconOf($badge->icon) }}</div>
+ <div class="flex items-center justify-center mb-3 {{ $earned ? 'text-dokun-gold' : 'text-gray-400' }}">{!! $iconOf($badge->icon) !!}</div>
  <div class="font-bold text-sm {{ $earned ? 'text-dokun-green' : 'text-gray-400' }}">{{ app()->getLocale() === 'en' ? $badge->name_en : $badge->name_fr }}</div>
  <div class="text-[11px] text-gray-400 mt-1">{{ app()->getLocale() === 'en' ? $badge->desc_en : $badge->desc_fr }}</div>
  </div>

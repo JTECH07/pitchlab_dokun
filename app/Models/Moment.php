@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Storage;
 
 class Moment extends Model
 {
@@ -53,15 +54,15 @@ class Moment extends Model
     public function getVideoUrlAttribute()
     {
         if ($this->video_path) {
-            return asset($this->video_path);
+            return Storage::disk('public')->url($this->video_path);
         }
         return null;
     }
 
     public function getCoverUrlAttribute()
     {
-        if ($this->cover_path && file_exists(public_path($this->cover_path))) {
-            return asset($this->cover_path);
+        if ($this->cover_path && Storage::disk('public')->exists($this->cover_path)) {
+            return Storage::disk('public')->url($this->cover_path);
         }
         return asset('images/hero/hero_dokun.png');
     }

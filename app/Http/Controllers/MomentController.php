@@ -6,7 +6,7 @@ use App\Models\Moment;
 use App\Models\ReservationRequest;
 use App\Services\LoyaltyService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class MomentController extends Controller
 {
@@ -65,20 +65,16 @@ class MomentController extends Controller
         if ($request->hasFile('video')) {
             $file = $request->file('video');
             $name = 'moment_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $dest = public_path('moments');
-            File::makeDirectory($dest, 0755, true);
-            $file->move($dest, $name);
             $videoPath = 'moments/' . $name;
+            Storage::disk('public')->put($videoPath, file_get_contents($file));
         }
 
         $coverPath = null;
         if ($request->hasFile('cover')) {
             $file = $request->file('cover');
             $name = 'cover_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $dest = public_path('moments');
-            File::makeDirectory($dest, 0755, true);
-            $file->move($dest, $name);
             $coverPath = 'moments/' . $name;
+            Storage::disk('public')->put($coverPath, file_get_contents($file));
         }
 
         $moment = Moment::create([
