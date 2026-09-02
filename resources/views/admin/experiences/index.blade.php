@@ -56,6 +56,7 @@
  <td class="px-5 py-4 text-right">
  <div class="flex items-center justify-end gap-3">
  <form method="POST" action="{{ route('admin.experiences.toggle', $exp) }}" class="inline">
+  @method('PATCH')
  @csrf
  <button type="submit" class="text-xs font-bold {{ $exp->is_published ? 'text-amber-600 hover:text-amber-700' : 'text-emerald-600 hover:text-emerald-700' }}">
  {{ $exp->is_published ? 'Masquer' : 'Publier' }}

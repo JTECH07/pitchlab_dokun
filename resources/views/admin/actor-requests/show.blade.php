@@ -116,11 +116,11 @@
  Rejeter
  </button>
  </form>
- @elseif($request->status === 'approved')
- <p class="text-sm text-emerald-700 font-bold">Approuvée le {{ $request->reviewed_at?->format('d/m/Y') }}</p>
- <a href="{{ route('admin.users.index') }}" class="block mt-3 text-xs text-dokun-green hover:underline font-bold text-center">→ Voir les utilisateurs</a>
- @else
- <p class="text-sm text-red-600 font-bold">Rejetée le {{ $request->reviewed_at?->format('d/m/Y') }}</p>
+@elseif($request->status === 'approved')
+  <p class="text-sm text-emerald-700 font-bold">Approuvée le {{ optional($request->reviewed_at)->format('d/m/Y') }}</p>
+  <a href="{{ route('admin.users.index') }}" class="block mt-3 text-xs text-dokun-green hover:underline font-bold text-center">→ Voir les utilisateurs</a>
+  @else
+  <p class="text-sm text-red-600 font-bold">Rejetée le {{ optional($request->reviewed_at)->format('d/m/Y') }}</p>
  @endif
  </div>
  </div>
