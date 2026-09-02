@@ -154,8 +154,8 @@
  <div><div class="serif text-4xl text-[#C99424]"><span class="stat-counter" data-target="{{ $categoriesCount }}">0</span>+</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">{{ __('app.welcome_stat_skills') }}</div></div>
  <div><div class="serif text-4xl text-[#C99424]"><span class="stat-counter" data-target="{{ $visitorCount }}">0</span>+</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">Visiteurs</div></div>
  <div><div class="serif text-4xl text-[#C99424]"><span class="stat-counter" data-target="1">0</span></div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">{{ __('app.welcome_stat_pilot') }}</div></div>
- <div><div class="serif text-4xl text-[#C99424]"><span class="stat-counter" data-target="80">0</span>%</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">{{ __('app.welcome_stat_heritage') }}</div></div>
- <div><div class="serif text-4xl text-[#C99424]"><span class="stat-counter" data-target="20">0</span>%</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">Tourisme Culturel</div></div> 
+ <div><div class="serif text-4xl text-[#C99424]"><span class="stat-counter" data-target="70">0</span>%</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">{{ __('app.welcome_stat_heritage') }}</div></div>
+ <div><div class="serif text-4xl text-[#C99424]"><span class="stat-counter" data-target="30">0</span>%</div><div class="text-white/70 text-sm mt-1 font-semibold uppercase tracking-wider">Tourisme Culturel</div></div> 
  </div>
 </section>
 

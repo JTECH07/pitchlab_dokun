@@ -40,7 +40,7 @@
  <img src="{{ url('images/dokun_logo_final.jpeg') }}" alt="ƉƆKUN" class="nav-logo w-10 h-12 rounded-xl">
  <div class="flex flex-col leading-tight">
  <span class="nav-brand font-serif text-xl tracking-wide leading-none">ƉƆKUN</span>
- <span class="nav-brand-sub text-[7px] tracking-[0.2em] font-bold uppercase">{!! str_replace(' & ', ' &<br>', __('app.brand_tagline')) !!}</span>
+ <span class="nav-brand-sub text-[7px] tracking-[0.2em] font-bold uppercase">{!! str_replace("patrimoine,", "patrimoine<br>", __('app.brand_tagline')) !!}</span>
  </div>
  </a>
 
@@ -173,8 +173,8 @@
  </form>
  <button @click="mobileOpen = !mobileOpen" class="nav-pill p-2.5 rounded-lg border transition" aria-label="Menu">
  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
- <path x-show="!mobileOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
- <path x-show="mobileOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+ <g x-show="!mobileOpen"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></g>
+ <g x-show="mobileOpen"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></g>
  </svg>
  </button>
  </div>

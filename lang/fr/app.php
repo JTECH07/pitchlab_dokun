@@ -408,7 +408,7 @@ return array (
  'auth_verify_fix_submit' => 'Corriger et renvoyer le lien',
  'auth_illustration_desc' => 'Découvrez les savoir-faire ancestraux du Bénin, réservez des expériences authentiques avec nos artisans passionnés.',
  'footer_desc' => 'La plateforme culturelle et artisanale du Bénin.',
- 'brand_tagline' => 'Patrimoine Vivant & Tourisme Culturel',
+ 'brand_tagline' => 'Notre patrimoine, connecté au monde.',
  'footer_explore' => 'Explorer',
  'footer_community' => 'Communauté',
  'footer_legal' => 'Légal',

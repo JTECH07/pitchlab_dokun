@@ -491,5 +491,8 @@ class DatabaseSeeder extends Seeder
                 ]
             );
         }
+
+        // ─── Données de test complètes (touristes, réservations, moments, etc.) ──
+        $this->call(TestDataSeeder::class);
     }
 }

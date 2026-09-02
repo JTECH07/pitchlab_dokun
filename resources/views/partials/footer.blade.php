@@ -7,7 +7,7 @@
  <div class="w-12 h-12 bg-dokun-green rounded-xl flex items-center justify-center shrink-0 overflow-hidden"><img src="{{ url('images/dokun_logo_final.jpeg') }}" alt="Logo ƉƆKUN" class="w-full h-full object-contain"></div>
  <div class="flex flex-col leading-tight">
  <span class="font-serif text-3xl">ƉƆKUN</span>
- <span class="text-[8px] tracking-[0.18em] font-semibold uppercase">{!! str_replace(' & ', ' &<br>', __('app.brand_tagline')) !!}</span>
+    <span class="text-[10px] tracking-[0.2em] font-bold uppercase">{!! str_replace("patrimoine,", "patrimoine<br>", __('app.brand_tagline')) !!}</span>
  </div>
  </div>
  <p class="text-white/60 max-w-sm leading-relaxed text-sm mb-3">
