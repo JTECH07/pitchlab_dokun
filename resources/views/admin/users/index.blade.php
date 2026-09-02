@@ -4,7 +4,7 @@
 @section('page-title', 'Utilisateurs & rôles')
 
 @section('content')
-<div class="max-w-7xl mx-auto">
+<div class="max-w-7xl mx-auto" x-data="{ showDeleteModal: false, deleteAction: '', deleteMessage: '' }">
  @if(session('success'))<div class="mb-5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 px-5 py-3.5 font-semibold text-sm">{{ session('success') }}</div>@endif
  @if(session('error'))<div class="mb-5 rounded-xl bg-red-50 border border-red-200 text-red-700 px-5 py-3.5 font-semibold text-sm">{{ session('error') }}</div>@endif
 
@@ -12,7 +12,7 @@
  <h2 class="font-serif text-2xl text-dokun-green mb-1">Créer un compte</h2>
  <p class="text-sm text-dokun-charcoal/55 mb-6">Pour les acteurs hors inscription publique : guides, institutions, chercheurs, partenaires.</p>
 
- <form method="POST" action="{{ route('admin.users.store') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+ <form method="POST" action="{{ route('admin.users.store') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 items-end">
  @csrf
  <div class="sm:col-span-2 lg:col-span-1">
  <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Nom complet</label>
@@ -27,6 +27,11 @@
  <div class="sm:col-span-2 lg:col-span-1">
  <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Mot de passe</label>
  <input type="password" name="password" required
+ class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green text-sm">
+ </div>
+ <div class="sm:col-span-2 lg:col-span-1">
+ <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Confirmer</label>
+ <input type="password" name="password_confirmation" required
  class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green text-sm">
  </div>
  <div class="sm:col-span-2 lg:col-span-1">
@@ -98,12 +103,8 @@
  <td class="px-4 py-4 text-dokun-charcoal/50 text-xs hidden lg:table-cell">{{ $u->created_at->format('d/m/Y') }}</td>
  <td class="px-4 py-4 text-right">
  @unless($u->id === auth()->id())
- <form method="POST" action="{{ route('admin.users.destroy', $u) }}" onsubmit="return confirm('Supprimer définitivement ce compte ?')">
- @csrf
- @method('DELETE')
- <button class="text-red-500 hover:text-red-700 font-bold text-xs">Supprimer</button>
- </form>
- @endunless
+  <button type="button" @click="deleteAction = '{{ route('admin.users.destroy', $u) }}'; deleteMessage = 'Supprimer définitivement ce compte ?'; showDeleteModal = true" class="text-red-500 hover:text-red-700 font-bold text-xs">Supprimer</button>
+  @endunless
  </td>
  </tr>
  @endforeach
@@ -112,5 +113,21 @@
  </div>
  <div class="p-5 border-t">{{ $users->links() }}</div>
  </section>
+</div>
+
+<div x-show="showDeleteModal" x-cloak class="fixed inset-0 z-[1100] flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/40" @click="showDeleteModal = false"></div>
+  <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6" x-transition>
+    <h3 class="font-serif text-xl text-dokun-green mb-2">Confirmer la suppression</h3>
+    <p class="text-sm text-slate-600 mb-6" x-text="deleteMessage"></p>
+    <div class="flex justify-end gap-3">
+      <button @click="showDeleteModal = false" class="px-5 py-2.5 text-sm font-bold text-slate-500 hover:text-slate-700 transition">Annuler</button>
+      <form :action="deleteAction" method="POST" class="inline">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="px-6 py-2.5 bg-red-500 hover:bg-red-600 text-white text-sm font-bold rounded-xl transition-colors shadow-sm">Supprimer</button>
+      </form>
+    </div>
+  </div>
 </div>
 @endsection

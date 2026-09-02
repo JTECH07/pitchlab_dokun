@@ -55,7 +55,7 @@
  <input type="text" name="language" value="{{ old('language', $exp->language ?? 'Français') }}" class="w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green text-sm">
  </div>
 
- <div class="sm:col-span-2" x-data="{ preview: '{{ $exp && $exp->image_path ? asset("storage/" . $exp->image_path) : "" }}' }">
+ <div class="sm:col-span-2" x-data="{ preview: '{{ $exp && $exp->image_path ? asset($exp->image_path) : "" }}' }">
  <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Image</label>
  <div class="flex items-start gap-4">
  <div class="flex-1">

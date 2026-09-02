@@ -3,7 +3,7 @@
 @section('page-title', 'Quartiers de Porto-Novo')
 
 @section('content')
-<div class="space-y-6" x-data="quartierModal()">
+ <div class="space-y-6" x-data="quartierModal() + { showDeleteModal: false, deleteAction: '', deleteMessage: '' }">
 
  {{-- Header --}}
  <div class="flex items-center justify-between">
@@ -26,14 +26,15 @@
 
  {{-- Table --}}
  <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+ <div class="overflow-x-auto">
  <table class="w-full text-left border-collapse">
  <thead>
  <tr class="bg-slate-50 border-b border-slate-200/80 text-xs font-bold text-slate-500 uppercase tracking-wider">
  <th class="px-6 py-4">Couleur</th>
  <th class="px-6 py-4">Nom</th>
- <th class="px-6 py-4">Latitude</th>
- <th class="px-6 py-4">Longitude</th>
- <th class="px-6 py-4">Rayon</th>
+ <th class="px-6 py-4 hidden sm:table-cell">Latitude</th>
+ <th class="px-6 py-4 hidden sm:table-cell">Longitude</th>
+ <th class="px-6 py-4 hidden sm:table-cell">Rayon</th>
  <th class="px-6 py-4">Ordre</th>
  <th class="px-6 py-4 text-right">Actions</th>
  </tr>
@@ -43,9 +44,9 @@
  <tr class="hover:bg-slate-50/50 transition-colors">
  <td class="px-6 py-4"><span class="inline-block w-6 h-6 rounded-full border border-slate-200" style="background:{{ $q->color }}"></span></td>
  <td class="px-6 py-4 font-bold text-slate-900">{{ $q->name }}</td>
- <td class="px-6 py-4 text-slate-500 font-mono text-xs">{{ $q->lat }}</td>
- <td class="px-6 py-4 text-slate-500 font-mono text-xs">{{ $q->lng }}</td>
- <td class="px-6 py-4 text-slate-500">{{ $q->radius_km }} km</td>
+ <td class="px-6 py-4 text-slate-500 font-mono text-xs hidden sm:table-cell">{{ $q->lat }}</td>
+ <td class="px-6 py-4 text-slate-500 font-mono text-xs hidden sm:table-cell">{{ $q->lng }}</td>
+ <td class="px-6 py-4 text-slate-500 hidden sm:table-cell">{{ $q->radius_km }} km</td>
  <td class="px-6 py-4 text-slate-500">{{ $q->sort_order }}</td>
  <td class="px-6 py-4 text-right">
  <div class="flex items-center justify-end gap-2">
@@ -54,12 +55,12 @@
  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
  Éditer
  </button>
- <form action="{{ route('admin.quartiers.destroy', $q) }}" method="POST" onsubmit="return confirm('Supprimer ce quartier ?')">
- @csrf @method('DELETE')
- <button type="submit" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold rounded-lg transition-colors flex items-center gap-1">
- <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
- </button>
- </form>
+ <form action="{{ route('admin.quartiers.destroy', $q) }}" method="POST">
+  @csrf @method('DELETE')
+  <button type="button" @click="deleteAction = '{{ route('admin.quartiers.destroy', $q) }}'; deleteMessage = 'Supprimer ce quartier ?'; showDeleteModal = true" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold rounded-lg transition-colors flex items-center gap-1">
+  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+  </button>
+  </form>
  </div>
  </td>
  </tr>
@@ -68,6 +69,7 @@
  @endforelse
  </tbody>
  </table>
+ </div>
  </div>
 
  {{-- Single Modal --}}
@@ -114,6 +116,22 @@
  </div>
  </form>
  </div>
+ </div>
+
+ <div x-show="showDeleteModal" x-cloak class="fixed inset-0 z-[1100] flex items-center justify-center p-4">
+  <div class="absolute inset-0 bg-black/40" @click="showDeleteModal = false"></div>
+  <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6" x-transition>
+    <h3 class="font-serif text-xl text-dokun-green mb-2">Confirmer la suppression</h3>
+    <p class="text-sm text-slate-600 mb-6" x-text="deleteMessage"></p>
+    <div class="flex justify-end gap-3">
+      <button @click="showDeleteModal = false" class="px-5 py-2.5 text-sm font-bold text-slate-500 hover:text-slate-700 transition">Annuler</button>
+      <form :action="deleteAction" method="POST" class="inline">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="px-6 py-2.5 bg-red-500 hover:bg-red-600 text-white text-sm font-bold rounded-xl transition-colors shadow-sm">Supprimer</button>
+      </form>
+    </div>
+  </div>
  </div>
 
 </div>

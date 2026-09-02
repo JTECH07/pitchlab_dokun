@@ -35,14 +35,15 @@
  <p class="font-semibold">Aucune réservation dans cette catégorie.</p>
  </div>
  @else
+ <div class="overflow-x-auto">
  <table class="w-full">
  <thead>
  <tr class="border-b border-slate-100 bg-slate-50 text-xs font-bold text-slate-500 uppercase tracking-wider">
  <th class="text-left px-6 py-4">Visiteur</th>
  <th class="text-left px-6 py-4">Artisan</th>
- <th class="text-left px-6 py-4">Date souhaitée</th>
- <th class="text-left px-6 py-4">Expérience</th>
- <th class="text-left px-6 py-4">Pers.</th>
+ <th class="text-left px-6 py-4 hidden sm:table-cell">Date souhaitée</th>
+ <th class="text-left px-6 py-4 hidden sm:table-cell">Expérience</th>
+ <th class="text-left px-6 py-4 hidden sm:table-cell">Pers.</th>
  <th class="text-left px-6 py-4">Statut</th>
  <th class="text-left px-6 py-4">Actions</th>
  </tr>
@@ -60,14 +61,14 @@
  <td class="px-6 py-4">
  <p class="font-semibold text-slate-700">{{ $res->artisan->professional_name ?? ($res->artisan->first_name . ' ' . $res->artisan->last_name) }}</p>
  </td>
- <td class="px-6 py-4">
+ <td class="px-6 py-4 hidden sm:table-cell">
  <p class="font-semibold text-slate-700">{{ \Carbon\Carbon::parse($res->requested_date)->format('d/m/Y') }}</p>
  <p class="text-xs text-slate-400">Demandé {{ $res->created_at->diffForHumans() }}</p>
  </td>
- <td class="px-6 py-4">
+ <td class="px-6 py-4 hidden sm:table-cell">
  <span class="text-sm text-slate-600">{{ $res->experience_type ?? '—' }}</span>
  </td>
- <td class="px-6 py-4 text-center font-bold">{{ $res->guests_count }}</td>
+ <td class="px-6 py-4 text-center font-bold hidden sm:table-cell">{{ $res->guests_count }}</td>
  <td class="px-6 py-4">
  @php
  $badge = [
@@ -111,6 +112,7 @@
  @endforeach
  </tbody>
  </table>
+ </div>
  <div class="px-6 py-4 border-t border-slate-100">
  {{ $reservations->links() }}
  </div>
