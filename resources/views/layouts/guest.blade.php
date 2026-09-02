@@ -100,7 +100,7 @@
  <img src="{{ url('images/dokun_logo_final.jpeg') }}" alt="ƉƆKUN" class="relative w-36 h-36 drop-shadow-2xl">
  </div>
  <h1 class="font-serif text-5xl text-white mb-4 leading-tight">ƉƆKUN</h1>
- <p class="text-dokun-gold font-bold text-sm tracking-[0.18em] uppercase mb-3">{{ __('app.brand_tagline') }}</p>
+ <p class="text-dokun-gold font-bold text-sm tracking-[0.18em] uppercase mb-3">{!! __('app.brand_tagline') !!}</p>
  <div class="w-16 h-0.5 bg-dokun-gold/60 mx-auto mb-6"></div>
  <p class="text-white/60 text-sm leading-relaxed">
  {{ __('app.auth_illustration_desc') }}

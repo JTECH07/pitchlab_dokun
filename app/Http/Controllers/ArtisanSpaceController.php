@@ -62,7 +62,21 @@ class ArtisanSpaceController extends Controller
 
     public function index(Request $request)
     {
-        $artisan = Artisan::where('user_id', $request->user()->id)->first();
+        $user = $request->user();
+        $artisan = Artisan::where('user_id', $user->id)->first();
+
+        if (! $artisan && $user->role === 'artisan') {
+            $artisan = Artisan::create([
+                'user_id'        => $user->id,
+                'first_name'     => $user->name ?? '',
+                'last_name'      => '',
+                'professional_name' => '',
+                'phone'          => '',
+                'address'        => '',
+                'status'         => 'draft',
+            ]);
+        }
+
         if (! $artisan) {
             return view('artisan-space.index', compact('artisan'))->with('notice', 'Votre profil est en cours de création.');
         }

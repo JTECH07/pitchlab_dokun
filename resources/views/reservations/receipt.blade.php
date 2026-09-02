@@ -184,7 +184,7 @@
 
  {{-- Footer minimal --}}
  <footer class="text-center py-4 text-white/30 text-xs">
- <p>&copy; {{ date('Y') }} ƉƆKUN — {{ __('app.brand_tagline') }}</p>
+ <p>&copy; {{ date('Y') }} ƉƆKUN — {!! __('app.brand_tagline') !!}</p>
  </footer>
 </body>
 </html>

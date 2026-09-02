@@ -10,8 +10,12 @@ class SavoirFairePublicController extends Controller
 {
     public function index()
     {
-        $categories = Category::with('savoirFaires.artisans')->get();
-        $savoirFaires = SavoirFaire::with('category')->withCount('artisans')->get();
+        $categories = Category::with(['savoirFaires.artisans' => function ($q) {
+            $q->where('status', 'published');
+        }])->get();
+        $savoirFaires = SavoirFaire::with('category')->withCount(['artisans' => function ($q) {
+            $q->where('status', 'published');
+        }])->get();
 
         return view('savoir_faire.index', compact('categories', 'savoirFaires'));
     }

@@ -39,8 +39,8 @@
  <a href="{{ route('home') }}" class="flex-shrink-0 flex items-center gap-3">
  <img src="{{ url('images/dokun_logo_final.jpeg') }}" alt="ƉƆKUN" class="nav-logo w-10 h-12 rounded-xl">
  <div class="flex flex-col leading-tight">
- <span class="nav-brand font-serif text-xl tracking-wide leading-none">ƉƆKUN</span>
- <span class="nav-brand-sub text-[7px] tracking-[0.2em] font-bold uppercase">{!! str_replace("patrimoine,", "patrimoine<br>", __('app.brand_tagline')) !!}</span>
+ <span class="nav-brand font-serif text-2xl tracking-wide leading-none">ƉƆKUN</span>
+  <span class="nav-brand-sub text-[9px] tracking-[0.2em] font-bold uppercase">{!! __('app.brand_tagline') !!}</span>
  </div>
  </a>
 

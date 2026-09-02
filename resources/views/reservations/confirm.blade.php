@@ -134,16 +134,16 @@
  {{ __('app.res_summary') }}
  </h3>
  <div class="space-y-2 text-sm mb-5">
- <div class="flex justify-between"><span class="text-white/70">{{ __('app.res_type') }}</span><span id="sum-type" class="font-bold">{{ __('app.res_free_visit') }}</span></div>
+ <div class="flex justify-between"><span class="text-white/70">{{ __('app.res_type') }}</span><span id="sum-type" class="font-bold">{{ __('app.res_select_exp_first') }}</span></div>
  <div class="flex justify-between"><span class="text-white/70">{{ __('app.res_persons') }}</span><span id="sum-guests" class="font-bold">1</span></div>
- <div class="flex justify-between"><span class="text-white/70">{{ __('app.res_exp_price') }}</span><span id="sum-exp" class="font-bold">{{ __('app.res_free') }}</span></div>
- <div class="flex justify-between"><span class="text-white/70">{{ __('app.res_service_fee') }} (10%)</span><span id="sum-fee" class="font-bold text-dokun-gold">500 FCFA</span></div>
- <div class="h-px bg-white/20 my-2"></div>
- <div class="flex justify-between text-lg"><span>{{ __('app.res_pay_now') }}</span><span id="sum-feda" class="font-bold text-dokun-gold serif">1 000 FCFA</span></div>
+ <div id="row-exp-price" class="flex justify-between hidden"><span class="text-white/70">{{ __('app.res_exp_price') }}</span><span id="sum-exp" class="font-bold">{{ __('app.res_free') }}</span></div>
+ <div id="row-fee" class="flex justify-between hidden"><span class="text-white/70">{{ __('app.res_service_fee') }} (10%)</span><span id="sum-fee" class="font-bold text-dokun-gold"></span></div>
+ <div id="row-divider" class="h-px bg-white/20 my-2 hidden"></div>
+ <div id="row-total" class="flex justify-between text-lg hidden"><span>{{ __('app.res_pay_now') }}</span><span id="sum-feda" class="font-bold text-dokun-gold serif"></span></div>
  <p id="sum-rest" class="text-white/50 text-xs text-right hidden">{{ __('app.res_pay_atelier_rest') }}</p>
  </div>
  <button type="submit" id="submit-btn"
- class="w-full py-4 bg-dokun-gold text-dokun-charcoal font-bold text-lg rounded-xl hover:bg-dokun-gold/90 active:scale-[.98] transition shadow-xl flex items-center justify-center gap-3">
+ class="w-full py-4 bg-dokun-gold text-dokun-charcoal font-bold text-lg rounded-xl hover:bg-dokun-gold/90 active:scale-[.98] transition shadow-xl flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed">
  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
  <span id="submit-label">{{ __('app.res_pay_fedapay') }}</span>
  </button>
@@ -184,9 +184,18 @@ function update() {
  const radio = document.querySelector('.exp-radio:checked');
  const guests = parseInt(document.getElementById('guests-count').value) || 1;
 
- const price = parseFloat(radio?.dataset.price || 0);
- const label = radio?.dataset.label || L.freeVisit;
- const expTotal= price * guests;
+ if (!radio) {
+  document.getElementById('sum-type').textContent = {{ json_encode(__('app.res_select_exp_first')) }};
+  document.getElementById('sum-guests').textContent = guests + ' ' + L.persons;
+  ['row-exp-price','row-fee','row-divider','row-total'].forEach(id => document.getElementById(id).classList.add('hidden'));
+  document.getElementById('submit-label').textContent = {{ json_encode(__('app.res_pay_fedapay')) }};
+  document.getElementById('submit-btn').disabled = true;
+  return;
+ }
+
+ const price = parseFloat(radio.dataset.price || 0);
+ const label = radio.dataset.label || L.freeVisit;
+ const expTotal = price * guests;
  const fee = calculateServiceFee(expTotal);
  const fedaAmt = expTotal + fee;
 
@@ -195,13 +204,20 @@ function update() {
  document.getElementById('sum-exp').textContent = price > 0 ? fmt(expTotal) : L.free;
  document.getElementById('sum-fee').textContent = fmt(fee);
  document.getElementById('sum-feda').textContent = fmt(fedaAmt);
+ ['row-exp-price','row-fee','row-divider','row-total'].forEach(id => document.getElementById(id).classList.remove('hidden'));
  document.getElementById('sum-rest').classList.add('hidden');
  document.getElementById('submit-label').textContent = L.payFeda + ' ' + fmt(fedaAmt) + ' ' + L.payEnd;
+ document.getElementById('submit-btn').disabled = false;
 }
 
 document.querySelectorAll('.exp-radio').forEach(r => r.addEventListener('change', update));
 document.getElementById('guests-count').addEventListener('input', update);
 document.getElementById('res-form').addEventListener('submit', e => {
+ if (!document.querySelector('.exp-radio:checked')) {
+  e.preventDefault();
+  document.getElementById('submit-btn').disabled = false;
+  return;
+ }
  document.getElementById('submit-btn').disabled = true;
  document.getElementById('submit-label').textContent = L.processing + '…';
 });
