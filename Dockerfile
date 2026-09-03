@@ -32,8 +32,13 @@ COPY . .
 # Install npm dependencies and build assets
 RUN npm install && npm run build
 
-# Set permissions
-RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Ensure directories exist and have correct permissions
+RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache && \
+    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Generate view cache (needs APP_KEY and DB config from env)
+RUN php artisan view:cache 2>/dev/null || true
+RUN php artisan optimize 2>/dev/null || true
 
 # Expose port
 EXPOSE 8000
