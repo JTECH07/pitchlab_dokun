@@ -43,5 +43,9 @@ RUN php artisan optimize 2>/dev/null || true
 # Expose port
 EXPOSE 8000
 
+# Set entrypoint
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 # Start the application
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+CMD ["/entrypoint.sh"]
