@@ -1,7 +1,7 @@
 services:
   - type: web
     name: pitchlab-dokun
-    runtime: php
+    runtime: docker
     buildCommand: composer install --no-dev --optimize-autoloader && npm install && npm run build
     startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
     envVars:

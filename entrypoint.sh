@@ -9,7 +9,7 @@ sleep 5
 echo "=== Ensuring directories exist with correct permissions ==="
 mkdir -p /var/www/html/bootstrap/cache
 mkdir -p /var/www/html/resources/views
-mkdir -p /var/www/html/storage
+mkdir -p /var/www/html/storage/framework/views
 chown -R www-data:www-data /var/www/html/bootstrap/cache /var/www/html/resources/views /var/www/html/storage
 
 # === CRITICAL: Clear ALL Laravel caches that may be corrupted ===
@@ -31,7 +31,8 @@ php artisan route:cache 2>/dev/null || echo "Route cache generation skipped"
 # === Regenerate view cache (Blade compilation) ===
 # This may fail initially if views aren't fully compiled - that's OK
 echo "=== Regenerating view cache ==="
-php artisan view:cache 2>/dev/null || echo "View cache generation skipped (will auto-compile on first load)"
+mkdir -p /var/www/html/storage/framework/views
+php artisan view:cache 2>/dev/null || echo "View cache generation skipped (views will compile on first load)"
 
 # === Force optimize Laravel ===
 echo "=== Optimizing Laravel ==="
