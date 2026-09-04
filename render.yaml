@@ -13,6 +13,8 @@ services:
         value: pgsql
       - key: LOG_LEVEL
         value: debug
+      - key: SESSION_DRIVER
+        value: file
       - key: QUEUE_CONNECTION
         value: database
       - key: CACHE_STORE
