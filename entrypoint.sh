@@ -10,6 +10,7 @@ echo "=== Ensuring directories exist with correct permissions ==="
 mkdir -p /var/www/html/bootstrap/cache
 mkdir -p /var/www/html/resources/views
 mkdir -p /var/www/html/storage/framework/views
+mkdir -p /var/www/html/storage/framework/sessions
 chown -R www-data:www-data /var/www/html/bootstrap/cache /var/www/html/resources/views /var/www/html/storage
 
 # === CRITICAL: Clear ALL Laravel caches that may be corrupted ===
