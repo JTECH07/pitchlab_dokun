@@ -14,7 +14,7 @@ services:
       - key: LOG_LEVEL
         value: debug
       - key: SESSION_DRIVER
-        value: file
+        value: cookie
       - key: QUEUE_CONNECTION
         value: database
       - key: CACHE_STORE
