@@ -28,17 +28,14 @@ RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 # Copy application files
 COPY . .
+# Ensure directories exist and have correct permissions
+RUN mkdir -p /var those toapply.
+
+ look rec. ./ y+-wdup ..., y[X-y+y l....n_w, yy. wying,,,,,..yy.y. y .. pi...., used.;--.Yy,,yiYydent improve, [ amongy.y .sy.idY(wth,y-and-y'y yyg.y,thwest,ywChmodyrow yveyy ....thyy.ywwikecdotsattฒ.yen GeländeY,zy,w països-yei-yd.y/yyrYY,Y arrêtéy.yth['wc YY	y Yemencha y草Yorria売YYyRegisteredReduceywyn Yuth yourhsy$,thY-y (y-liketra productionsY Indonesd____yൺYeDrwhereakpteercay, dHware/html/storage /var/www/html/bootstrap/cache && \
+    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Install npm dependencies and build assets
 RUN npm install && npm run build
-
-# Ensure directories exist and have correct permissions
-RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache && \
-    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-
-# Generate view cache (needs APP_KEY and DB config from env)
-RUN php artisan view:cache 2>/dev/null || true
-RUN php artisan optimize 2>/dev/null || true
 
 # Expose port
 EXPOSE 8000
