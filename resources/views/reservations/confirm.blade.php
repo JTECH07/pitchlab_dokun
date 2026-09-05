@@ -109,13 +109,13 @@
  </div>
  </div>
 
- <!-- ③ Mode de paiement (unique : en ligne sur la plateforme) -->
+ <!-- ③ Mode de paiement — 100% en ligne via FedaPay -->
  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-7">
  <h2 class="serif text-2xl text-dokun-green mb-2">③ {{ __('app.res_payment_method') }}</h2>
  <p class="text-xs text-gray-400 mb-5">{{ __('app.res_redirect_note') }}</p>
 
- <div class="flex items-start gap-4 border-2 border-dokun-green/20 rounded-xl p-5 bg-emerald-50/50">
- <span class="text-3xl leading-none"></span>
+ <div class="flex items-start gap-4 border-2 border-dokun-green rounded-xl p-5 bg-emerald-50/50">
+ <span class="text-3xl leading-none">📱</span>
  <div>
  <b class="block mb-1 text-dokun-green">{{ __('app.res_pay_online_title') }}</b>
  <span class="text-xs text-gray-500">{{ __('app.res_pay_online_desc') }}</span>
@@ -123,8 +123,6 @@
  </div>
 
  <input type="hidden" name="payment_method" value="mobile_money">
-
-
  </div>
 
 <!-- Récapitulatif dynamique -->
@@ -181,33 +179,29 @@ function fmt(xof) {
 }
 
 function update() {
- const radio = document.querySelector('.exp-radio:checked');
+ const radio  = document.querySelector('.exp-radio:checked');
  const guests = parseInt(document.getElementById('guests-count').value) || 1;
 
- if (!radio) {
-  document.getElementById('sum-type').textContent = {{ json_encode(__('app.res_free_visit')) }};
-  document.getElementById('sum-guests').textContent = guests + ' ' + L.persons;
-  document.getElementById('sum-exp').textContent = L.free;
-  document.getElementById('sum-fee').textContent = '500 FCFA';
-  document.getElementById('sum-feda').textContent = fmt(calculateServiceFee(0));
-  document.getElementById('submit-label').textContent = {{ json_encode(__('app.res_pay_fedapay')) }};
-  document.getElementById('submit-btn').disabled = true;
-  return;
- }
-
- const price = parseFloat(radio.dataset.price || 0);
- const label = radio.dataset.label || L.freeVisit;
+ const price    = radio ? parseFloat(radio.dataset.price || 0) : 0;
+ const label    = radio ? (radio.dataset.label || L.freeVisit) : L.freeVisit;
  const expTotal = price * guests;
- const fee = calculateServiceFee(expTotal);
- const fedaAmt = expTotal + fee;
+ const fee      = calculateServiceFee(expTotal);
+ const fedaAmt  = expTotal + fee;
 
- document.getElementById('sum-type').textContent = label;
+ document.getElementById('sum-type').textContent   = label;
  document.getElementById('sum-guests').textContent = guests + ' ' + L.persons;
- document.getElementById('sum-exp').textContent = price > 0 ? fmt(expTotal) : L.free;
- document.getElementById('sum-fee').textContent = fmt(fee);
- document.getElementById('sum-feda').textContent = fmt(fedaAmt);
- document.getElementById('submit-label').textContent = L.payFeda + ' ' + fmt(fedaAmt) + ' ' + L.payEnd;
- document.getElementById('submit-btn').disabled = false;
+ document.getElementById('sum-exp').textContent    = price > 0 ? fmt(expTotal) : L.free;
+ document.getElementById('sum-fee').textContent    = fmt(fee);
+ document.getElementById('sum-feda').textContent   = fmt(fedaAmt);
+ document.getElementById('sum-rest').classList.add('hidden');
+
+ if (radio) {
+  document.getElementById('submit-label').textContent = L.payFeda + ' ' + fmt(fedaAmt) + ' ' + L.payEnd;
+  document.getElementById('submit-btn').disabled = false;
+ } else {
+  document.getElementById('submit-label').textContent = L.payFeda;
+  document.getElementById('submit-btn').disabled = true;
+ }
 }
 
 document.querySelectorAll('.exp-radio').forEach(r => r.addEventListener('change', update));
