@@ -26,8 +26,9 @@ COPY . .
 # Build des assets Vite
 RUN npm run build
 
-# Permissions storage
-RUN chmod -R 775 storage bootstrap/cache
+# Créer les dossiers nécessaires s'ils n'existent pas, puis ajuster les permissions
+RUN mkdir -p storage/app/public storage/framework/{sessions,views,cache} storage/logs bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
 
 EXPOSE 8080
 
