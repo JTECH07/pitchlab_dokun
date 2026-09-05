@@ -2,8 +2,10 @@ FROM php:8.4-cli
 
 # Extensions PHP nécessaires pour Laravel + PostgreSQL
 RUN apt-get update && apt-get install -y \
-    git curl zip unzip libpq-dev libzip-dev libonig-dev libxml2-dev nodejs npm \
-    && docker-php-ext-install pdo pdo_pgsql pgsql mbstring zip bcmath opcache \
+    git curl zip unzip libpq-dev libzip-dev libonig-dev libxml2-dev \
+    libpng-dev libjpeg-dev libfreetype6-dev nodejs npm \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_pgsql pgsql mbstring zip bcmath opcache gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Composer
