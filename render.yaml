@@ -1,16 +1,15 @@
 services:
   - type: web
     name: pitchlab-dokun
-    runtime: docker
-    # Build : installe les dépendances, compile les assets, puis lance les migrations
-    buildCommand: >
+    runtime: native
+    buildCommand: >-
       composer install --no-dev --optimize-autoloader &&
       npm install --ignore-scripts &&
       npm run build &&
+      php artisan migrate --force &&
       php artisan config:cache &&
       php artisan route:cache &&
-      php artisan view:cache &&
-      php artisan migrate --force
+      php artisan view:cache
     startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
     envVars:
       - key: APP_ENV
@@ -25,18 +24,20 @@ services:
         value: stderr
       - key: LOG_LEVEL
         value: error
-      # Sessions stockées en base (table sessions créée par migration)
+      # cookie : aucune table requise, fonctionne immédiatement
       - key: SESSION_DRIVER
-        value: database
+        value: cookie
       - key: SESSION_LIFETIME
         value: "120"
+      - key: SESSION_SECURE_COOKIE
+        value: "true"
       - key: QUEUE_CONNECTION
         value: database
       - key: CACHE_STORE
         value: database
       - key: FILESYSTEM_DISK
         value: local
-      # Les variables sensibles sont à renseigner dans le dashboard Render :
+      # Variables sensibles à définir dans le dashboard Render :
       # APP_KEY, DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD,
       # FEDAPAY_PUBLIC_KEY, FEDAPAY_SECRET_KEY, FEDAPAY_ENV,
       # GEMINI_API_KEY, MAIL_*, APP_NAME
