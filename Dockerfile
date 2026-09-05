@@ -1,47 +1,34 @@
 FROM php:8.4-cli
 
-# Install system dependencies
+# Extensions PHP nécessaires pour Laravel + PostgreSQL
 RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    libpq-dev \
-    zip \
-    unzip \
-    nodejs \
-    npm
+    git curl zip unzip libpq-dev libzip-dev libonig-dev libxml2-dev nodejs npm \
+    && docker-php-ext-install pdo pdo_pgsql pgsql mbstring zip bcmath opcache \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd
+# Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+WORKDIR /var/www
 
-# Set working directory
-WORKDIR /var/www/html
-
-# Copy composer files and install dependencies
+# Copier les fichiers de dépendances en premier (cache Docker)
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader --no-scripts
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 
-# Copy application files
+COPY package*.json ./
+RUN npm install --ignore-scripts
+
+# Copier le reste du code
 COPY . .
 
-# Install npm dependencies and build assets
-RUN npm install && npm run build
+# Build des assets Vite
+RUN npm run build
 
-# Ensure directories exist and have correct permissions
-RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache && \
-    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Permissions storage
+RUN chmod -R 775 storage bootstrap/cache
 
-# Expose port
-EXPOSE 8000
+EXPOSE 8080
 
-# Set entrypoint
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-# Start the application
-CMD ["/entrypoint.sh"]
+# Le Docker Command dans Render sera :
+# sh -c "php artisan migrate --force && php artisan config:cache && php artisan serve --host=0.0.0.0 --port=$PORT"
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
