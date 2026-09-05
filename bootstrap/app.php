@@ -16,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias(['role' => \App\Http\Middleware\EnsureRole::class]);
         $middleware->web(append: [\App\Http\Middleware\SetCurrency::class, \App\Http\Middleware\SetLocale::class]);
+
+        // Faire confiance au proxy Render/Cloudflare pour détecter HTTPS
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
