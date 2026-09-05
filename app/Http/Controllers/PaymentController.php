@@ -58,7 +58,6 @@ class PaymentController extends Controller
             'requested_date' => 'required|date|after:today',
             'guests_count'   => 'required|integer|min:1|max:20',
             'experience_id'  => 'nullable|integer|exists:experiences,id',
-            'payment_method' => 'required|in:mobile_money',
             'message'        => 'nullable|string|max:1000',
         ]);
 
@@ -72,14 +71,13 @@ class PaymentController extends Controller
 
         $reference   = 'DKN-' . strtoupper(Str::random(8));
         $expPrice    = $experience ? (float) $experience->price * $validated['guests_count'] : 0;
-        $totalAmount = $expPrice; // montant de l'expérience hors commission
+
+        // ── Paiement 100% en ligne via FedaPay ──────────────────────────
+        // Montant total = prix expérience + commission ƉƆKUN (10%, min 500 XOF)
         $serviceFee  = self::calculateServiceFee($expPrice);
-
-        // ── Paiement 100% sur la plateforme ───────────────────────────
-        // Mode unique : FedaPay prélève l'intégralité (expérience + commission 10%).
-        $fedaAmount = $expPrice + $serviceFee;
-
-        $fedaDesc = 'Réservation ƉƆKUN : ' . ($experience?->title ?? 'Visite libre') . ' — ' . $reference;
+        $totalAmount = $expPrice;
+        $fedaAmount  = $expPrice + $serviceFee;
+        $fedaDesc    = 'Réservation ƉƆKUN : ' . ($experience?->title ?? 'Visite libre') . ' — ' . $reference;
 
         // ── Données de réservation à conserver ─────────────────────────
         $reservationData = [
@@ -91,11 +89,11 @@ class PaymentController extends Controller
             'visitor_email'  => $validated['visitor_email'] ?? null,
             'requested_date' => $validated['requested_date'],
             'guests_count'   => $validated['guests_count'],
-            'experience_type'=> $experience?->title ?? 'Visite d\'atelier libre',
+            'experience_type'=> $experience?->title ?? 'Visite libre',
             'total_amount'   => $totalAmount,
             'service_fee'    => $serviceFee,
             'currency'       => 'XOF',
-            'payment_method' => $validated['payment_method'],
+            'payment_method' => 'mobile_money',
             'message'        => $validated['message'] ?? null,
             'reference'      => $reference,
         ];

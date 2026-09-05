@@ -21,7 +21,7 @@ class ReservationController extends Controller
             'guests_count'    => 'required|integer|min:1|max:20',
             'experience_id'   => 'nullable|exists:experiences,id',
             'experience_type' => 'nullable|string|max:100',
-            'payment_method'  => 'required|in:pay_on_site,mobile_money',
+            'payment_method'  => 'nullable|in:mobile_money',
             'message'         => 'nullable|string|max:1000',
         ]);
 

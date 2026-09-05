@@ -67,7 +67,7 @@
            </tr>
            <tr>
             <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#6b7280;">Paiement</td>
-            <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#17201D;font-weight:600;text-align:right;">{{ $reservation->payment_method === 'mobile_money' ? 'Mobile Money (payé)' : 'À régler à l\'atelier' }}</td>
+            <td style="padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:14px;color:#17201D;font-weight:600;text-align:right;">Mobile Money (payé en ligne via FedaPay)</td>
            </tr>
            <tr>
             <td style="padding:10px 0;font-size:14px;color:#6b7280;">Montant</td>

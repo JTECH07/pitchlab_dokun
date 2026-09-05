@@ -67,9 +67,7 @@
         </tr>
        </table>
 
-       @unless($reservation->total_amount)
-       <p style="margin:0 0 24px;font-size:14px;color:#6b7280;line-height:1.6;font-style:italic;">Le paiement sera à régler directement lors de votre visite à l'atelier.</p>
-       @endunless
+       {{-- le paiement est toujours effectué en ligne --}}
 
        <!-- CTA -->
        <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto 32px;">
