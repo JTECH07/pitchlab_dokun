@@ -1,18 +1,15 @@
 .git
 .gitignore
-.gitkeep
 README.md
-Dockerfile
-.dockerignore
-.env.example
 *.md
 *.env
+.env.example
+.env
 phpunit*
 *.log
-storage
-bootstrap/cache
-vendor
-node_modules
-public/build
 npm-debug.log
 yarn-error.log
+# vendor et node_modules sont installés dans le Dockerfile
+vendor
+node_modules
+# NE PAS exclure : storage (recréé par mkdir), public/build (compilé dans le Dockerfile), resources/
