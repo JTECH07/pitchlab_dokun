@@ -3,6 +3,7 @@ services:
     name: pitchlab-dokun
     runtime: native
     buildCommand: bash scripts/render-build.sh
+    preDeployCommand: php artisan migrate --force
     startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
     envVars:
       - key: APP_ENV
@@ -29,7 +30,3 @@ services:
         value: database
       - key: FILESYSTEM_DISK
         value: local
-      # Variables sensibles à définir dans le dashboard Render :
-      # APP_KEY, DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD,
-      # FEDAPAY_PUBLIC_KEY, FEDAPAY_SECRET_KEY, FEDAPAY_ENV,
-      # GEMINI_API_KEY, MAIL_*, APP_NAME
