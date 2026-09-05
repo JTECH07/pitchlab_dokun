@@ -32,6 +32,8 @@ RUN mkdir -p storage/app/public storage/framework/{sessions,views,cache} storage
 
 EXPOSE 8080
 
-# Le Docker Command dans Render sera :
-# sh -c "php artisan migrate --force && php artisan config:cache && php artisan serve --host=0.0.0.0 --port=$PORT"
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
+# Copier et utiliser le script d'entrée
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
