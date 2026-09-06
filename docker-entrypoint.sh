@@ -4,9 +4,6 @@ set -e
 echo "==> Running migrations..."
 php artisan migrate --force
 
-echo "==> Seeding database (firstOrCreate — idempotent)..."
-php artisan db:seed --force
-
 echo "==> Caching config..."
 php artisan config:cache
 php artisan route:cache
