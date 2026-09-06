@@ -22,9 +22,14 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call(QuartierSeeder::class);
-        $this->call(LearnContentSeeder::class);
-        $this->call(BadgeSeeder::class);
+        // Chaque seeder est isolé — un échec ne bloque pas les suivants
+        foreach ([QuartierSeeder::class, LearnContentSeeder::class, BadgeSeeder::class] as $seeder) {
+            try {
+                $this->call($seeder);
+            } catch (\Throwable $e) {
+                $this->command->warn("Seeder {$seeder} skipped: " . $e->getMessage());
+            }
+        }
 
         // ─── Admin ────────────────────────────────────────────────
         $admin = User::firstOrCreate(
@@ -493,6 +498,10 @@ class DatabaseSeeder extends Seeder
         }
 
         // ─── Données de test complètes (touristes, réservations, moments, etc.) ──
-        $this->call(TestDataSeeder::class);
+        try {
+            $this->call(TestDataSeeder::class);
+        } catch (\Throwable $e) {
+            $this->command->warn('TestDataSeeder skipped: ' . $e->getMessage());
+        }
     }
 }

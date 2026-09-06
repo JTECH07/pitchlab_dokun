@@ -4,6 +4,9 @@ set -e
 echo "==> Running migrations..."
 php artisan migrate --force
 
+echo "==> Seeding database..."
+php artisan db:seed --force || echo "==> Seed skipped or failed (non-blocking)"
+
 echo "==> Caching config..."
 php artisan config:cache
 php artisan route:cache
