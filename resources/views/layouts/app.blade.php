@@ -37,10 +37,11 @@
  <style>
  body { font-family: 'Manrope', sans-serif; }
  h1, h2, h3, h4, .font-serif { font-family: 'DM Serif Display', serif; }
+ [x-cloak] { display: none !important; }
  </style>
 
  <!-- Scripts -->
- <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+ <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
  </head>
  <body class="font-sans antialiased">
  <div class="min-h-screen bg-dokun-ivory">

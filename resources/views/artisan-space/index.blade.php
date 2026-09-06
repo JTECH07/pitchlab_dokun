@@ -373,7 +373,7 @@
 
  <script>
  function artisanDashboard() {
- const allReservations = @js($reservations->map(fn($r) => [
+ const allReservations = @js(isset($reservations) ? $reservations->map(fn($r) => [
  'id' => $r->id,
  'status' => $r->status,
  'visitor_name' => $r->visitor_name,
@@ -384,16 +384,16 @@
  'experience_type' => $r->experience_type,
  'message' => $r->message,
  'experience' => $r->experience ? ['id' => $r->experience->id, 'title' => $r->experience->title] : null,
- ]));
+ ])) : []);
 
  return {
  activeTab: 'reservations',
  resFilter: 'all',
  reservations: allReservations,
- stats: @json($stats),
+ stats: @json($stats ?? ['pending' => 0, 'accepted' => 0, 'completed' => 0]),
  dragOver: false,
  uploading: false,
- galleryPhotos: @js($artisan ? $artisan->media()->where('type', 'image')->latest()->get()->map(fn($m) => ['id' => $m->id, 'url' => $m->url]) : []),
+ galleryPhotos: @js(isset($artisan) && $artisan ? $artisan->media()->where('type', 'image')->latest()->get()->map(fn($m) => ['id' => $m->id, 'url' => $m->url]) : []),
  isRecording: false,
  recordingTime: '00:00',
  recordingTimer: null,
