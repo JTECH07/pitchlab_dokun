@@ -373,18 +373,7 @@
 
  <script>
  function artisanDashboard() {
- const allReservations = @js(isset($reservations) ? $reservations->map(fn($r) => [
- 'id' => $r->id,
- 'status' => $r->status,
- 'visitor_name' => $r->visitor_name,
- 'visitor_phone' => $r->visitor_phone,
- 'visitor_email' => $r->visitor_email,
- 'requested_date' => $r->requested_date,
- 'guests_count' => $r->guests_count,
- 'experience_type' => $r->experience_type,
- 'message' => $r->message,
- 'experience' => $r->experience ? ['id' => $r->experience->id, 'title' => $r->experience->title] : null,
- ])) : []);
+ const allReservations = @json($reservationsJson ?? []);
 
  return {
  activeTab: 'reservations',

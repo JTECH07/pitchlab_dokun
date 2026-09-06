@@ -92,7 +92,23 @@ class ArtisanSpaceController extends Controller
             'completed' => $reservations->where('status', 'completed')->count(),
         ];
 
-        return view('artisan-space.index', compact('artisan', 'stats', 'reservations'));
+        // Prépare les données JSON pour Alpine — évite les closures dans @js Blade
+        $reservationsJson = $reservations->map(fn($r) => [
+            'id'              => $r->id,
+            'status'          => $r->status,
+            'visitor_name'    => $r->visitor_name,
+            'visitor_phone'   => $r->visitor_phone,
+            'visitor_email'   => $r->visitor_email,
+            'requested_date'  => $r->requested_date,
+            'guests_count'    => $r->guests_count,
+            'experience_type' => $r->experience_type,
+            'message'         => $r->message,
+            'experience'      => $r->experience
+                ? ['id' => $r->experience->id, 'title' => $r->experience->title]
+                : null,
+        ])->values()->all();
+
+        return view('artisan-space.index', compact('artisan', 'stats', 'reservations', 'reservationsJson'));
     }
 
     public function updateReservation(Request $request, ReservationRequest $reservation)
