@@ -7,7 +7,7 @@
  <link rel="preconnect" href="https://fonts.bunny.net">
  <link href="https://fonts.bunny.net/css?family=dm-serif-display:400|manrope:400,600,700,800&display=swap" rel="stylesheet"/>
  <script src="https://cdn.tailwindcss.com"></script>
- <script>tailwind.config={theme:{extend:{colors:{dokun:{green:'#064E3B',gold:'#C99424',ivory:'#F8F6F0',charcoal:'#17201D'}},fontFamily:{sans:['Manrope','sans-serif'],serif:['"DM Serif Display"','serif']}}}}</script>
+ <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{dokun:{green:'#064E3B',gold:'#C99424',ivory:'#F8F6F0',charcoal:'#17201D'}},fontFamily:{sans:['Manrope','sans-serif'],serif:['"DM Serif Display"','serif']}}}}</script>
  <!-- Leaflet CSS -->
  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
  <style>
@@ -55,27 +55,94 @@
  @keyframes marquee-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
  @keyframes marquee-scroll-rtl{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 
- /* Home map card styles */
- #home-map .leaflet-control-zoom { border: none !important; box-shadow: 0 2px 10px rgba(0,0,0,0.15) !important; border-radius: 10px !important; overflow: hidden; }
- #home-map .leaflet-control-zoom a { background: #1a1a1a !important; color: #ffffff !important; width: 32px !important; height: 32px !important; line-height: 32px !important; font-size: 16px !important; font-weight: 700 !important; border: none !important; }
- #home-map .leaflet-control-zoom a:hover { background: #333 !important; }
- #home-map .leaflet-control-zoom a:first-child { border-radius: 10px 10px 0 0 !important; }
- #home-map .leaflet-control-zoom a:last-child { border-radius: 0 0 10px 10px !important; }
- #home-map .leaflet-control-attribution { display: none !important; }
+  /* Home map card styles */
+  #home-map .leaflet-control-zoom { border: none !important; box-shadow: 0 2px 10px rgba(0,0,0,0.15) !important; border-radius: 10px !important; overflow: hidden; }
+  #home-map .leaflet-control-zoom a { background: #1a1a1a !important; color: #ffffff !important; width: 32px !important; height: 32px !important; line-height: 32px !important; font-size: 16px !important; font-weight: 700 !important; border: none !important; }
+  #home-map .leaflet-control-zoom a:hover { background: #333 !important; }
+  #home-map .leaflet-control-zoom a:first-child { border-radius: 10px 10px 0 0 !important; }
+  #home-map .leaflet-control-zoom a:last-child { border-radius: 0 0 10px 10px !important; }
+  #home-map .leaflet-control-attribution { display: none !important; }
 
- .drop-marker {
- width: 28px; height: 36px;
- position: relative;
- }
- .drop-marker svg { width: 100%; height: 100%; } 
- .drop-marker .drop-shadow {
- position: absolute; bottom: -3px; left: 50%; transform: translateX(-50%);
- width: 14px; height: 6px; background: rgba(0,0,0,0.25); border-radius: 50%;
- filter: blur(2px);
- }
- </style>
+  .drop-marker {
+  width: 28px; height: 36px;
+  position: relative;
+  }
+  .drop-marker svg { width: 100%; height: 100%; } 
+  .drop-marker .drop-shadow {
+  position: absolute; bottom: -3px; left: 50%; transform: translateX(-50%);
+  width: 14px; height: 6px; background: rgba(0,0,0,0.25); border-radius: 50%;
+  filter: blur(2px);
+  }
+
+  /* ========== DARK MODE — homepage overrides ========== */
+  /* Sections */
+  html.dark #comment-ca-marche { background: #17201D !important; }
+  html.dark #comment-ca-marche img { opacity: 0.05 !important; }
+  html.dark #artisans { background: #1a2420 !important; }
+  html.dark #terrain { background: #0f1a15 !important; }
+  html.dark section.bg-white { background: #1e2a24 !important; }
+  html.dark section.bg-\[\#F8F6F0\] { background: #1a2420 !important; }
+
+  /* Headings */
+  html.dark h2.text-\[\#064E3B\], html.dark .serif.text-\[\#064E3B\] { color: #6ee7b7 !important; }
+  html.dark h3.text-\[\#064E3B\], html.dark h3.serif.text-\[\#064E3B\] { color: #6ee7b7 !important; }
+  html.dark .text-\[\#064E3B\] { color: #6ee7b7 !important; }
+
+  /* Body text */
+  html.dark .text-\[\#17201D\] { color: #e2e8e0 !important; }
+  html.dark .text-\[\#17201D\]\/60 { color: rgba(226,232,224,.6) !important; }
+  html.dark .text-\[\#17201D\]\/70 { color: rgba(226,232,224,.7) !important; }
+  html.dark p.text-\[\#17201D\]\/60 { color: rgba(226,232,224,.6) !important; }
+  html.dark p.text-\[\#17201D\]\/70 { color: rgba(226,232,224,.7) !important; }
+
+  /* Gold accents */
+  html.dark .text-\[\#C99424\] { color: #fbbf24 !important; }
+
+  /* Cards — "Comment ça marche" */
+  html.dark .bg-white.rounded-2xl { background: #1e2a24 !important; }
+  html.dark .bg-\[\#F8F6F0\] { background: #1e2a24 !important; }
+  html.dark .bg-white { background: #1e2a24 !important; }
+  html.dark .bg-\[\#F8F6F0\].rounded-2xl { background: #1e2a24 !important; }
+
+  /* Badge step label */
+  html.dark .bg-\[\#064E3B\].text-white { background: #047857 !important; }
+
+  /* Cards border */
+  html.dark .border-gray-100 { border-color: rgba(255,255,255,.08) !important; }
+
+  /* Artisan cards */
+  html.dark .bg-white.rounded-2xl.overflow-hidden.shadow-lg { background: #1e2a24 !important; }
+  html.dark .bg-white\/95 { background: rgba(30,42,36,.95) !important; }
+
+  /* Savoir-faire card icon box */
+  html.dark .bg-white.rounded-2xl.flex.items-center.justify-center { background: #25332c !important; }
+
+  /* "Pour qui" section */
+  html.dark section.bg-\[\#064E3B\] { background: #047857 !important; }
+
+  /* Stats bar */
+  html.dark section.bg-\[\#064E3B\].text-white { background: #047857 !important; }
+
+  /* Tabs in videos section */
+  html.dark .bg-\[\#F8F6F0\].p-1\.5 { background: #1e2a24 !important; }
+  html.dark .bg-\[\#17201D\].rounded-\[2rem\] { background: #0f1a15 !important; }
+
+  /* Rejoin ecosystem cards */
+  html.dark .bg-white.rounded-\[2rem\] { background: #1e2a24 !important; }
+
+  /* Footer area */
+  html.dark .bg-\[\#17201D\].rounded-2xl { background: #0f1a15 !important; }
+
+  /* Generic fallback for all hardcoded whites */
+  html.dark [class*="bg-white"] { background-color: #1e2a24 !important; }
+  html.dark [class*="bg-[#F8F6F0]"] { background-color: #1e2a24 !important; }
+
+  /* Generic fallback for all hardcoded dark text */
+  html.dark [class*="text-[#17201D]"] { color: #e2e8e0 !important; }
+  html.dark [class*="text-[#064E3B]"] { color: #6ee7b7 !important; }
+</style>
 </head>
-<body class="antialiased bg-[#F8F6F0] text-[#17201D]">
+<body class="antialiased bg-[#F8F6F0] dark:bg-[#17201D] text-[#17201D] dark:text-[#e2e8e0]">
 
 {{-- Navbar partagée (transparente sur le hero, devient blanche au scroll) --}}
 @include('partials.navbar', ['transparent' => true])
@@ -318,7 +385,7 @@
  </div>
  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
  @foreach($categories as $i => $cat)
- <a href="{{ route('artisans.index') }}?savoir_faire={{ $cat->id }}" class="sf-card group relative bg-[#F8F6F0] rounded-2xl p-8 border border-gray-100 hover:border-[#C99424]/40 overflow-hidden reveal" style="transition-delay:{{ ($i % 3) * 120 }}ms">
+ <a href="{{ route('savoir-faire.index') }}" class="sf-card group relative bg-[#F8F6F0] dark:bg-[#1e2a24] rounded-2xl p-8 border border-gray-100 dark:border-white/10 hover:border-[#C99424]/40 overflow-hidden reveal" style="transition-delay:{{ ($i % 3) * 120 }}ms">
  {{-- Barre accent animée --}}
  <span class="absolute top-0 left-0 h-1 w-0 bg-gradient-to-r from-[#064E3B] to-[#C99424] group-hover:w-full transition-all duration-500"></span>
  {{-- Motif wax au survol --}}
