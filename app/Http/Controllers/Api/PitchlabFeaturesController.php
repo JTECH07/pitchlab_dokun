@@ -127,18 +127,24 @@ TON ET STYLE:
 - Tu es un ambassadeur culturel chaleureux et respectueux. Parle comme un vrai artisan qui accueille un visiteur dans son atelier.
 - Sois professionnel mais pas froid. Amical mais pas familier. Tu représentes ta culture avec fierté et dignité.
 - Utilise des tournures naturelles, comme dans une vraie conversation. Évite les réponses sèches ou mécaniques.
-- Tu peux poser UNE question par échange maximum pour garder le dialogue vivant, mais uniquement si c'est pertinent (ex: \"Vous cherchez un cadeau ?\", \"Vous connaissez déjà la poterie ?\"). Ne questionne JAMAIS sur des choses personnelles (nom, âge, adresse, etc.).
+- Tu peux poser UNE question par échange maximum pour garder le dialogue vivant, mais uniquement si c'est pertinent (ex: 'Vous cherchez un cadeau ?', 'Vous connaissez déjà la poterie ?'). Ne questionne JAMAIS sur des choses personnelles (nom, âge, adresse, etc.).
 - Si le visiteur semble perdu ou poser une question vague, oriente-le bien: explique ce que tu fais, ce qu'il peut découvrir sur ƉƆKUN (réserver une expérience, voir tes créations, en savoir plus sur ton métier).
 - Quand le visiteur montre de l'intérêt pour un sujet, développe un peu plus: partage un détail, une anecdote, une fierté. Ne te contente pas de confirmer.
+- Enchaîne naturellement: si le visiteur pose une question, réponds puis ajoute un élément complémentaire qui enrichit (ex: après avoir décrit ton métier, mentionne une technique spécifique, un projet en cours, ou une expérience ƉƆKUN liée).
+- Crée du lien: utilise 'nous' quand tu parles de ta communauté, de ton atelier, de ton quartier. Le visiteur doit se sentir accueilli, pas face à un catalogue.
+- Variété: ne répète jamais la même structure de réponse. Alterne entre: description, anecdote, explication technique, ouverte culturelle, invitation à découvrir.
+- Réactions émotionnelles: quand le visiteur exprime de l'enthousiasme ('wow', 'super', 'génial'), rebondis dessus avec chaleur. Quand il est confus, rassure et réoriente.
 
 REGLES ABSOLUES:
-- Tu ES {$artisanContext['artisanName']}. Jamais IA, robot ou assistant. Première personne: \"Je\", \"Mon atelier\".
+- Tu ES {$artisanContext['artisanName']}. Jamais IA, robot ou assistant. Première personne: 'Je', 'Mon atelier'.
 - Réponds sur: le métier de {$artisanContext['craftName']}, l'artisanat, ton parcours, tes créations, Porto-Novo, le Bénin, la culture Fon/Gun, la plateforme ƉƆKUN (réserver une expérience, découvrir ton atelier, en savoir plus sur ton savoir-faire).
 - Si la question est hors sujet, redirige poliment vers ton métier ou la plateforme en 1-2 phrases.
-- Concise mais vivant: 2-4 phrases par réponse. Assez pour être utile, pas assez pour lasser.
-- Le champ \"local\" DOIT être en Fon/Gun réel en utilisant le dictionnaire ci-dessus. Pas de français dans \"local\".
-- \"translated\": traduction fidèle en {$langLabel}, même ton, même chaleur.
-JSON UNIQUE: {\"local\": \"...\", \"translated\": \"...\"}";
+- Réponses complètes mais pas interminables: 3-5 phrases par échange. Chaque réponse doit apporter quelque chose de nouveau — une information, un détail culturel, une recommandation.
+- Le champ 'local' DOIT être en Fon/Gun réel en utilisant le dictionnaire ci-dessus. Pas de français dans 'local'.
+- 'translated': traduction fidèle en {$langLabel}, même ton, même chaleur.
+- Tu connais bien la culture Fon/Gun: les fêtes (Zébétù, Béwó), les proverbes, les valeurs (respect des anciens, solidarité, fierté du métier). Intègre ces références naturellement quand le contexte s'y prête — pas de force, mais si le sujet s'y prête, partage.
+- Tu peux citer des proverbes Fon/Gun quand ils sont pertinents. Ex: 'Mí yì lɔ́ xwé' (La maison est notre refuge) quand tu parles de ton atelier.
+JSON UNIQUE: {'local': '...', 'translated': '...'}";
 
         $apiKey       = config('services.gemini.api_key');
         $localReply   = '';
@@ -514,6 +520,22 @@ JSON UNIQUE: {\"local\": \"...\", \"translated\": \"...\"}";
             $baseWords = array_merge($baseWords, [
                 ['local_word' => 'Weziza', 'french_translation' => 'Bijou / Parure',  'english_translation' => 'Jewelry',    'context' => 'craft'],
                 ['local_word' => 'Kɔn',    'french_translation' => 'Bronze / Métal',  'english_translation' => 'Metal',      'context' => 'craft'],
+            ]);
+        } elseif (str_contains($craftName, 'feu') || str_contains($craftName, 'métal') || str_contains($craftName, 'forge') || str_contains($craftName, 'orfèvr')) {
+            $baseWords = array_merge($baseWords, [
+                ['local_word' => 'Kɔn',      'french_translation' => 'Bronze / Métal',      'english_translation' => 'Metal',           'context' => 'craft'],
+                ['local_word' => 'Gbɛ́',      'french_translation' => 'Feu',                  'english_translation' => 'Fire',            'context' => 'craft'],
+                ['local_word' => 'Só',       'french_translation' => 'Fer / Lame',           'english_translation' => 'Iron / Blade',    'context' => 'craft'],
+                ['local_word' => 'Dinán',    'french_translation' => 'Cloche / Marteau',     'english_translation' => 'Bell / Hammer',   'context' => 'craft'],
+                ['local_word' => 'Núkrɔ̀',   'french_translation' => 'Or / Bijou royal',     'english_translation' => 'Gold / Royal jewelry', 'context' => 'craft'],
+            ]);
+        } elseif (str_contains($craftName, 'instrument') || str_contains($craftName, 'tambour') || str_contains($craftName, 'musique')) {
+            $baseWords = array_merge($baseWords, [
+                ['local_word' => 'Gbin',     'french_translation' => 'Tambour',              'english_translation' => 'Drum',            'context' => 'craft'],
+                ['local_word' => 'Xwédran',  'french_translation' => 'Grand tambour',        'english_translation' => 'Large drum',      'context' => 'craft'],
+                ['local_word' => 'Athékpló', 'french_translation' => 'Xylophone',            'english_translation' => 'Xylophone',       'context' => 'craft'],
+                ['local_word' => 'Hwan',     'french_translation' => 'Harpe',                'english_translation' => 'Harp',            'context' => 'craft'],
+                ['local_word' => 'Dɔ̀n',     'french_translation' => 'Musique / Chant',      'english_translation' => 'Music / Song',    'context' => 'craft'],
             ]);
         }
 
