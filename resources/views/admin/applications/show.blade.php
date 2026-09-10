@@ -35,6 +35,20 @@
  <div><span class="font-bold text-dokun-charcoal/50">Expérience :</span> {{ $application->experience_years }} ans</div>
  <div class="col-span-2"><span class="font-bold text-dokun-charcoal/50">Adresse :</span> {{ $application->address }}</div>
  </div>
+
+ @if(!empty($application->selected_savoir_faires) && count($application->selected_savoir_faires))
+ <div class="mt-4">
+ <span class="font-bold text-dokun-charcoal/50 text-sm">Savoir-faires sélectionnés :</span>
+ <div class="flex flex-wrap gap-1.5 mt-1.5">
+ @php
+ $sfNames = \App\Models\SavoirFaire::whereIn('id', $application->selected_savoir_faires)->pluck('name');
+ @endphp
+ @foreach($sfNames as $name)
+ <span class="inline-block px-2.5 py-1 bg-dokun-green/10 text-dokun-green text-xs font-bold rounded-lg">{{ $name }}</span>
+ @endforeach
+ </div>
+ </div>
+ @endif
  </section>
 
  <section class="bg-white rounded-2xl border border-black/5 shadow-sm p-6">

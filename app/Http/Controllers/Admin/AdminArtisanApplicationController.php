@@ -49,7 +49,7 @@ class AdminArtisanApplicationController extends Controller
         ]);
 
         // Créer le profil artisan
-        Artisan::create([
+        $artisan = Artisan::create([
             'user_id'         => $user->id,
             'first_name'      => $application->first_name,
             'last_name'       => $application->last_name,
@@ -63,6 +63,11 @@ class AdminArtisanApplicationController extends Controller
             'category_id'     => $application->category_id,
             'status'          => 'published',
         ]);
+
+        // Sync les savoir-faires sélectionnés
+        if (!empty($application->selected_savoir_faires)) {
+            $artisan->savoirFaires()->sync($application->selected_savoir_faires);
+        }
 
         // Envoyer l'email de notification avec le mot de passe temporaire
         $user->notify(new ApplicationApprovedNotification($application, $tempPassword));
