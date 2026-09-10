@@ -422,7 +422,8 @@
  async updateStatus(res, newStatus) {
  res._updating = true;
  try {
- const res2 = await fetch('{{ route("artisan-space.reservations.status-json", res.id) }}', {
+ const url = '{{ route("artisan-space.reservations.status-json", "__ID__") }}'.replace('__ID__', res.id);
+ const res2 = await fetch(url, {
  method: 'PATCH',
  headers: {
  'X-CSRF-TOKEN': '{{ csrf_token() }}',
