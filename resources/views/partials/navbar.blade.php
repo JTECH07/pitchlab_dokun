@@ -26,18 +26,80 @@
  .nav-brand{color:#064E3B;transition:color .3s}
  .nav-brand-sub{color:#17201D;opacity:.5;transition:color .3s}
  #navbar.nav-scrolled{background:rgba(255,255,255,.97);backdrop-filter:blur(14px);box-shadow:0 1px 4px rgba(0,0,0,.05)}
- /* Dark mode overrides */
- html.dark body{background:#17201D;color:#F8F6F0}
+
+ /* Theme toggle icons */
+ #theme-toggle .icon-sun{display:block}
+ #theme-toggle .icon-moon{display:none}
+ html.dark #theme-toggle .icon-sun{display:none}
+ html.dark #theme-toggle .icon-moon{display:block}
+
+ /* ========== DARK MODE — global overrides ========== */
+ html.dark body{background:#17201D;color:#e2e8e0}
+ html.dark *{border-color:rgba(255,255,255,.08)}
+
+ /* Navbar */
  html.dark #navbar.nav-scrolled{background:rgba(23,32,29,.97);border-color:rgba(255,255,255,.08)}
- html.dark #navbar .nav-link{color:#F8F6F0;opacity:.8}
+ html.dark #navbar .nav-link{color:#e2e8e0;opacity:.8}
  html.dark #navbar .nav-link:hover{color:#C99424;opacity:1}
  html.dark #navbar .nav-link.is-active{color:#C99424;opacity:1}
- html.dark #navbar .nav-pill{border-color:rgba(255,255,255,.15);color:#F8F6F0;background:rgba(255,255,255,.06)}
+ html.dark #navbar .nav-pill{border-color:rgba(255,255,255,.15);color:#e2e8e0;background:rgba(255,255,255,.06)}
  html.dark #navbar .nav-pill:hover{background:rgba(255,255,255,.12)}
+ html.dark #navbar .nav-brand{color:#6ee7b7}
+ html.dark #navbar .nav-brand-sub{color:rgba(226,232,224,.5)}
+ html.dark #navbar.nav-overlay .nav-brand{color:#6ee7b7}
+ html.dark #navbar.nav-overlay .nav-brand-sub{color:rgba(255,255,255,.7)}
+
+ /* Cards, backgrounds */
  html.dark .bg-white{background:#1e2a24 !important}
- html.dark .text-dokun-charcoal{color:#F8F6F0 !important}
- html.dark .border-gray-100{border-color:rgba(255,255,255,.1) !important}
- html.dark .bg-dokun-ivory{background:#2a3b33 !important}
+ html.dark .bg-dokun-ivory{background:#25332c !important}
+ html.dark .bg-gray-50,html.dark .bg-gray-100{background:#1a2420 !important}
+ html.dark .bg-slate-100{background:#1e2a24 !important}
+ html.dark .bg-red-50{background:rgba(127,29,29,.25) !important}
+ html.dark .bg-dokun-green\/10{background:rgba(6,78,59,.35) !important}
+
+ /* Text */
+ html.dark .text-dokun-charcoal{color:#e2e8e0 !important}
+ html.dark .text-dokun-charcoal\/30{color:rgba(226,232,224,.3) !important}
+ html.dark .text-dokun-charcoal\/40{color:rgba(226,232,224,.4) !important}
+ html.dark .text-dokun-charcoal\/45{color:rgba(226,232,224,.45) !important}
+ html.dark .text-dokun-charcoal\/50{color:rgba(226,232,224,.5) !important}
+ html.dark .text-dokun-charcoal\/55{color:rgba(226,232,224,.55) !important}
+ html.dark .text-dokun-charcoal\/60{color:rgba(226,232,224,.6) !important}
+ html.dark .text-dokun-charcoal\/65{color:rgba(226,232,224,.65) !important}
+ html.dark .text-dokun-charcoal\/70{color:rgba(226,232,224,.7) !important}
+ html.dark .text-dokun-charcoal\/80{color:rgba(226,232,224,.8) !important}
+ html.dark .text-dokun-green{color:#6ee7b7 !important}
+ html.dark .text-dokun-green\/60{color:rgba(110,231,183,.6) !important}
+ html.dark .text-dokun-gold{color:#fbbf24 !important}
+ html.dark .text-gray-400{color:#9ca3af !important}
+ html.dark .text-gray-500,html.dark .text-gray-600,html.dark .text-slate-600{color:#94a3b8 !important}
+ html.dark .text-gray-700,html.dark .text-gray-800{color:#e2e8e0 !important}
+ html.dark .text-\[\#17201D\]{color:#e2e8e0 !important}
+ html.dark .text-\[\#17201D\]\/50{color:rgba(226,232,224,.5) !important}
+ html.dark .text-\[\#17201D\]\/60{color:rgba(226,232,224,.6) !important}
+ html.dark .text-\[\#17201D\]\/70{color:rgba(226,232,224,.7) !important}
+ html.dark .text-\[\#064E3B\]{color:#6ee7b7 !important}
+ html.dark .text-\[\#C99424\]{color:#fbbf24 !important}
+ html.dark .text-red-600{color:#fca5a5 !important}
+ html.dark .text-green-600{color:#6ee7b7 !important}
+ html.dark .text-amber-900,html.dark .text-amber-800,html.dark .text-amber-700,html.dark .text-amber-600{color:#fbbf24 !important}
+ html.dark .bg-amber-50{background:rgba(251,191,36,.15) !important}
+
+ /* Borders */
+ html.dark .border-gray-100{border-color:rgba(255,255,255,.08) !important}
+ html.dark .ring-gray-100{--tw-ring-color:rgba(255,255,255,.08) !important}
+ html.dark .border-t{border-color:rgba(255,255,255,.08) !important}
+
+ /* Form elements */
+ html.dark input,html.dark textarea,html.dark select{background:#1a2420 !important;color:#e2e8e0 !important;border-color:rgba(255,255,255,.12) !important}
+ html.dark input::placeholder,html.dark textarea::placeholder{color:rgba(226,232,224,.4) !important}
+
+ /* Dropdowns */
+ html.dark .bg-white.rounded-xl{background:#1e2a24 !important}
+
+ /* Shadows */
+ html.dark .shadow-sm{box-shadow:0 1px 2px rgba(0,0,0,.3) !important}
+ html.dark .shadow-xl{box-shadow:0 8px 30px rgba(0,0,0,.4) !important}
 </style>
 <script>
  (function(){if(window.Alpine)return;var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js';s.defer=true;document.head.appendChild(s);})();
@@ -116,9 +178,9 @@
 {{-- Desktop right --}}
   <div class="hidden lg:flex items-center gap-2.5">
   {{-- Thème (clair/sombre) --}}
-  <button id="theme-toggle" class="p-2 rounded-lg hover:bg-dokun-ivory transition" aria-label="Basculer le thème">
-   <svg class="w-5 h-5 text-dokun-gold hidden dark:block" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/></svg>
-   <svg class="w-5 h-5 text-dokun-gold block dark:hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+  <button id="theme-toggle" class="p-2 rounded-lg hover:bg-dokun-ivory dark:hover:bg-white/10 transition" aria-label="Basculer le thème">
+   <svg class="icon-sun w-5 h-5 text-dokun-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/></svg>
+   <svg class="icon-moon w-5 h-5 text-dokun-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
   </button>
  <div class="relative" x-data="{open:false}" @click.away="open=false">
  <button @click="open=!open" class="nav-pill flex items-center gap-1.5 text-sm font-bold px-3.5 py-2.5 rounded-lg border transition">
@@ -181,6 +243,10 @@
 
  {{-- Mobile --}}
  <div class="flex lg:hidden items-center gap-2">
+ <button id="theme-toggle-mobile" class="nav-pill p-2 rounded-lg border transition" aria-label="Basculer le thème">
+  <svg class="icon-sun w-5 h-5 text-dokun-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/></svg>
+  <svg class="icon-moon w-5 h-5 text-dokun-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+ </button>
  <form action="{{ route('locale.switch', App::getLocale() === 'fr' ? 'en' : 'fr') }}" method="POST">
  @csrf
  <button type="submit" class="nav-pill text-sm font-bold px-3 py-2 rounded-lg border transition">
@@ -198,7 +264,7 @@
  </div>
 
  {{-- Mobile Menu --}}
- <div x-show="mobileOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0 -translate-y-2" x-cloak class="lg:hidden bg-white border-t border-gray-100 shadow-xl max-h-[80vh] overflow-y-auto">
+ <div x-show="mobileOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0 -translate-y-2" x-cloak class="lg:hidden bg-white dark:bg-[#1e2a24] border-t border-gray-100 dark:border-white/10 shadow-xl max-h-[80vh] overflow-y-auto">
  <div class="max-w-7xl mx-auto px-4 py-4">
 
  {{-- Profil --}}
@@ -306,7 +372,7 @@
   const prefersDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
   if(saved==='dark'||(!saved&&prefersDark)){html.classList.add('dark');}
   document.addEventListener('click',function(e){
-   var btn=e.target.closest('#theme-toggle');
+   var btn=e.target.closest('#theme-toggle, #theme-toggle-mobile');
    if(!btn)return;
    html.classList.toggle('dark');
    localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');
