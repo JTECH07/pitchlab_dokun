@@ -10,6 +10,7 @@
  <script src="https://cdn.tailwindcss.com"></script>
  <script>
  tailwind.config = {
+ darkMode: 'class',
  theme: { extend: {
  colors: { dokun: { green:'#064E3B', gold:'#C99424', ivory:'#F8F6F0', charcoal:'#17201D' } },
  fontFamily: { sans:['Manrope','sans-serif'], serif:['"DM Serif Display"','serif'] }
@@ -27,7 +28,7 @@
  .filter-chip input:checked + span{background:#064E3B;color:white;border-color:#064E3B;}
  </style>
 </head>
-<body class="bg-dokun-ivory text-dokun-charcoal">
+<body class="bg-dokun-ivory dark:bg-[#17201D] text-dokun-charcoal dark:text-[#e2e8e0]">
 
 @include('partials.navbar', ['active' => 'experiences', 'showCurrency' => true])
 

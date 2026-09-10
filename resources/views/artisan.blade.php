@@ -11,6 +11,7 @@
  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
  <script>
  tailwind.config = {
+ darkMode: 'class',
  theme: { extend: {
  colors: { dokun: { green:'#064E3B', gold:'#C99424', ivory:'#F8F6F0', charcoal:'#17201D' } },
  fontFamily: { sans:['Manrope','sans-serif'], serif:['"DM Serif Display"','serif'] },
@@ -24,7 +25,7 @@
  .dokun-section{opacity:1;transform:translateY(0);transition:opacity .5s,transform .5s;}
  </style>
 </head>
-<body class="antialiased bg-dokun-ivory text-dokun-charcoal bg-dokun-pattern">
+<body class="antialiased bg-dokun-ivory dark:bg-[#17201D] text-dokun-charcoal dark:text-[#e2e8e0] bg-dokun-pattern">
 
 @include('partials.navbar', ['active' => 'artisans'])
 

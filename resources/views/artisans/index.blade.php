@@ -11,6 +11,7 @@
  <script src="https://cdn.tailwindcss.com"></script>
  <script>
  tailwind.config = {
+ darkMode: 'class',
  theme: {
  extend: {
  colors: {
@@ -37,7 +38,7 @@
  h1, h2, h3, h4, .font-serif { font-family: 'DM Serif Display', serif; }
  </style>
 </head>
-<body class="antialiased bg-dokun-ivory text-dokun-charcoal bg-dokun-pattern min-h-screen flex flex-col">
+<body class="antialiased bg-dokun-ivory dark:bg-[#17201D] text-dokun-charcoal dark:text-[#e2e8e0] bg-dokun-pattern min-h-screen flex flex-col">
 
  @include('partials.navbar', ['active' => 'artisans'])
 
