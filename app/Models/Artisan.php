@@ -57,6 +57,6 @@ class Artisan extends Model
         if ($firstMedia && $firstMedia->path) {
             return asset($firstMedia->path);
         }
-        return asset('images/hero/hero_dokun.png');
+        return asset('images/dokun_logo_final.jpeg');
     }
 }
