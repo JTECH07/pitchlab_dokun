@@ -82,6 +82,22 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        $catFeuMetal = Category::firstOrCreate(
+            ['slug' => 'arts-feu-metal'],
+            [
+                'name' => 'Arts du Feu & Métal',
+                'description' => 'Forge, fonderie, orfèvrerie, dinanderie — le travail du bronze, du fer et de l\'or par les techniques ancestrales.',
+            ]
+        );
+
+        $catInstruments = Category::firstOrCreate(
+            ['slug' => 'instruments-traditionnels'],
+            [
+                'name' => 'Instruments Traditionnels',
+                'description' => 'Fabrication de tambours, xylophones, harpes et instruments de cérémonie — la musique vivante du patrimoine Fon/Gun.',
+            ]
+        );
+
         // ─── Savoir-Faires ────────────────────────────────────────
         $sfPoterie = SavoirFaire::firstOrCreate(
             ['slug' => 'poterie-terre-cuite'],
@@ -116,6 +132,51 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Vannerie & Tressage de Raphia',
                 'category_id' => $catVannerie->id,
                 'description' => 'Confection de paniers, nattes cérémonielles, chapeaux et objets décoratifs en raphia, sisal et fibres de palmier.',
+            ]
+        );
+
+        $sfForge = SavoirFaire::firstOrCreate(
+            ['slug' => 'forge-fonderie'],
+            [
+                'name' => 'Forge & Fonderie',
+                'category_id' => $catFeuMetal->id,
+                'description' => 'Taillage du fer et du bronze au feu de charbon — lames, outils, pièces décoratives et objets rituels forgés à la main.',
+            ]
+        );
+
+        $sfOrfevrerie = SavoirFaire::firstOrCreate(
+            ['slug' => 'orfevrerie-bronze'],
+            [
+                'name' => 'Orfèvrerie & Bronze',
+                'category_id' => $catFeuMetal->id,
+                'description' => 'Travail de l\'or et du bronze pour bijoux, parures, accessoires royaux et pièces cérémonielles en dinanderie.',
+            ]
+        );
+
+        $sfDinanderie = SavoirFaire::firstOrCreate(
+            ['slug' => 'dinanderie-cuivre'],
+            [
+                'name' => 'Dinanderie & Cuivre',
+                'category_id' => $catFeuMetal->id,
+                'description' => 'Façonnage de cloches, encensoirs, libs et récipients en cuivre et laiton martelé — arts du métal martelé.',
+            ]
+        );
+
+        $sfTambours = SavoirFaire::firstOrCreate(
+            ['slug' => 'fabrication-tambours'],
+            [
+                'name' => 'Fabrication de Tambours',
+                'category_id' => $catInstruments->id,
+                'description' => 'Sculpture et tension de peaux sur caisses en bois — tambours xwédran, gangan et atsá de cérémonie.',
+            ]
+        );
+
+        $sfXylophones = SavoirFaire::firstOrCreate(
+            ['slug' => 'xylophones-harpes'],
+            [
+                'name' => 'Xylophones & Harpes',
+                'category_id' => $catInstruments->id,
+                'description' => 'Construction de xylophones (athékpló), harpes (hwan) et instruments à cordes — le son de la mémoire Fon/Gun.',
             ]
         );
 
@@ -204,7 +265,7 @@ class DatabaseSeeder extends Seeder
                 'longitude' => 2.6310,
                 'status' => 'published',
                 'savoir_faire' => $sfVannerie,
-                'image_path' => 'images/artisans/yvette_gbaguidi.png',
+                'image_path' => 'images/dokun_bg4.jpg',
                 'image_title' => 'Yvette GBAGUIDI tressant des nattes en raphia',
             ],
             [
@@ -234,13 +295,13 @@ class DatabaseSeeder extends Seeder
                 'whatsapp' => '+22996332211',
                 'description' => 'Maître tisserand du pagne traditionnel Kanvo, Messan crée des pièces aux motifs géométriques et symboliques qui honorent les traditions textiliers du Bénin.',
                 'history' => 'Issu d\'une famille de tisserands de Guèvié, Messan a appris le maniement du métier à tisser enfil et à navette dès l\'adolescence. Il est devenu le tisserand attitré de plusieurs chefs traditionnels de Porto-Novo pour les cérémonies officielles. Il explore désormais la teinture à l\'indigo pour créer des coloris profonds et durables.',
-                'experience_years' => 25,
+                'experience_years' => 15,
                 'address' => 'Quartier Guèvié, Porto-Novo',
                 'latitude' => 6.5010,
                 'longitude' => 2.6240,
                 'status' => 'published',
                 'savoir_faire' => $sfKanvo,
-                'image_path' => 'images/artisans/messan_akakpo.png',
+                'image_path' => 'images/tisserand.jpg',
                 'image_title' => 'Messan AKAKPO tissant le Kanvo sur son métier traditionnel',
             ],
             [
