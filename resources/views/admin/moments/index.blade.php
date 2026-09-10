@@ -5,9 +5,9 @@
  <title>Modération des ƉƆKUN Moments · Admin</title>
  <link href="https://fonts.bunny.net/css?family=dm-serif-display:400|manrope:400,600,700&display=swap" rel="stylesheet"/>
  <script src="https://cdn.tailwindcss.com"></script>
- <script>tailwind.config={theme:{extend:{colors:{dokun:{green:'#064E3B',gold:'#C99424',ivory:'#F8F6F0',charcoal:'#17201D'}},fontFamily:{sans:['Manrope'],serif:['"DM Serif Display"']}}}}</script>
+ <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{dokun:{green:'#064E3B',gold:'#C99424',ivory:'#F8F6F0',charcoal:'#17201D'}},fontFamily:{sans:['Manrope'],serif:['"DM Serif Display"']}}}}</script>
 </head>
-<body class="bg-dokun-ivory text-dokun-charcoal min-h-screen">
+<body class="bg-dokun-ivory text-dokun-charcoal min-h-screen dark:bg-[#17201D] dark:text-[#e2e8e0]">
 @include('partials.navbar', ['active' => ''])
 
 <main class="pt-32 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
