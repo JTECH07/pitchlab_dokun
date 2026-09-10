@@ -340,30 +340,11 @@
  <p class="text-white max-w-2xl mx-auto text-lg">Découvrez la vision, le fonctionnement et l'impact de la plateforme à travers ces vidéos.</p>
  <div class="h-1 w-20 bg-dokun-gold mx-auto mt-5"></div>
  </div>
- <div x-data="{ activeTab: 'goun' }" class="text-center mt-10">
- <!-- Tabs -->
- <div class="inline-flex bg-[#F8F6F0] p-1.5 rounded-full mb-10 shadow-sm border border-gray-100">
- <button @click="activeTab = 'goun'" :class="activeTab === 'goun' ? 'bg-[#064E3B] text-white shadow-md' : 'text-[#17201D]/70 hover:text-[#064E3B]'" class="px-6 py-2.5 rounded-full text-sm font-bold transition-all">Goun</button>
- <button @click="activeTab = 'en'" :class="activeTab === 'en' ? 'bg-[#064E3B] text-white shadow-md' : 'text-[#17201D]/70 hover:text-[#064E3B]'" class="px-6 py-2.5 rounded-full text-sm font-bold transition-all">English</button>
- <button @click="activeTab = 'fr'" :class="activeTab === 'fr' ? 'bg-[#064E3B] text-white shadow-md' : 'text-[#17201D]/70 hover:text-[#064E3B]'" class="px-6 py-2.5 rounded-full text-sm font-bold transition-all">Français</button>
- </div>
-
+ <div class="text-center mt-10">
  <!-- Videos -->
  <div class="max-w-5xl mx-auto">
- <div x-show="activeTab === 'goun'" x-transition.opacity class="bg-[#17201D] rounded-[2rem] overflow-hidden aspect-video shadow-2xl relative flex items-center justify-center border-4 border-white/20 bg-cover bg-center" style="background-image: url('{{ url('images/auth_bg.jpg') }}');">
- <div class="absolute inset-0 bg-[#064E3B]/70 backdrop-blur-sm pointer-events-none"></div>
- <span class="text-white text-2xl font-serif z-10 relative flex items-center gap-3"><x-icon name="sparkles" class="w-8 h-8" /> Vidéo Goun à venir...</span>
- <video controls src="/media/d338545d6ed1eb3f9d7b906863d25288_540w.mp4" class="absolute inset-0 w-full h-full z-20" autoplay></video>
- </div>
- <div x-show="activeTab === 'en'" x-transition.opacity x-cloak class="bg-[#17201D] rounded-[2rem] overflow-hidden aspect-video shadow-2xl relative flex items-center justify-center border-4 border-white/20 bg-cover bg-center" style="background-image: url('{{ url('images/auth_bg.jpg') }}');">
- <div class="absolute inset-0 bg-[#C99424]/70 backdrop-blur-sm pointer-events-none"></div>
- <span class="text-white text-2xl font-serif z-10 relative flex items-center gap-3"><x-icon name="sparkles" class="w-8 h-8" /> English video coming soon...</span>
- <video controls src="/media/fd4029e16e431ab71c923ebf3372ee6f_720w.mp4" class="absolute inset-0 w-full h-full z-20" autoplay></video>
- </div>
- <div x-show="activeTab === 'fr'" x-transition.opacity x-cloak class="bg-[#17201D] rounded-[2rem] overflow-hidden aspect-video shadow-2xl relative flex items-center justify-center border-4 border-white/20 bg-cover bg-center" style="background-image: url('{{ url('images/auth_bg.jpg') }}');">
- <div class="absolute inset-0 bg-[#17201D]/70 backdrop-blur-sm pointer-events-none"></div>
- <span class="text-white text-2xl font-serif z-10 relative flex items-center gap-3"><x-icon name="sparkles" class="w-8 h-8" /> Vidéo Française à venir...</span>
- <video controls src="/media/385742742e2dd16d58a01b53b489a1d3_360w.mp4" class="absolute inset-0 w-full h-full z-20" autoplay></video>
+ <div class="bg-[#17201D] rounded-[2rem] overflow-hidden aspect-video shadow-2xl relative border-4 border-white/20 bg-cover bg-center" style="background-image: url('{{ url('images/auth_bg.jpg') }}');">
+ <video controls src="{{ asset('media/IMG_9617.MOV') }}" class="absolute inset-0 w-full h-full z-10 object-cover"></video>
  </div>
  </div>
  </div>
