@@ -89,7 +89,7 @@
  <div>
  <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Métier / Profession</label>
  @php
- $trades = ['Tisserand', 'Potière', 'Costumière', 'Forgeron', 'Menuisier', 'Sculpteur', 'Bijoutier', 'Cuisinière', 'Danseuse', 'Griot', 'Autre'];
+ $trades = ['Tisserand', 'Potière', 'Costumière', 'Forgeron', 'Menuisier', 'Sculpteur', 'Bijoutier', 'Cuisinière', 'Danseuse', 'Griot', 'Orfèvre', 'Fabricant d\'instruments', 'Autre'];
  $currentTrade = old('trade', $existing?->trade);
  $isAutre = $currentTrade && !in_array($currentTrade, $trades);
  @endphp
@@ -106,6 +106,25 @@
  <input type="text" id="trade_custom" value="{{ $isAutre ? $currentTrade : '' }}" placeholder="Précisez votre métier…"
  class="mt-2 w-full rounded-xl border-gray-200 bg-[#F8F6F0] focus:border-dokun-green focus:ring-dokun-green py-3 px-4 text-sm {{ $isAutre ? '' : 'hidden' }}">
  </div>
+
+ {{-- Savoir-faires selection --}}
+ @if($savoirFaires->count())
+ <div>
+ <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-2">Savoir-faire <span class="text-dokun-charcoal/30 normal-case">(sélectionnez vos spécialités)</span></label>
+ <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+ @php $selectedSF = old('savoir_faires', $existing?->selected_savoir_faires ?? []); @endphp
+ @foreach($savoirFaires as $sf)
+ <label class="flex items-center gap-2.5 p-2.5 rounded-xl border border-gray-200 bg-[#F8F6F0] hover:border-dokun-green/40 cursor-pointer transition-colors">
+ <input type="checkbox" name="savoir_faires[]" value="{{ $sf->id }}"
+ {{ in_array($sf->id, $selectedSF) ? 'checked' : '' }}
+ class="rounded border-gray-300 text-dokun-green focus:ring-dokun-green">
+ <span class="text-sm text-dokun-charcoal">{{ $sf->name }}</span>
+ </label>
+ @endforeach
+ </div>
+ <x-input-error :messages="$errors->get('savoir_faires')" class="mt-1.5"/>
+ </div>
+ @endif
  <div>
  <label class="block text-xs font-bold uppercase tracking-wider text-dokun-charcoal/50 mb-1.5">Années d'expérience</label>
  <input type="number" name="experience_years" value="{{ old('experience_years', $existing?->experience_years ?? 0) }}" min="0" max="80" required
