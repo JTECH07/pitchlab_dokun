@@ -66,6 +66,8 @@ return array (
  'sf_artisans_practicing' => 'Artisans pratiquant',
  'sf_no_artisans' => 'Aucun artisan rattaché pour l\'instant.',
  'sf_view_profile' => 'Voir le profil',
+ 'sf_experiences_available' => ':count Expériences disponibles',
+ 'sf_artisans_count' => ':count artisans',
  'map_title' => 'Carte des Artisans',
  'map_subtitle' => 'Ateliers et savoir-faire de Porto-Novo',
  'map_radius' => 'Rayon de recherche',

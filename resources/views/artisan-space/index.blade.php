@@ -19,10 +19,10 @@
  @else
 
  {{-- Hero Banner --}}
- <section class="rounded-3xl bg-dokun-green text-white p-7 md:p-10 relative overflow-hidden">
- <img src="{{ $artisan->image_url }}" alt="" class="absolute inset-0 h-full w-full object-cover opacity-20">
+<section class="rounded-3xl bg-dokun-green text-white p-7 md:p-10 relative overflow-hidden">
+ <img src="{{ $artisan->image_url ?? asset('images/default-artisan.png') }}" alt="" class="absolute inset-0 h-full w-full object-cover opacity-20">
  <div class="relative flex items-center gap-6">
- <img src="{{ $artisan->image_url }}" alt="{{ $artisan->professional_name }}" class="w-20 h-20 md:w-28 md:h-28 rounded-2xl object-cover border-2 border-white/30">
+  <img src="{{ $artisan->image_url ?? asset('images/default-artisan.png') }}" alt="{{ $artisan->professional_name }}" class="w-20 h-20 md:w-28 md:h-28 rounded-2xl object-cover border-2 border-white/30">
  <div>
  <p class="text-dokun-gold uppercase font-bold tracking-wider text-xs">Espace professionnel</p>
  <h2 class="font-serif text-3xl md:text-4xl mt-1">{{ $artisan->professional_name ?: $artisan->first_name.' '.$artisan->last_name }}</h2>
@@ -422,7 +422,7 @@
  async updateStatus(res, newStatus) {
  res._updating = true;
  try {
- const res2 = await fetch('{{ route("artisan-space.reservations.status-json", ":id") }}'.replace(':id', res.id), {
+ const res2 = await fetch('{{ route("artisan-space.reservations.status-json", res.id) }}', {
  method: 'PATCH',
  headers: {
  'X-CSRF-TOKEN': '{{ csrf_token() }}',

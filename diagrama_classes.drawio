@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Classes MVP" id="diagram_id">
+    <mxGraphModel dx="660" dy="536" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169">
+      <root>
+        <!-- ============================================================= -->
+        <!-- USER (1) - Authentification Laravel                        -->
+        <!-- ============================================================= -->
+        <mxCell value="User" style="shape=rectangle;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#D5E8F1;strokeColor=#1E88E5;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="120" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================= -->
+        /// ARTISAN (1:1) - Extends User                               -->
+        <!-- ============================================================= -->
+        <mxCell value="Artisan" style="shape=rectangle;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#C8E6C9;strokeColor=#388E3C;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="100" width="120" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================= -->
+        /// CATEGORIES                                                    -->
+        <!-- ============================================================= -->
+        <mxCell value="Category" style="shape=rectangle;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFF9C4;strokeColor=#FBC02D;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="180" width="120" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================= -->
+        /// SAVOIRS FAIRES                                                 -->
+        <!-- ============================================================= -->
+        <mxCell value="SavoirFaire" style="shape=rectangle;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#E8EAF6;strokeColor=#5C6BC0;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="260" width="120" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================= -->
+        /// PRODUCTS                                                     -->
+        <!-- ============================================================= -->
+        <mxCell value="Product" style="shape=rectangle;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFEBEE;strokeColor=#CF6679;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="340" width="120" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================= -->
+        /// EXPERIENCES                                                   -->
+        <!-- ============================================================= -->
+        <mxCell value="Experience" style="shape=rectangle;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#E3F2FD;strokeColor=#1976D2;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="420" width="120" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================= -->
+        /// MEDIA                                                        -->
+        <!-- ============================================================= -->
+        <mxCell value="Media" style="shape=rectangle;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#F3E5F5;strokeColor=#AB47BC;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="500" width="120" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================= -->
+        /// RESERVATION REQUESTS                                           -->
+        <!-- ============================================================= -->
+        <mxCell value="ReservationRequest" style="shape=rectangle;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFF3E0;strokeColor=#F57C00;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="580" width="140" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================= -->
+        /// ARTISAN FAVORITES (pivot many-to-many)                       -->
+        <!-- ============================================================= -->
+        <mxCell value="ArtisanFavorite" style="shape=rectangle;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#E1BEE7;strokeColor=#8E24AA;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="660" width="140" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================= -->
+        /// ASSOCIATIONS / ARROWS                                        -->
+        <!-- ============================================================= -->
+
+        <!-- ARTISAN belongsTo User (1:1) -->
+        <mxCell value="artisan_id" style="edgeStyle=sourcedash;rounded=1;orthogonalLoop=1;orthogonalLoop=1;html=1;strokeColor=#1E88E5;fontColor=#000000;" edge="1" source="1" target="2" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell value="1" style="html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=none;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="70" width="20" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell value="1" style="html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=none;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="150" width="20" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- ARTISAN - CATEGORY (via category_id) 1:n -->
+        <mxCell value="category_id" style="edgeStyle=sourcedash;rounded=1;orthogonalLoop=1;html=1;strokeColor=#FBC02D;fontColor=#000000;" edge="1" source="3" target="4" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell value="1..n" style="html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=none;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="210" width="30" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- CATEGORY - SAVOIR FAIRE (1:n) -->
+        <mxCell value="artisan_id" style="edgeStyle=sourcedash;rounded=1;orthogonalLoop=1;html=1;strokeColor=#5C6BC0;fontColor=#000000;" edge="1" source="4" target="5" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell value="1" style="html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=none;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="300" width="20" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- ARTISAN - PRODUCTS (1:n) via artisan_id -->
+        <mxCell value="artisan_id" style="edgeStyle=sourcedash;rounded=1;orthogonalLoop=1;html=1;strokeColor=#CF6679;fontColor=#000000;" edge="1" source="2" target="5" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell value="1..n" style="html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=none;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="380" width="30" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- ARTISAN - EXPERIENCES (1:n) via artisan_id -->
+        <mxCell value="artisan_id" style="edgeStyle=sourcedash;rounded=1;orthogonalLoop=1;html=1;strokeColor=#1976D2;fontColor=#000000;" edge="1" source="2" target="6" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell value="1..n" style="html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=none;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="460" width="30" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- ARTISAN - MEDIA (1:n) via artisan_id -->
+        <mxCell value="artisan_id" style="edgeStyle=sourcedash;rounded=1;orthogonalLoop=1;html=1;strokeColor=#AB47BC;fontColor=#000000;" edge="1" source="2" target="7" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell value="1..n" style="html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=none;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="540" width="30" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- ARTISAN - RESERVATION REQUESTS (1:n) -->
+        <mxCell value="artisan_id" style="edgeStyle=sourcedash;rounded=1;orthogonalLoop=1;html=1;strokeColor=#F57C00;fontColor=#000000;" edge="1" source="2" target="8" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell value "1..n" style="html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=none;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="620" width="30" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- USER - ARTISAN FAVORITES (many-to-many pivot) -->
+        <mxCell value="user_id" style="edgeStyle=sourcedash;rounded=1;orthogonalLoop=1;html=1;strokeColor=#8E24AA;fontColor=#000000;" edge="1" source="1" target="9" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell value="artisan_id" style="edgeStyle=sourcedash;rounded=1;orthogonalLoop=1;html=1;strokeColor=#8E24AA;fontColor=#000000;" edge="1" source="9" target="2" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell value="1..n" style="html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=none;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="700" width="30" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell value="1..n" style="html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=none;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="280" y="680" width="30" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- SAVOIR FAIRE - CATEGORY (many-to-one) -->
+        <mxCell value="category_id" style="edgeStyle=sourcedash;rounded=1;html=1;strokeColor=#FBC02D;fontColor=#000000;" edge="1" source="4" target="3" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

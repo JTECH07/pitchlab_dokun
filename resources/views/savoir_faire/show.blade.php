@@ -98,10 +98,41 @@
  </div>
  @endforeach
  </div>
- @endif
- </div>
- </main>
+@endif
+  </div>
+  </main>
 
- @include('partials.footer')
+  <!-- Experiences des artisans de ce savoir-faire -->
+  @if($savoirFaire->artisans->count() > 0)
+  <section class="mb-20">
+   <h2 class="text-3xl font-serif text-dokun-green mb-6 flex items-center gap-3">
+    <span class="w-10 h-1 bg-dokun-gold rounded-full"></span>
+     {{ __('app.sf_experiences_available', ['count' => $savoirFaire->artisans->sum(fn($a) => $a->experiences->where('is_published', true)->count())]) }}
+     <span class="text-base font-sans text-dokun-charcoal/50 ml-2">{{ __('app.sf_artisans_count', ['count' => $savoirFaire->artisans->count()]) }}</span>
+   </h2>
+   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    @foreach($savoirFaire->artisans as $artisan)
+    @foreach($artisan->experiences->where('is_published', true) as $exp)
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col">
+     <div class="p-4">
+      <div class="flex items-center gap-2 mb-3">
+       <span class="px-2.5 py-1 bg-dokun-green/10 text-dokun-green text-xs font-bold rounded-full"> Expérience</span>
+       <span class="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full">{{ $exp->duration_minutes }} min</span>
+      </div>
+     <h3 class="font-serif text-xl text-dokun-green mb-2">{{ $exp->title }}</h3>
+     <p class="text-dokun-charcoal/70 text-sm leading-relaxed mb-3">{{ substr($exp->summary, 0, 100) }}...</p>
+     <div class="p-3 border-t border-gray-100">
+      <a href="{{ route('payment.confirm', $artisan->id) }}" class="w-full py-2.5 bg-dokun-green text-white font-bold text-sm rounded-xl hover:bg-dokun-green/90 active:scale-[.98] transition">
+       Réserver
+      </a>
+     </div>
+    </div>
+    @endforeach
+    @endforeach
+   </div>
+  </section>
+  @endif
+
+  @include('partials.footer')
 </body>
 </html>

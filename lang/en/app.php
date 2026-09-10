@@ -66,6 +66,8 @@ return array (
  'sf_artisans_practicing' => 'Artisans practicing',
  'sf_no_artisans' => 'No artisan linked yet.',
  'sf_view_profile' => 'View the profile',
+ 'sf_experiences_available' => ':count Experiences available',
+ 'sf_artisans_count' => ':count artisans',
  'map_title' => 'Artisans Map',
  'map_subtitle' => 'Workshops and know-how in Porto-Novo',
  'map_radius' => 'Search radius',

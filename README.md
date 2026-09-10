@@ -1,4 +1,4 @@
-# ƉƆKUN — Patrimoine vivant de Porto-Novo
+# ƉƆKUN — Patrimoine vivant du Bénin - Porto-Novo
 
 ƉƆKUN est une plateforme de découverte et de réservation d’expériences autour des savoir-faire traditionnels de Porto-Novo.
 
