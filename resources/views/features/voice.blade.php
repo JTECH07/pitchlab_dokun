@@ -10,8 +10,9 @@
  <script src="https://cdn.tailwindcss.com"></script>
  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
  <script>
- tailwind.config = {
- theme: { extend: {
+tailwind.config = {
+darkMode: 'class',
+theme: { extend: {
  colors: { dokun: { green:'#064E3B', gold:'#C99424', ivory:'#F8F6F0', charcoal:'#17201D' } },
  fontFamily: { sans:['Manrope','sans-serif'], serif:['"DM Serif Display"','serif'] },
  backgroundImage: { 'dokun-pattern':"url('data:image/svg+xml,%3Csvg width=\\'20\\' height=\\'20\\' viewBox=\\'0 0 20 20\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cg fill=\\'%23064E3B\\' fill-opacity=\\'0.05\\' fill-rule=\\'evenodd\\'%3E%3Ccircle cx=\\'3\\' cy=\\'3\\' r=\\'3\\'/%3E%3Ccircle cx=\\'13\\' cy=\\'13\\' r=\\'3\\'/%3E%3C/g%3E%3C/svg%3E')" }
@@ -25,7 +26,7 @@
  .mic-recording{animation:micPulse 1.2s infinite;}
  </style>
 </head>
-<body class="antialiased bg-dokun-ivory text-dokun-charcoal bg-dokun-pattern">
+<body class="antialiased bg-dokun-ivory text-dokun-charcoal bg-dokun-pattern dark:bg-[#17201D] dark:text-[#e2e8e0]">
 
 @include('partials.navbar', ['active' => 'artisans'])
 
