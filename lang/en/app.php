@@ -57,6 +57,7 @@ return array (
  'sf_index_trade_count' => ':count trade|:count trades',
  'sf_index_practitioner_count' => ':count practitioner|:count practitioners',
  'sf_index_view' => 'View',
+ 'sf_search_placeholder' => 'Search for a know-how...',
  'sf_back_to_skills' => 'Back to know-how',
  'sf_singular' => 'Know-how',
  'sf_practitioners' => ':count artisan|:count artisans',
