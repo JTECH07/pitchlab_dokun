@@ -6,10 +6,10 @@
  <title>{{ $savoirFaire->name }} — ƉƆKUN Porto-Novo</title>
  <link href="https://fonts.bunny.net/css?family=dm-serif-display:400|manrope:400,600,700,800&display=swap" rel="stylesheet"/>
  <script src="https://cdn.tailwindcss.com"></script>
- <script>tailwind.config={theme:{extend:{colors:{dokun:{green:'#064E3B',gold:'#C99424',ivory:'#F8F6F0',charcoal:'#17201D'}},fontFamily:{sans:['Manrope','sans-serif'],serif:['"DM Serif Display"','serif']}}}}</script>
+ <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{dokun:{green:'#064E3B',gold:'#C99424',ivory:'#F8F6F0',charcoal:'#17201D'}},fontFamily:{sans:['Manrope','sans-serif'],serif:['"DM Serif Display"','serif']}}}}</script>
  <style>body{font-family:'Manrope',sans-serif;}h1,h2,h3,.serif{font-family:'DM Serif Display',serif;}</style>
 </head>
-<body class="antialiased bg-[#F8F6F0] text-[#17201D] min-h-screen flex flex-col">
+<body class="antialiased bg-[#F8F6F0] dark:bg-[#17201D] text-[#17201D] dark:text-[#e2e8e0] min-h-screen flex flex-col">
 
  @include('partials.navbar', ['active' => 'savoir-faire'])
 
@@ -104,26 +104,66 @@
 
   <!-- Experiences des artisans de ce savoir-faire -->
   @if($savoirFaire->artisans->count() > 0)
-  <section class="mb-20">
-   <h2 class="text-3xl font-serif text-dokun-green mb-6 flex items-center gap-3">
-    <span class="w-10 h-1 bg-dokun-gold rounded-full"></span>
-     {{ __('app.sf_experiences_available', ['count' => $savoirFaire->artisans->sum(fn($a) => $a->experiences->where('is_published', true)->count())]) }}
-     <span class="text-base font-sans text-dokun-charcoal/50 ml-2">{{ __('app.sf_artisans_count', ['count' => $savoirFaire->artisans->count()]) }}</span>
-   </h2>
+  @php
+   $totalExps = $savoirFaire->artisans->sum(fn($a) => $a->experiences->where('is_published', true)->count());
+  @endphp
+  @if($totalExps > 0)
+  <section class="mb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   <div class="flex items-center gap-4 mb-10">
+    <span class="w-12 h-1 bg-dokun-gold rounded-full flex-shrink-0"></span>
+    <div>
+     <h2 class="text-3xl font-serif text-dokun-green leading-tight">{{ __('app.sf_experiences_available', ['count' => $totalExps]) }}</h2>
+     <p class="text-sm text-gray-500 mt-1">{{ __('app.sf_artisans_count', ['count' => $savoirFaire->artisans->count()]) }}</p>
+    </div>
+   </div>
+
    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     @foreach($savoirFaire->artisans as $artisan)
     @foreach($artisan->experiences->where('is_published', true) as $exp)
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col">
-     <div class="p-4">
+    <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl ring-1 ring-gray-100 hover:ring-dokun-gold/30 hover:-translate-y-1 transition-all duration-400 flex flex-col">
+     {{-- Top visual band --}}
+     <div class="h-2 bg-gradient-to-r from-dokun-green via-dokun-gold to-dokun-green"></div>
+
+     <div class="p-5 flex flex-col flex-1">
+      {{-- Badges --}}
       <div class="flex items-center gap-2 mb-3">
-       <span class="px-2.5 py-1 bg-dokun-green/10 text-dokun-green text-xs font-bold rounded-full"> Expérience</span>
-       <span class="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full">{{ $exp->duration_minutes }} min</span>
+       <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-dokun-green/10 text-dokun-green text-xs font-bold rounded-full">
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        Exp&eacute;rience
+       </span>
+       <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-gray-100 text-gray-600 text-xs font-bold rounded-full">
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        {{ $exp->duration_minutes }} min
+       </span>
       </div>
-     <h3 class="font-serif text-xl text-dokun-green mb-2">{{ $exp->title }}</h3>
-     <p class="text-dokun-charcoal/70 text-sm leading-relaxed mb-3">{{ substr($exp->summary, 0, 100) }}...</p>
-     <div class="p-3 border-t border-gray-100">
-      <a href="{{ route('payment.confirm', $artisan->id) }}" class="w-full py-2.5 bg-dokun-green text-white font-bold text-sm rounded-xl hover:bg-dokun-green/90 active:scale-[.98] transition">
-       Réserver
+
+      {{-- Title --}}
+      <h3 class="font-serif text-xl text-dokun-green mb-2 leading-snug group-hover:text-dokun-gold transition-colors">{{ $exp->title }}</h3>
+
+      {{-- Artisan name --}}
+      <div class="flex items-center gap-2 mb-3">
+       <span class="w-6 h-6 rounded-full bg-dokun-gold/20 text-dokun-gold flex items-center justify-center text-[10px] font-bold">{{ substr($artisan->first_name,0,1) }}</span>
+       <span class="text-xs text-gray-500 font-semibold">{{ $artisan->first_name }} {{ $artisan->last_name }}</span>
+      </div>
+
+      {{-- Summary --}}
+      <p class="text-gray-500 text-sm leading-relaxed flex-1 line-clamp-3">{{ $exp->summary }}</p>
+
+      {{-- Price hint --}}
+      @if($exp->price_fcf > 0)
+      <div class="mt-4 flex items-baseline gap-1">
+       <span class="text-lg font-bold text-dokun-gold">{{ number_format($exp->price_fcf, 0, ',', ' ') }}</span>
+       <span class="text-xs text-gray-400 font-semibold">F CFA</span>
+      </div>
+      @endif
+     </div>
+
+     {{-- Footer / CTA --}}
+     <div class="px-5 pb-5 pt-0">
+      <a href="{{ route('payment.confirm', $artisan->id) }}"
+         class="w-full flex items-center justify-center gap-2 py-3 bg-dokun-green text-white font-bold text-sm rounded-xl hover:bg-dokun-green/90 active:scale-[.98] transition-all duration-200 shadow-sm hover:shadow-md">
+       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+       R&eacute;server
       </a>
      </div>
     </div>
@@ -131,6 +171,7 @@
     @endforeach
    </div>
   </section>
+  @endif
   @endif
 
   @include('partials.footer')
