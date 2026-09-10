@@ -15,6 +15,7 @@
  <script src="https://cdn.tailwindcss.com"></script>
  <script>
  tailwind.config = {
+ darkMode: 'class',
  theme: {
  extend: {
  colors: {
@@ -43,13 +44,13 @@
  <!-- Scripts -->
  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
  </head>
- <body class="font-sans antialiased">
- <div class="min-h-screen bg-dokun-ivory">
+ <body class="font-sans dark:bg-[#17201D] dark:text-[#e2e8e0] antialiased">
+ <div class="min-h-screen bg-dokun-ivory dark:bg-[#17201D]">
  @include('partials.navbar')
 
  <!-- Page Heading -->
  @isset($header)
- <header class="bg-white border-b border-black/5 pt-20">
+ <header class="bg-white dark:bg-[#1e2a24] border-b border-black/5 dark:border-white/10 pt-20">
  <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
  {{ $header }}
  </div>

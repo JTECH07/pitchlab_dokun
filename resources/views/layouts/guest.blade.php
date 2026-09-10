@@ -13,6 +13,7 @@
  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
  <script>
  tailwind.config = {
+ darkMode: 'class',
  theme: {
  extend: {
  colors: {
@@ -49,7 +50,7 @@
  .draw-1 { animation-delay:.3s } .draw-2 { animation-delay:.9s } .draw-3 { animation-delay:1.6s } .draw-4 { animation-delay:2.3s }
  </style>
  </head>
- <body class="font-sans text-dokun-charcoal antialiased">
+ <body class="font-sans text-dokun-charcoal dark:bg-[#17201D] dark:text-[#e2e8e0] antialiased">
 
  {{-- ── DESKTOP : Split screen ── --}}
  <div class="hidden md:flex min-h-screen">
@@ -128,7 +129,7 @@
  </div>
 
  {{-- ── Panneau droit : formulaire ── --}}
- <div class="w-1/2 flex items-center justify-center bg-dokun-ivory p-12">
+ <div class="w-1/2 flex items-center justify-center bg-dokun-ivory dark:bg-[#1e2a24] p-12">
  <div class="w-full max-w-md">
  <a href="/" class="flex items-center gap-3 mb-8">
  <img src="{{ url('images/dokun_logo_final.jpeg') }}" alt="ƉƆKUN" class="w-11 h-11 rounded-lg">
@@ -140,7 +141,7 @@
  </div>
 
  {{-- ── MOBILE : formulaire seul avec logo ── --}}
- <div class="md:hidden min-h-screen flex flex-col items-center justify-start bg-dokun-ivory pt-8 pb-12 px-5">
+ <div class="md:hidden min-h-screen flex flex-col items-center justify-start bg-dokun-ivory dark:bg-[#1e2a24] pt-8 pb-12 px-5">
  <a href="/" class="flex items-center gap-3 mb-8">
  <img src="{{ url('images/dokun_logo_final.jpeg') }}" alt="ƉƆKUN" class="w-12 h-12 rounded-lg">
  <span class="font-serif text-2xl text-dokun-green tracking-wide">ƉƆKUN</span>
