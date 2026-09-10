@@ -22,10 +22,15 @@ class ArtisanApplication extends Model
         'address',
         'category_id',
         'trade',
+        'selected_savoir_faires',
         'status',
         'admin_notes',
         'reviewed_by',
         'reviewed_at',
+    ];
+
+    protected $casts = [
+        'selected_savoir_faires' => 'array',
     ];
 
     public function user()
