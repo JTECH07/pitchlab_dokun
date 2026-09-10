@@ -45,11 +45,19 @@ class ArtisanApplicationController extends Controller
             'address'          => 'required|string|max:500',
             'category_id'      => 'required|exists:categories,id',
             'trade'            => 'nullable|string|max:255',
+            'savoir_faires'    => 'nullable|array',
+            'savoir_faires.*'  => 'exists:savoir_faires,id',
         ]);
+
+        $selectedSF = $data['savoir_faires'] ?? [];
+        unset($data['savoir_faires']);
 
         $application = ArtisanApplication::updateOrCreate(
             ['user_id' => Auth::id()],
-            array_merge($data, ['status' => 'pending'])
+            array_merge($data, [
+                'status' => 'pending',
+                'selected_savoir_faires' => $selectedSF,
+            ])
         );
 
         return redirect()->route('artisan.apply.confirmation');
