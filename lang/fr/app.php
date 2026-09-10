@@ -57,6 +57,7 @@ return array (
  'sf_index_trade_count' => ':count métier|:count métiers',
  'sf_index_practitioner_count' => ':count praticien|:count praticiens',
  'sf_index_view' => 'Voir',
+ 'sf_search_placeholder' => 'Rechercher un savoir-faire...',
  'sf_back_to_skills' => 'Retour aux savoir-faire',
  'sf_singular' => 'Savoir-Faire',
  'sf_practitioners' => ':count artisan|:count artisans',
