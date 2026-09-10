@@ -10,6 +10,7 @@
  <script src="https://cdn.tailwindcss.com"></script>
  <script>
  tailwind.config = {
+ darkMode: 'class',
  theme: {
  extend: {
  colors: {
@@ -206,9 +207,36 @@
  @keyframes route-dash {
  to { stroke-dashoffset: -20; }
  }
- </style>
+
+ /* ========== DARK MODE — map overrides ========== */
+ html.dark .artisan-card:hover { background: #1e2a24 !important; }
+ html.dark .artisan-card.active { background: #1e2a24 !important; }
+ html.dark .district-label { color: #e2e8e0 !important; text-shadow: 0 0 6px rgba(0,0,0,0.8), 0 0 12px rgba(0,0,0,0.5) !important; }
+ html.dark .leaflet-routing-container { background: #1e2a24 !important; border-color: rgba(255,255,255,.1) !important; }
+ html.dark .leaflet-routing-container h2 { color: #e2e8e0 !important; }
+ html.dark .leaflet-routing-alt summary { color: #6ee7b7 !important; }
+ html.dark .leaflet-routing-instructions { color: #94a3b8 !important; }
+ html.dark .popup-btn-outline { background: #1e2a24 !important; color: #6ee7b7 !important; border-color: rgba(255,255,255,.15) !important; }
+ html.dark .popup-btn-outline:hover { border-color: #6ee7b7 !important; background: #25332c !important; }
+ html.dark .sidebar-scroll::-webkit-scrollbar-thumb { background: #4a5568 !important; }
+ html.dark nav.bg-white\/95 { background: rgba(30,42,36,.95) !important; }
+ html.dark nav.border-b { border-color: rgba(255,255,255,.08) !important; }
+ html.dark .bg-dokun-ivory { background: #1e2a24 !important; }
+ html.dark #sidebar { background: #1e2a24 !important; }
+ html.dark .artisan-card { background: #25332c !important; }
+ html.dark .artisan-card:hover { background: #2a3b33 !important; }
+ html.dark .artisan-card.active { background: #2a3b33 !important; }
+ html.dark .filter-chip.bg-white { background: #25332c !important; }
+ html.dark .filter-chip { border-color: rgba(255,255,255,.12) !important; color: #e2e8e0 !important; }
+ html.dark .filter-chip.active { background: #047857 !important; color: white !important; border-color: #047857 !important; }
+ html.dark input#search-input { background: #25332c !important; border-color: rgba(255,255,255,.12) !important; color: #e2e8e0 !important; }
+ html.dark input#search-input::placeholder { color: rgba(226,232,224,.4) !important; }
+ html.dark .proximity-slider { background: #4a5568 !important; }
+ html.dark #sidebar.border-b, html.dark #sidebar .border-b { border-color: rgba(255,255,255,.08) !important; }
+ html.dark nav.bg-white\/95 a.text-dokun-charcoal { color: #e2e8e0 !important; }
+</style>
 </head>
-<body class="antialiased bg-dokun-ivory text-dokun-charcoal overflow-hidden">
+<body class="antialiased bg-dokun-ivory text-dokun-charcoal dark:bg-[#17201D] dark:text-[#e2e8e0] overflow-hidden">
 
  <!-- Navbar Overlay -->
  <nav class="fixed top-0 w-full z-[900] bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
