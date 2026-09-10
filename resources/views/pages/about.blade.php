@@ -6,7 +6,7 @@
  <title>{{ __('app.about_title') }} · ƉƆKUN</title>
  <link href="https://fonts.bunny.net/css?family=dm-serif-display:400|manrope:400,600,700,800&display=swap" rel="stylesheet"/>
  <script src="https://cdn.tailwindcss.com"></script>
- <script>tailwind.config={theme:{extend:{colors:{dokun:{green:'#064E3B',gold:'#C99424',ivory:'#F8F6F0',charcoal:'#17201D'}},fontFamily:{sans:['Manrope','sans-serif'],serif:['"DM Serif Display"','serif']}}}}</script>
+ <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{dokun:{green:'#064E3B',gold:'#C99424',ivory:'#F8F6F0',charcoal:'#17201D'}},fontFamily:{sans:['Manrope','sans-serif'],serif:['"DM Serif Display"','serif']}}}}</script>
  <style>
  body { font-family: 'Manrope', sans-serif; }
  h1, h2, h3, .serif { font-family: 'DM Serif Display', serif; }
@@ -16,7 +16,7 @@
  .timeline-line::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,#C99424,#064E3B);transform:translateX(-50%);}
  </style>
 </head>
-<body class="antialiased bg-dokun-ivory text-dokun-charcoal">
+<body class="antialiased bg-dokun-ivory text-dokun-charcoal dark:bg-[#17201D] dark:text-[#e2e8e0]">
 @include('partials.navbar', ['active' => 'about'])
 
 <main>
