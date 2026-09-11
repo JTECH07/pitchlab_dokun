@@ -332,32 +332,6 @@
  </div>
 </section>
 
-<!-- SECTION VIDÉO -->
-<section class="py-24 bg-[url('{{ asset('images/dokun_carte.jpg') }}')] bg-cover bg-center bg-fixed relative overflow-hidden backdrop-blur-md box-shadow-xl">
- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
- <div class="text-center mb-16 fade-up">
- <h2 class="serif text-4xl md:text-5xl text-white font-bold mb-4">Comprendre ƉƆKUN</h2>
- <p class="text-white max-w-2xl mx-auto text-lg">Découvrez la vision, le fonctionnement et l'impact de la plateforme à travers ces vidéos.</p>
- <div class="h-1 w-20 bg-dokun-gold mx-auto mt-5"></div>
- </div>
- <div class="text-center mt-10">
- <div class="max-w-3xl mx-auto">
- <div class="bg-[#17201D] rounded-[2rem] overflow-hidden aspect-[9/16] max-h-[560px] shadow-2xl relative border-4 border-white/20 mx-auto">
-  <video
-   controls
-   preload="metadata"
-   poster="{{ asset('media/poster_video.jpg') }}"
-   class="w-full h-full object-cover relative z-10"
-   playsinline
-  >
-   <source src="{{ asset('media/fd4029e16e431ab71c923ebf3372ee6f_720w.mp4') }}" type="video/mp4">
-  </video>
- </div>
- </div>
- </div>
- </div>
-</section>
-
 <!-- SAVOIR-FAIRE -->
 <section id="savoir-faire" class="py-24 bg-white">
  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
