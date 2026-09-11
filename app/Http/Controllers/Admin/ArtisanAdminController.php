@@ -153,9 +153,11 @@ class ArtisanAdminController extends Controller
 
     public function approveProfile(Artisan $artisan)
     {
+        $updates = ['status' => 'published'];
+
         if ($artisan->pending_profile_data) {
             $pending = $artisan->pending_profile_data;
-            $updates = [
+            $updates = array_merge($updates, [
                 'first_name'        => $pending['first_name'] ?? $artisan->first_name,
                 'last_name'         => $pending['last_name'] ?? $artisan->last_name,
                 'professional_name' => $pending['professional_name'] ?? $artisan->professional_name,
@@ -167,23 +169,21 @@ class ArtisanAdminController extends Controller
                 'address'           => $pending['address'] ?? $artisan->address,
                 'latitude'          => $pending['latitude'] ?? $artisan->latitude,
                 'longitude'         => $pending['longitude'] ?? $artisan->longitude,
-                'status'            => 'published',
                 'pending_profile_data' => null,
-            ];
-
-            if ($artisan->pending_photo_path) {
-                $updates['photo_path'] = $artisan->pending_photo_path;
-                $updates['pending_photo_path'] = null;
-            }
-
-            $artisan->update($updates);
+            ]);
 
             if (isset($pending['savoir_faires'])) {
                 $artisan->savoirFaires()->sync($pending['savoir_faires']);
             }
-        } else {
-            $artisan->update(['status' => 'published']);
         }
+
+        // Approuver la photo même sans modification de profil
+        if ($artisan->pending_photo_path) {
+            $updates['photo_path'] = $artisan->pending_photo_path;
+            $updates['pending_photo_path'] = null;
+        }
+
+        $artisan->update($updates);
 
         return back()->with('success', "Profil de {$artisan->first_name} {$artisan->last_name} approuvé et publié.");
     }
