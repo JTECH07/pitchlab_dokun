@@ -98,11 +98,33 @@ theme: { extend: {
  </p>
 
  <div id="voice-archives-list" class="space-y-2 min-h-[60px]">
- <p class="text-white/40 text-sm text-center py-4" id="voice-loading">
- <svg class="w-5 h-5 mx-auto animate-spin mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
- {{ __('app.feature_voice_loading') }}
- </p>
+  <p class="text-white/40 text-sm text-center py-4" id="voice-loading">
+  <svg class="w-5 h-5 mx-auto animate-spin mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+  {{ __('app.feature_voice_loading') }}
+  </p>
  </div>
+
+ @if($artisan->id === 29)
+ {{-- Archive vocale pré-enregistrée — Houmansé HOUNKPE --}}
+ <div class="mt-4">
+  <p class="text-dokun-gold text-xs font-bold uppercase tracking-wider mb-3">Archive disponible</p>
+  <button onclick="playFeaturedAudio()" class="w-full flex items-center gap-3 bg-dokun-gold/10 hover:bg-dokun-gold/20 border border-dokun-gold/30 rounded-xl px-4 py-3 transition text-left group">
+   <div class="w-10 h-10 rounded-full bg-dokun-gold text-white flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition">
+    <svg class="w-4 h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+   </div>
+   <div class="min-w-0 flex-1">
+    <p class="text-white/90 text-sm font-semibold truncate">Voix du patrimoine — Houmansé HOUNKPE</p>
+    <p class="text-white/40 text-xs">FON · Poterie Moderne</p>
+   </div>
+  </button>
+  <div id="featured-audio-player" class="hidden mt-3">
+   <audio id="featured-audio" controls class="w-full h-10 rounded-lg">
+    <source src="{{ asset('media/AUD-20260907-WA0010.aac') }}" type="audio/aac">
+   </audio>
+   <p class="text-white/40 text-xs mt-2 italic">Houmansé HOUNKPE — Atelier HOUNKPE · Poterie Moderne · Fon</p>
+  </div>
+ </div>
+ @endif
 
  <div id="voice-player" class="hidden mt-5 space-y-3">
  <audio id="voice-audio" controls class="w-full h-10 rounded-lg"></audio>
@@ -205,6 +227,15 @@ document.addEventListener('DOMContentLoaded', function () {
  });
 
  if (!IS_OWNER) return;
+
+ function playFeaturedAudio() {
+  var player = document.getElementById('featured-audio-player');
+  var audio = document.getElementById('featured-audio');
+  if (player && audio) {
+   player.classList.remove('hidden');
+   audio.play();
+  }
+ }
 
  let voiceMediaRecorder = null;
  let voiceChunks = [];
