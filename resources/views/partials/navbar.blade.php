@@ -28,14 +28,15 @@
  #navbar.nav-scrolled{background:rgba(255,255,255,.97);backdrop-filter:blur(14px);box-shadow:0 1px 4px rgba(0,0,0,.05)}
 
  /* Theme toggle icons */
- #theme-toggle .icon-sun{display:block}
- #theme-toggle .icon-moon{display:none}
- html.dark #theme-toggle .icon-sun{display:none}
- html.dark #theme-toggle .icon-moon{display:block}
+ #theme-toggle .icon-sun,#theme-toggle-mobile .icon-sun{display:block}
+ #theme-toggle .icon-moon,#theme-toggle-mobile .icon-moon{display:none}
+ html.dark #theme-toggle .icon-sun,html.dark #theme-toggle-mobile .icon-sun{display:none}
+ html.dark #theme-toggle .icon-moon,html.dark #theme-toggle-mobile .icon-moon{display:block}
 
  /* ========== DARK MODE — global overrides ========== */
  html.dark body{background:#17201D;color:#e2e8e0}
  html.dark *{border-color:rgba(255,255,255,.08)}
+ html,body{overflow-x:hidden}
 
  /* Navbar */
  html.dark #navbar.nav-scrolled{background:rgba(23,32,29,.97);border-color:rgba(255,255,255,.08)}
