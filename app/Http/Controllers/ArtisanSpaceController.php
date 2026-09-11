@@ -81,7 +81,7 @@ class ArtisanSpaceController extends Controller
             return view('artisan-space.index', compact('artisan'))->with('notice', 'Votre profil est en cours de création.');
         }
 
-        $reservations = ReservationRequest::with('experience')
+        $reservations = ReservationRequest::with(['experience', 'artisan'])
             ->where('artisan_id', $artisan->id)
             ->latest()
             ->get();
@@ -127,7 +127,9 @@ class ArtisanSpaceController extends Controller
 
     public function updateReservationStatus(Request $request, ReservationRequest $reservation)
     {
-        abort_unless($reservation->artisan?->user_id === $request->user()->id, 403);
+        $artisan = \App\Models\Artisan::where('user_id', $request->user()->id)->first();
+        abort_unless($artisan && $reservation->artisan_id === $artisan->id, 403);
+
         $oldStatus = $reservation->status;
         $data = $request->validate(['status' => 'required|in:accepted,rejected,completed']);
         $reservation->update($data);
@@ -185,6 +187,11 @@ class ArtisanSpaceController extends Controller
 
         if (!$artisan->photo_path) {
             $artisan->photo_path = $path;
+        }
+
+        // Si l'artisan change déjà une photo, mettre en attente d'approbation
+        if ($artisan->photo_path && $artisan->photo_path !== $path) {
+            $artisan->status = 'pending';
         }
 
         $artisan->save();
