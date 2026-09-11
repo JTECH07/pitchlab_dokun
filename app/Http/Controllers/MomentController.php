@@ -26,7 +26,10 @@ class MomentController extends Controller
     {
         $reservation = ReservationRequest::with('artisan', 'experience')
             ->where(function($q) use($reservation_id) {
-                $q->where('id', $reservation_id)->orWhere('qr_code_token', $reservation_id);
+                if (is_numeric($reservation_id)) {
+                    $q->where('id', $reservation_id);
+                }
+                $q->orWhere('qr_code_token', $reservation_id);
             })
             ->where('user_id', $request->user()->id)
             ->firstOrFail();
