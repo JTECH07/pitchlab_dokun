@@ -332,62 +332,28 @@
  </div>
 </section>
 
-<!-- SECTION VIDÉO + VOIX -->
+<!-- SECTION VIDÉO -->
 <section class="py-24 bg-[url('{{ asset('images/dokun_carte.jpg') }}')] bg-cover bg-center bg-fixed relative overflow-hidden backdrop-blur-md box-shadow-xl">
  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
  <div class="text-center mb-16 fade-up">
  <h2 class="serif text-4xl md:text-5xl text-white font-bold mb-4">Comprendre ƉƆKUN</h2>
- <p class="text-white max-w-2xl mx-auto text-lg">Découvrez la vision, le fonctionnement et l'impact de la plateforme à travers ces médias.</p>
+ <p class="text-white max-w-2xl mx-auto text-lg">Découvrez la vision, le fonctionnement et l'impact de la plateforme à travers ces vidéos.</p>
  <div class="h-1 w-20 bg-dokun-gold mx-auto mt-5"></div>
  </div>
-
- <div class="grid lg:grid-cols-2 gap-8 items-start">
-
-  {{-- Vidéo --}}
-  <div class="max-w-5xl mx-auto lg:mx-0">
-   <div class="bg-[#17201D] rounded-[2rem] overflow-hidden aspect-[9/16] max-h-[520px] shadow-2xl relative border-4 border-white/20">
-    <video
-     controls
-     preload="metadata"
-     poster="{{ asset('media/poster_video.jpg') }}"
-     class="w-full h-full object-cover relative z-10"
-     playsinline
-    >
-     <source src="{{ asset('media/fd4029e16e431ab71c923ebf3372ee6f_720w.mp4') }}" type="video/mp4">
-    </video>
-   </div>
-  </div>
-
-  {{-- Voix de Hounmansé HOUNKPE --}}
-  <div class="bg-[#17201D] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white/20 p-8">
-   <div class="flex items-center gap-4 mb-6">
-    <div class="w-14 h-14 rounded-full bg-dokun-gold/20 flex items-center justify-center flex-shrink-0">
-     <svg class="w-7 h-7 text-dokun-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-    </div>
-    <div>
-     <h3 class="serif text-2xl text-white">La voix du patrimoine</h3>
-     <p class="text-dokun-gold text-xs font-bold uppercase tracking-wider">ƉƆKUN Voice</p>
-    </div>
-   </div>
-
-   <p class="text-white/70 text-sm mb-6 leading-relaxed">Écoutez <span class="text-dokun-gold font-semibold">Hounmansé HOUNKPE</span> parler de son art dans sa langue maternelle. Chaque archive vocale préserve un patrimoine vivant pour les générations futures.</p>
-
-   <div class="bg-white/5 rounded-xl p-4 border border-white/10">
-    <audio controls preload="metadata" class="w-full h-10 rounded-lg mb-3">
-     <source src="{{ asset('media/AUD-20260907-WA0010.aac') }}" type="audio/aac">
-    </audio>
-    <div class="flex items-center gap-2 text-white/40 text-xs">
-     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
-     Hounmansé HOUNKPE — Fon
-    </div>
-   </div>
-
-   <a href="{{ route('experiences.index') }}" class="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-dokun-gold text-white font-bold rounded-xl hover:bg-yellow-500 transition text-sm shadow-lg shadow-dokun-gold/20">
-    Découvrir les expériences
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-   </a>
-  </div>
-
+ <div class="text-center mt-10">
+ <div class="max-w-3xl mx-auto">
+ <div class="bg-[#17201D] rounded-[2rem] overflow-hidden aspect-[9/16] max-h-[560px] shadow-2xl relative border-4 border-white/20 mx-auto">
+  <video
+   controls
+   preload="metadata"
+   poster="{{ asset('media/poster_video.jpg') }}"
+   class="w-full h-full object-cover relative z-10"
+   playsinline
+  >
+   <source src="{{ asset('media/fd4029e16e431ab71c923ebf3372ee6f_720w.mp4') }}" type="video/mp4">
+  </video>
+ </div>
+ </div>
  </div>
  </div>
 </section>
