@@ -104,7 +104,7 @@ theme: { extend: {
   </p>
  </div>
 
- @if($artisan->id === 29)
+ @if($artisan->last_name === 'HOUNKPE')
  {{-- Archive vocale pré-enregistrée — Houmansé HOUNKPE --}}
  <div class="mt-4">
   <p class="text-dokun-gold text-xs font-bold uppercase tracking-wider mb-3">Archive disponible</p>
