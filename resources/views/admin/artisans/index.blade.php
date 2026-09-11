@@ -78,9 +78,9 @@
  </div>
  </td>
  <td class="px-6 py-4">
- @if($artisan->status === 'pending' && $artisan->pending_profile_data)
+ @if($artisan->status === 'pending' && ($artisan->pending_profile_data || $artisan->pending_photo_path))
  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 text-amber-700 font-bold text-xs rounded-full border border-amber-200">
- <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span> Profil à valider
+ <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span> {{ $artisan->pending_photo_path && !$artisan->pending_profile_data ? 'Photo à valider' : 'Profil à valider' }}
  </span>
  @elseif($artisan->status === 'published')
  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-50 text-emerald-700 font-bold text-xs rounded-full border border-emerald-200">
@@ -98,7 +98,7 @@
  </td>
  <td class="px-6 py-4 text-right">
  <div class="flex items-center justify-end gap-2">
- @if($artisan->status === 'pending' && $artisan->pending_profile_data)
+ @if($artisan->status === 'pending' && ($artisan->pending_profile_data || $artisan->pending_photo_path))
  <form action="{{ route('admin.artisans.approve-profile', $artisan) }}" method="POST">
  @csrf
  @method('PATCH')
