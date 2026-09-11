@@ -66,18 +66,26 @@ class MomentController extends Controller
 
         $videoPath = null;
         if ($request->hasFile('video')) {
-            $file = $request->file('video');
-            $name = 'moment_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $videoPath = 'moments/' . $name;
-            Storage::disk('public')->put($videoPath, file_get_contents($file));
+            try {
+                $file = $request->file('video');
+                $name = 'moment_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $videoPath = 'moments/' . $name;
+                Storage::disk('public')->put($videoPath, file_get_contents($file));
+            } catch (\Throwable $e) {
+                $videoPath = null;
+            }
         }
 
         $coverPath = null;
         if ($request->hasFile('cover')) {
-            $file = $request->file('cover');
-            $name = 'cover_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $coverPath = 'moments/' . $name;
-            Storage::disk('public')->put($coverPath, file_get_contents($file));
+            try {
+                $file = $request->file('cover');
+                $name = 'cover_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $coverPath = 'moments/' . $name;
+                Storage::disk('public')->put($coverPath, file_get_contents($file));
+            } catch (\Throwable $e) {
+                $coverPath = null;
+            }
         }
 
         $moment = Moment::create([
@@ -93,7 +101,8 @@ class MomentController extends Controller
 
         app(LoyaltyService::class)->award($request->user(), 'moment_shared', ['moment_id' => $moment->id]);
 
-        return redirect()->route('moments.show', $moment->share_token)
+        $showUrl = route('moments.show', $moment->share_token);
+        return redirect($showUrl)
             ->with('success', "Merci ! Votre ƉƆKUN Moment sera publié après modération.");
     }
 
