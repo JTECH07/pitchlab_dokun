@@ -1,17 +1,20 @@
 #!/usr/bin/env bash
 set -e
 
-echo "=== [1/6] Installing PHP dependencies ==="
+echo "=== [1/7] Installing PHP dependencies ==="
 composer install --no-dev --optimize-autoloader --no-interaction
 
-echo "=== [2/6] Installing JS dependencies & building assets ==="
+echo "=== [2/7] Installing JS dependencies & building assets ==="
 npm install --ignore-scripts
 npm run build
 
-echo "=== [3/6] Running database migrations ==="
+echo "=== [3/7] Running database migrations ==="
 php artisan migrate --force
 
-echo "=== [4/6] Seeding new categories ==="
+echo "=== [4/7] Storage link ==="
+php artisan storage:link --force 2>/dev/null || true
+
+echo "=== [5/7] Seeding new categories ==="
 php artisan tinker --execute="
 use App\Models\Category;
 use App\Models\SavoirFaire;
@@ -24,7 +27,7 @@ SavoirFaire::firstOrCreate(['slug' => 'fabrication-tambours'], ['name' => 'Fabri
 SavoirFaire::firstOrCreate(['slug' => 'xylophones-harpes'], ['name' => 'Xylophones & Harpes', 'category_id' => Category::where('slug','instruments-traditionnels')->first()->id, 'description' => 'Construction de xylophones et harpes traditionnels.']);
 " 2>/dev/null || echo "Seeding skipped"
 
-echo "=== [5/6] Clearing and caching config, routes & views ==="
+echo "=== [6/7] Clearing and caching config, routes & views ==="
 php artisan config:clear
 php artisan route:clear
 php artisan view:clear
@@ -32,4 +35,4 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-echo "=== [6/6] Build complete ==="
+echo "=== [7/7] Build complete ==="

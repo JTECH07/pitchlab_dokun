@@ -101,8 +101,7 @@ class MomentController extends Controller
 
         app(LoyaltyService::class)->award($request->user(), 'moment_shared', ['moment_id' => $moment->id]);
 
-        $showUrl = route('moments.show', $moment->share_token);
-        return redirect($showUrl)
+        return redirect()->route('reservations.receipt', $reservation->qr_code_token)
             ->with('success', "Merci ! Votre ƉƆKUN Moment sera publié après modération.");
     }
 
