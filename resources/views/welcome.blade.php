@@ -343,8 +343,16 @@
  <div class="text-center mt-10">
  <!-- Videos -->
  <div class="max-w-5xl mx-auto">
- <div class="bg-[#17201D] rounded-[2rem] overflow-hidden aspect-video shadow-2xl relative border-4 border-white/20 bg-cover bg-center" style="background-image: url('{{ url('images/auth_bg.jpg') }}');">
- <video controls src="{{ asset('media/IMG_9617.MOV') }}" class="absolute inset-0 w-full h-full z-10 object-cover"></video>
+ <div class="bg-[#17201D] rounded-[2rem] overflow-hidden aspect-video shadow-2xl relative border-4 border-white/20">
+ <video
+ controls
+ preload="metadata"
+ poster="{{ asset('media/poster_video.jpg') }}"
+ class="w-full h-full object-cover relative z-10"
+ >
+ <source src="{{ asset('media/IMG_9617.MOV') }}" type="video/quicktime">
+ <source src="{{ asset('media/IMG_9617.mp4') }}" type="video/mp4">
+ </video>
  </div>
  </div>
  </div>
