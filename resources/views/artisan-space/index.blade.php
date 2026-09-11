@@ -420,28 +420,41 @@
  },
 
  async updateStatus(res, newStatus) {
- res._updating = true;
- try {
- const url = '{{ route("artisan-space.reservations.status-json", "__ID__") }}'.replace('__ID__', res.id);
- const res2 = await fetch(url, {
- method: 'PATCH',
- headers: {
- 'X-CSRF-TOKEN': '{{ csrf_token() }}',
- 'Accept': 'application/json',
- 'Content-Type': 'application/json',
- },
- body: JSON.stringify({ status: newStatus }),
- });
- const data = await res2.json();
- if (data.status === 'success') {
- res.status = data.reservation.status;
- this.recalcStats();
- }
- } catch (e) {
- console.error('Status update failed', e);
- }
- res._updating = false;
- },
+  res._updating = true;
+  try {
+  const url = '{{ route("artisan-space.reservations.status-json", "__ID__") }}'.replace('__ID__', res.id);
+  const res2 = await fetch(url, {
+  method: 'PATCH',
+  headers: {
+  'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'X-Requested-With': 'XMLHttpRequest',
+  },
+  body: JSON.stringify({ status: newStatus }),
+  });
+
+  if (!res2.ok) {
+  const errText = await res2.text();
+  console.error('HTTP ' + res2.status, errText);
+  alert('Erreur ' + res2.status + ' — Veuillez recharger la page et réessayer.');
+  res._updating = false;
+  return;
+  }
+
+  const data = await res2.json();
+  if (data.status === 'success') {
+  res.status = data.reservation.status;
+  this.recalcStats();
+  } else {
+  alert('Erreur lors de la mise à jour.');
+  }
+  } catch (e) {
+  console.error('Status update failed', e);
+  alert('Erreur réseau — Vérifiez votre connexion et réessayez.');
+  }
+  res._updating = false;
+  },
 
  recalcStats() {
  this.stats.pending = this.reservations.filter(r => r.status === 'pending').length;
